@@ -3,7 +3,7 @@ import { TourMap } from "./pages/ToursMap";
 
 function App() {
   return (
-    <div className="App">
+    <div className="app">
       <TourMap />
     </div>
   );
