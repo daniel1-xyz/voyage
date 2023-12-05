@@ -16,7 +16,7 @@ const TourMapWrapper = styled.div`
   width: 100%;
 `;
 
-export const TourMap = () => {
+export const ToursMap = () => {
   return (
     <TourMapWrapper>
       <MapContainer

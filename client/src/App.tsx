@@ -4,7 +4,7 @@ import { TourMap } from "./pages/ToursMap";
 function App() {
   return (
     <div className="app">
-      <TourMap />
+      <ToursMap />
     </div>
   );
 }
