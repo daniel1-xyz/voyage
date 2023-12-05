@@ -31,7 +31,7 @@ export const ToursMap = () => {
         />
         <Marker position={[exampleCoords.lat, exampleCoords.lon]}>
           <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
+            A pretty CSS5 popup. <br /> Easily customizable.
           </Popup>
         </Marker>
       </MapContainer>
