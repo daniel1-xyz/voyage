@@ -1,10 +1,10 @@
 import "./App.css";
-import { TourMap } from "./pages/ToursMap";
+import { ToursMap } from "./pages/ToursMap";
 
 function App() {
   return (
     <div className="app">
-      <TourMap />
+      <ToursMap />
     </div>
   );
 }
