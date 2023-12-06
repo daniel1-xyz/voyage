@@ -7,7 +7,7 @@
   "name": "tourmap",
   "version": "1.0.0",
   "description": "just a tour map",
-  "main": "index.ts",
+  "main": "app.ts",
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
