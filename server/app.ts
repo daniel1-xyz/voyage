@@ -1,7 +1,6 @@
-const express = require("express");
-const path = require("path");
-
-const { db } = require("./config/database.ts");
+import express from "express";
+import { db } from "./config/database";
+import router from "./routes/points";
 
 db.authenticate()
   .then(() => console.log("DB Connected"))
@@ -9,9 +8,7 @@ db.authenticate()
 
 const app = express();
 
-app.use("/", (req: Request, res: Response) => {});
-
-app.use("/points", require("./routes/points"));
+app.use(router);
 
 const PORT = process.env.PORT || 5000;
 

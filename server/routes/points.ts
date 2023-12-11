@@ -1,11 +1,14 @@
-const express = require("express");
-const router = express.Router();
-const { Point } = require("../models/point");
+import { Request, Response, Router } from "express";
+import { Point } from "../models/point";
 
-router.get("/", (req: Request, res: Response) => {});
+const router: Router = Router();
 
-router.get("/:id", (req: Request, res: Response) => {});
+router.get("/point", (req: Request, res: Response) => {
+  res.send(Point.findAll());
+});
 
-module.exports = router;
+router.get("/point/:id", (req: Request, res: Response) => {
+  res.send(Point.findByPk(req.params.id));
+});
 
-export {};
+export default router;

@@ -1,7 +1,5 @@
-const { DataTypes, Model } = require("sequelize");
-const { Table, Column } = require("sequelize-typescript");
-
-const { db } = require("../config/database");
+import { DataTypes, Model } from "sequelize";
+import { db } from "../config/database";
 
 interface PointAttributes {
   id: string;
@@ -12,9 +10,6 @@ interface PointAttributes {
   price: number;
 }
 
-@Table({
-  tableName: "points",
-})
 class Point extends Model implements PointAttributes {
   id!: string;
   latitude!: number;
