@@ -3,7 +3,9 @@ import { Point } from "../models/point";
 
 const router: Router = Router();
 
-router.get("/point", (req: Request, res: Response) => {
+router.get("/", (req: Request, res: Response) => {});
+
+router.get("/points", (req: Request, res: Response) => {
   res.send(Point.findAll());
 });
 
