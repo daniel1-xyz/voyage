@@ -1,5 +1,5 @@
-const { DataTypes } = require("sequelize");
-const { Table, Column, Model } = require("sequelize-typescript");
+const { DataTypes, Model } = require("sequelize");
+const { Table, Column } = require("sequelize-typescript");
 
 const { db } = require("../config/database");
 
@@ -13,15 +13,17 @@ interface PointAttributes {
   createdAt: Date;
 }
 
-@Table
-class Point extends Model<PointAttributes> {
-  declare id: string;
-  declare latitude: number;
-  declare longitude: number;
-  declare desc: string;
-  declare pointType: string;
-  declare price: number;
-  declare createdAt: Date;
+@Table({
+  tableName: "points",
+})
+class Point extends Model implements PointAttributes {
+  id!: string;
+  latitude!: number;
+  longitude!: number;
+  desc!: string;
+  pointType!: string;
+  price!: number;
+  createdAt!: Date;
 }
 
 Point.init(
