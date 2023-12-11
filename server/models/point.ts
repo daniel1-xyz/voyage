@@ -10,7 +10,6 @@ interface PointAttributes {
   desc: string;
   pointType: string;
   price: number;
-  createdAt: Date;
 }
 
 @Table({
@@ -23,7 +22,6 @@ class Point extends Model implements PointAttributes {
   desc!: string;
   pointType!: string;
   price!: number;
-  createdAt!: Date;
 }
 
 Point.init(
@@ -51,9 +49,6 @@ Point.init(
     },
     price: {
       type: DataTypes.INTEGER,
-    },
-    createdAt: {
-      type: DataTypes.DATE,
     },
   },
   {
