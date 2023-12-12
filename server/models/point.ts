@@ -8,6 +8,7 @@ interface PointAttributes {
   desc: string;
   pointType: string;
   price: number;
+  createdAt: Date;
 }
 
 class Point extends Model implements PointAttributes {
@@ -17,6 +18,7 @@ class Point extends Model implements PointAttributes {
   desc!: string;
   pointType!: string;
   price!: number;
+  createdAt!: Date;
 }
 
 Point.init(
@@ -45,11 +47,15 @@ Point.init(
     price: {
       type: DataTypes.INTEGER,
     },
+    createdAt: {
+      type: DataTypes.DATE,
+    },
   },
   {
     sequelize: db,
     modelName: "point",
     tableName: "points",
+    schema: "public",
   }
 );
 
