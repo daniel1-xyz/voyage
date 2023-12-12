@@ -8,15 +8,15 @@ Point.sync().then(() => {
   console.log("synced DB!");
 });
 
-router.get("/points", (req: Request, res: Response) => {
-  res.send(Point.findAll());
+router.get("/points", async (req: Request, res: Response) => {
+  res.send(await Point.findAll());
 });
 
-router.get("/point/:id", (req: Request, res: Response) => {
-  res.send(Point.findByPk(req.params.id));
+router.get("/point/:id", async (req: Request, res: Response) => {
+  res.send(await Point.findByPk(req.params.id));
 });
 
-router.post("/points/new", (req: Request, res: Response) => {
+router.post("/points/new", async (req: Request, res: Response) => {
   console.log(req.body);
   let point = Point.build({
     id: uniqid(),
@@ -27,6 +27,8 @@ router.post("/points/new", (req: Request, res: Response) => {
     price: req.body.price || null,
     createdAt: new Date(),
   });
+
+  await point.save();
 
   res.send(point);
 });
