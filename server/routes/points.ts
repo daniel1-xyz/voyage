@@ -17,7 +17,6 @@ router.get("/point/:id", async (req: Request, res: Response) => {
 });
 
 router.post("/points/new", async (req: Request, res: Response) => {
-  console.log(req.body);
   let point = Point.build({
     id: uniqid(),
     latitude: req.body.latitude,
