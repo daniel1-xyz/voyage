@@ -1,6 +1,7 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import styled from "styled-components";
 import "leaflet/dist/leaflet.css";
+import { AddPointButton } from "../components/AddPointButton";
 
 const exampleCoords = {
   lat: 32.08,
@@ -34,6 +35,7 @@ export const ToursMap = () => {
             A pretty CSS5 popup. <br /> Easily customizable.
           </Popup>
         </Marker>
+        <AddPointButton />
       </MapContainer>
     </TourMapWrapper>
   );
