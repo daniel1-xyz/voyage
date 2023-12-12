@@ -35,8 +35,8 @@ export const ToursMap = () => {
             A pretty CSS5 popup. <br /> Easily customizable.
           </Popup>
         </Marker>
-        <AddPointButton />
       </MapContainer>
+      <AddPointButton />
     </TourMapWrapper>
   );
 };
