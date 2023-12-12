@@ -2,6 +2,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import styled from "styled-components";
 import "leaflet/dist/leaflet.css";
 import { AddPointButton } from "../components/AddPointButton";
+import { useState } from "react";
 
 const exampleCoords = {
   lat: 32.08,
@@ -18,6 +19,7 @@ const TourMapWrapper = styled.div`
 `;
 
 export const ToursMap = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   return (
     <TourMapWrapper>
       <MapContainer
