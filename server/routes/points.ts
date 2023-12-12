@@ -4,9 +4,7 @@ import uniqid from "uniqid";
 
 const router: Router = Router();
 
-Point.sync().then(() => {
-  console.log("synced DB!");
-});
+Point.sync();
 
 router.get("/points", async (req: Request, res: Response) => {
   res.send(await Point.findAll());
