@@ -24,7 +24,6 @@ router.post("/points/new", async (req: Request, res: Response) => {
     desc: req.body.desc,
     pointType: req.body.pointType,
     price: req.body.price || null,
-    createdAt: new Date(),
   });
 
   await point.save();
