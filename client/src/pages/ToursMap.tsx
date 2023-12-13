@@ -3,7 +3,6 @@ import { styled } from "@mui/material/styles";
 import { AddPointButton } from "../components/AddPointButton";
 import { useState } from "react";
 import { AddPointSidebar } from "../components/AddPointSidebar";
-import { makeStyles } from "@mui/styles";
 import "leaflet/dist/leaflet.css";
 
 const exampleCoords = {
@@ -11,29 +10,25 @@ const exampleCoords = {
   lon: 34.78,
 };
 
-const useStyles = makeStyles({
-  fullSize: {
-    height: "100%",
-    width: "100%",
-  },
-});
-
 const TourMapWrapper = styled("div")({
   height: "100%",
   width: "100%",
   direction: "rtl",
 });
 
+const FullMapContainer = styled(MapContainer)({
+  height: "100%",
+  width: "100%",
+});
+
 export const ToursMap = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const classes = useStyles();
   return (
     <TourMapWrapper>
-      <MapContainer
+      <FullMapContainer
         center={[exampleCoords.lat, exampleCoords.lon]}
         zoom={13}
         scrollWheelZoom={true}
-        className={classes.fullSize}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -51,7 +46,7 @@ export const ToursMap = () => {
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
         />
-      </MapContainer>
+      </FullMapContainer>
     </TourMapWrapper>
   );
 };
