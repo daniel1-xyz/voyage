@@ -51,6 +51,14 @@ const CoordsInputFields = styled("div")({
 const CoordsInputField = styled(TextField)({
   width: "100%",
   marginBlock: "0.5vh",
+  "& legend": {
+    textAlign: "start",
+  },
+  "& label": {
+    transformOrigin: "right !important",
+    left: "inherit !important",
+    right: "1.75rem !important",
+  },
 });
 
 const DividerLine = styled(Divider)({
@@ -119,7 +127,31 @@ const SelectItem = styled(MenuItem)({
 });
 
 const validateForm = () => {
-  return false;
+  return true;
+};
+
+const validateLongitude = (e: SelectChangeEvent) => {
+  const input = e.target.value;
+
+  if (!input.length || parseFloat(input) > 180 || parseFloat(input) < -180) {
+    return false;
+  }
+
+  const regExp = new RegExp("^-?d*.?d+$");
+
+  return regExp.test(input) || false;
+};
+
+const validateLatitude = (e: SelectChangeEvent) => {
+  const input = e.target.value;
+
+  if (!input.length || parseFloat(input) > 90 || parseFloat(input) < -90) {
+    return false;
+  }
+
+  const regExp = new RegExp("^-?d*.?d+$");
+
+  return regExp.test(input) || false;
 };
 
 export const AddPointSidebar = ({
@@ -150,7 +182,7 @@ export const AddPointSidebar = ({
         </SidebarTitle>
       </SidebarHeader>
       <DividerLine />
-      <FullHeightForm>
+      <FullHeightForm onSubmit={(e) => e.preventDefault}>
         <CoordsSpan>
           <CoordsInputFields>
             <CoordsInputField
