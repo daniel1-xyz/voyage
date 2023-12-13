@@ -2,6 +2,7 @@ import { useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 import CloseIcon from "@mui/icons-material/Close";
+import SaveIcon from "@mui/icons-material/Save";
 import Divider from "@mui/material/Divider";
 import TextField from "@mui/material/TextField";
 import {
@@ -65,6 +66,22 @@ const SelectItem = styled(MenuItem)({
   backgroundColor: "#fff !important",
 });
 
+const SaveButton = styled(Button)({
+  // TODO: add gray color if disabled
+  marginBottom: "20vh",
+  marginInline: "auto",
+  fontSize: "1.25rem",
+  marginBlock: "auto",
+  border: "1px solid #666",
+  "&:focus": {
+    outline: "none",
+  },
+  "&:hover": {
+    backgroundColor: "transparent",
+    border: "1px solid #666",
+  },
+});
+
 export const AddPointSidebar = ({
   isSidebarOpen,
   setIsSidebarOpen,
@@ -111,6 +128,11 @@ export const AddPointSidebar = ({
       {pointType === "אטרקציה" && (
         <InputField label="מחיר" autoComplete="off"></InputField>
       )}
+
+      <SaveButton dir="rtl">
+        שמור&nbsp;
+        <SaveIcon />
+      </SaveButton>
     </Drawer>
   );
 };
