@@ -3,6 +3,7 @@ import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 import CloseIcon from "@mui/icons-material/Close";
 import SaveIcon from "@mui/icons-material/Save";
+import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 import Divider from "@mui/material/Divider";
 import TextField from "@mui/material/TextField";
 import {
@@ -15,12 +16,10 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 
-const validateForm = () => {};
-
 const InputField = styled(TextField)({
   marginBlock: "0.5vh",
   marginInline: "2vh",
-  direction: "rtl",
+  direction: "inherit",
   textAlign: "start",
   width: "20rem",
 });
@@ -28,9 +27,30 @@ const InputField = styled(TextField)({
 const SelectField = styled(FormControl)({
   marginBlock: "0.5vh",
   marginInline: "2vh",
-  direction: "rtl",
+  direction: "inherit",
   textAlign: "start",
   width: "20rem",
+});
+
+const FullHeightForm = styled(FormControl)({
+  height: "100%",
+});
+
+const CoordsSpan = styled("span")({
+  marginInline: "2vh",
+  display: "flex",
+  alignItems: "center",
+  direction: "inherit",
+});
+
+const CoordsInputFields = styled("div")({
+  width: "16rem",
+  height: "100%",
+});
+
+const CoordsInputField = styled(TextField)({
+  width: "100%",
+  marginBlock: "0.5vh",
 });
 
 const DividerLine = styled(Divider)({
@@ -51,9 +71,40 @@ const CloseButton = styled(Button)({
   },
 });
 
+const LocationButton = styled(Button)({
+  borderRadius: "100%",
+  height: "4rem",
+  width: "4rem",
+  color: "#888",
+  "&:focus": {
+    border: "none",
+    outline: "none",
+  },
+  "&:hover": {
+    backgroundColor: "transparent",
+  },
+});
+
+const SaveButton = styled(Button)({
+  // TODO: add gray color if disabled
+  fontSize: "1.25rem",
+  border: "1px solid",
+  position: "absolute",
+  bottom: "10%",
+  left: "50%",
+  direction: "inherit",
+  transform: "translate(-50%, -50%)",
+  "&:focus": {
+    outline: "none",
+  },
+  "&:hover": {
+    backgroundColor: "transparent",
+  },
+});
+
 const SidebarHeader = styled("div")({
   textAlign: "center",
-  direction: "rtl",
+  direction: "inherit",
 });
 
 const SidebarTitle = styled(Typography)({
@@ -64,23 +115,12 @@ const SidebarTitle = styled(Typography)({
 
 const SelectItem = styled(MenuItem)({
   backgroundColor: "#fff !important",
+  direction: "rtl",
 });
 
-const SaveButton = styled(Button)({
-  // TODO: add gray color if disabled
-  fontSize: "1.25rem",
-  border: "1px solid",
-  position: "absolute",
-  bottom: "10%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  "&:focus": {
-    outline: "none",
-  },
-  "&:hover": {
-    backgroundColor: "transparent",
-  },
-});
+const validateForm = () => {
+  return false;
+};
 
 export const AddPointSidebar = ({
   isSidebarOpen,
@@ -100,7 +140,7 @@ export const AddPointSidebar = ({
   };
 
   return (
-    <Drawer open={isSidebarOpen} anchor="right">
+    <Drawer open={isSidebarOpen} anchor="right" dir="rtl">
       <SidebarHeader>
         <CloseButton onClick={() => closeSidebar()} title="סגור הוספת נקודה">
           <CloseIcon />
@@ -110,38 +150,51 @@ export const AddPointSidebar = ({
         </SidebarTitle>
       </SidebarHeader>
       <DividerLine />
-      <InputField
-        id="longitude"
-        label="מיקום X"
-        autoComplete="off"
-      ></InputField>
-      <InputField id="latitude" label="מיקום Y" autoComplete="off"></InputField>
-      <InputField
-        id="description"
-        label="תיאור הנקודה"
-        autoComplete="off"
-      ></InputField>
-      <SelectField fullWidth>
-        <InputLabel id="point-type-label">סוג הנקודה</InputLabel>
-        <Select
-          labelId="point-type-label"
-          id="point-type"
-          value={pointType}
-          onChange={changePointType}
-        >
-          <SelectItem value="מסלול טיול">מסלול טיול</SelectItem>
-          <SelectItem value="אטרקציה">אטרקציה</SelectItem>
-          <SelectItem value="תצפית נוף">תצפית נוף</SelectItem>
-        </Select>
-      </SelectField>
-      {pointType === "אטרקציה" && (
-        <InputField id="price" label="מחיר" autoComplete="off"></InputField>
-      )}
+      <FullHeightForm>
+        <CoordsSpan>
+          <CoordsInputFields>
+            <CoordsInputField
+              id="longitude"
+              label="מיקום X"
+              autoComplete="off"
+            ></CoordsInputField>
+            <CoordsInputField
+              id="latitude"
+              label="מיקום Y"
+              autoComplete="off"
+            ></CoordsInputField>
+          </CoordsInputFields>
+          <LocationButton>
+            <AddLocationAltIcon />
+          </LocationButton>
+        </CoordsSpan>
+        <InputField
+          id="description"
+          label="תיאור הנקודה"
+          autoComplete="off"
+        ></InputField>
+        <SelectField fullWidth>
+          <InputLabel id="point-type-label">סוג הנקודה</InputLabel>
+          <Select
+            labelId="point-type-label"
+            id="point-type"
+            value={pointType}
+            onChange={changePointType}
+          >
+            <SelectItem value="מסלול טיול">מסלול טיול</SelectItem>
+            <SelectItem value="אטרקציה">אטרקציה</SelectItem>
+            <SelectItem value="תצפית נוף">תצפית נוף</SelectItem>
+          </Select>
+        </SelectField>
+        {pointType === "אטרקציה" && (
+          <InputField id="price" label="מחיר" autoComplete="off"></InputField>
+        )}
 
-      <SaveButton dir="rtl">
-        שמור&nbsp;
-        <SaveIcon />
-      </SaveButton>
+        <SaveButton type="submit" disabled={validateForm()}>
+          שמור&nbsp;
+          <SaveIcon />
+        </SaveButton>
+      </FullHeightForm>
     </Drawer>
   );
 };
