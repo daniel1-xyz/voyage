@@ -20,7 +20,7 @@ const validateForm = () => {};
 const InputField = styled(TextField)({
   marginBlock: "0.5vh",
   marginInline: "2vh",
-  direction: "inherit",
+  direction: "rtl",
   textAlign: "start",
   width: "20rem",
 });
@@ -28,7 +28,7 @@ const InputField = styled(TextField)({
 const SelectField = styled(FormControl)({
   marginBlock: "0.5vh",
   marginInline: "2vh",
-  direction: "inherit",
+  direction: "rtl",
   textAlign: "start",
   width: "20rem",
 });
@@ -68,17 +68,17 @@ const SelectItem = styled(MenuItem)({
 
 const SaveButton = styled(Button)({
   // TODO: add gray color if disabled
-  marginBottom: "20vh",
-  marginInline: "auto",
   fontSize: "1.25rem",
-  marginBlock: "auto",
-  border: "1px solid #666",
+  border: "1px solid",
+  position: "absolute",
+  bottom: "10%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
   "&:focus": {
     outline: "none",
   },
   "&:hover": {
     backgroundColor: "transparent",
-    border: "1px solid #666",
   },
 });
 
@@ -110,13 +110,22 @@ export const AddPointSidebar = ({
         </SidebarTitle>
       </SidebarHeader>
       <DividerLine />
-      <InputField label="מיקום X" autoComplete="off"></InputField>
-      <InputField label="מיקום Y" autoComplete="off"></InputField>
-      <InputField label="תיאור הנקודה" autoComplete="off"></InputField>
+      <InputField
+        id="longitude"
+        label="מיקום X"
+        autoComplete="off"
+      ></InputField>
+      <InputField id="latitude" label="מיקום Y" autoComplete="off"></InputField>
+      <InputField
+        id="description"
+        label="תיאור הנקודה"
+        autoComplete="off"
+      ></InputField>
       <SelectField fullWidth>
-        <InputLabel id="point-type">סוג הנקודה</InputLabel>
+        <InputLabel id="point-type-label">סוג הנקודה</InputLabel>
         <Select
-          labelId="point-type"
+          labelId="point-type-label"
+          id="point-type"
           value={pointType}
           onChange={changePointType}
         >
@@ -126,7 +135,7 @@ export const AddPointSidebar = ({
         </Select>
       </SelectField>
       {pointType === "אטרקציה" && (
-        <InputField label="מחיר" autoComplete="off"></InputField>
+        <InputField id="price" label="מחיר" autoComplete="off"></InputField>
       )}
 
       <SaveButton dir="rtl">
