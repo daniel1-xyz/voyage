@@ -3,6 +3,7 @@ import styled from "styled-components";
 import "leaflet/dist/leaflet.css";
 import { AddPointButton } from "../components/AddPointButton";
 import { useState } from "react";
+import { AddPointSidebar } from "../components/AddPointSidebar";
 
 const exampleCoords = {
   lat: 32.08,
@@ -37,8 +38,14 @@ export const ToursMap = () => {
             A pretty CSS5 popup. <br /> Easily customizable.
           </Popup>
         </Marker>
+        {!isSidebarOpen && (
+          <AddPointButton setIsSidebarOpen={setIsSidebarOpen} />
+        )}
+        <AddPointSidebar
+          isSidebarOpen={isSidebarOpen}
+          setIsSidebarOpen={setIsSidebarOpen}
+        />
       </MapContainer>
-      <AddPointButton />
     </TourMapWrapper>
   );
 };

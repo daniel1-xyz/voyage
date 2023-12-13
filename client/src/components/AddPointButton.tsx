@@ -1,21 +1,5 @@
 import { Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { makeStyles } from "@mui/styles";
-
-const useStyles = makeStyles({
-  root: {},
-  hoverBackground: {
-    "&:active": {
-      backgroundColor: "#ddd",
-    },
-  },
-  noOutline: {
-    "&:focus": {
-      border: "none",
-      outline: "none",
-    },
-  },
-});
 
 const NewPointButton = styled(Button)({
   position: "absolute",
@@ -29,7 +13,7 @@ const NewPointButton = styled(Button)({
   backgroundColor: "#fff",
   color: "#000",
   "&:hover": {
-    backgroundColor: "#ddd",
+    backgroundColor: "#eee",
   },
   "&:focus": {
     border: "none",
@@ -37,10 +21,16 @@ const NewPointButton = styled(Button)({
   },
 });
 
-export const AddPointButton = () => {
-  const classes = useStyles();
+export const AddPointButton = ({
+  setIsSidebarOpen,
+}: {
+  setIsSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const openSidebar = () => {
+    setIsSidebarOpen(true);
+  };
   return (
-    <NewPointButton variant="text" className={classes.hoverBackground}>
+    <NewPointButton variant="text" onClick={() => openSidebar()}>
       +
     </NewPointButton>
   );
