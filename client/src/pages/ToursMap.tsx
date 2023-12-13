@@ -1,33 +1,37 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import styled from "styled-components";
-import "leaflet/dist/leaflet.css";
+import { styled } from "@mui/material/styles";
 import { AddPointButton } from "../components/AddPointButton";
 import { useState } from "react";
 import { AddPointSidebar } from "../components/AddPointSidebar";
+import { makeStyles } from "@mui/styles";
+import "leaflet/dist/leaflet.css";
 
 const exampleCoords = {
   lat: 32.08,
   lon: 34.78,
 };
 
-const TourMapWrapper = styled.div`
-  .full-height {
-    height: 100%;
-  }
+const useStyles = makeStyles({
+  fullHeight: {
+    height: "100%",
+  },
+});
 
-  height: 100%;
-  width: 100%;
-`;
+const TourMapWrapper = styled("div")({
+  height: "100%",
+  width: "100%",
+});
 
 export const ToursMap = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const classes = useStyles();
   return (
     <TourMapWrapper>
       <MapContainer
         center={[exampleCoords.lat, exampleCoords.lon]}
         zoom={13}
         scrollWheelZoom={true}
-        className="full-height"
+        className={classes.fullHeight}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

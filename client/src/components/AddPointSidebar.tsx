@@ -2,8 +2,8 @@ import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 import CloseIcon from "@mui/icons-material/Close";
 import Divider from "@mui/material/Divider";
+import TextField from "@mui/material/TextField";
 import { styled } from "@mui/material/styles";
-import { Input } from "@mui/material";
 
 export const AddPointSidebar = ({
   isSidebarOpen,
@@ -22,6 +22,7 @@ export const AddPointSidebar = ({
         <CloseIcon />
       </Button>
       <Divider />
+      <TextField id="outlined-basic" label="מיקום X"></TextField>
     </Drawer>
   );
 };
