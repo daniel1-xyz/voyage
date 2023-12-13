@@ -12,14 +12,16 @@ const exampleCoords = {
 };
 
 const useStyles = makeStyles({
-  fullHeight: {
+  fullSize: {
     height: "100%",
+    width: "100%",
   },
 });
 
 const TourMapWrapper = styled("div")({
   height: "100%",
   width: "100%",
+  direction: "rtl",
 });
 
 export const ToursMap = () => {
@@ -31,7 +33,7 @@ export const ToursMap = () => {
         center={[exampleCoords.lat, exampleCoords.lon]}
         zoom={13}
         scrollWheelZoom={true}
-        className={classes.fullHeight}
+        className={classes.fullSize}
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
