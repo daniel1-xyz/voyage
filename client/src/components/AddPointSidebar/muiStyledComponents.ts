@@ -97,7 +97,6 @@ export const LocationButton = styled(Button)({
 });
 
 export const SaveButton = styled(Button)({
-  // TODO: add gray color if disabled
   fontSize: "1.25rem",
   border: "1px solid",
   position: "absolute",

@@ -3,7 +3,7 @@ import Drawer from "@mui/material/Drawer";
 import CloseIcon from "@mui/icons-material/Close";
 import SaveIcon from "@mui/icons-material/Save";
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
-import { Select, SelectChangeEvent } from "@mui/material";
+import { Select, SelectChangeEvent, InputLabel } from "@mui/material";
 import {
   SidebarHeader,
   CloseButton,
@@ -100,11 +100,19 @@ export const AddPointSidebar = ({
           autoComplete="off"
         ></InputField>
         <SelectField fullWidth>
+          <InputLabel id="point-type-label">סוג הנקודה</InputLabel>
           <Select
-            label="point-type-label"
+            label="סוג הנקודה"
+            labelId="point-type-label"
             id="point-type"
             value={pointType}
             onChange={changePointType}
+            sx={{
+              "& .MuiSvgIcon-root": {
+                right: "unset",
+                left: "7px",
+              },
+            }}
           >
             <SelectItem value="מסלול טיול">מסלול טיול</SelectItem>
             <SelectItem value="אטרקציה">אטרקציה</SelectItem>
