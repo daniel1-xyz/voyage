@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Drawer from "@mui/material/Drawer";
 import CloseIcon from "@mui/icons-material/Close";
 import SaveIcon from "@mui/icons-material/Save";
@@ -19,6 +19,7 @@ import {
   SelectItem,
   SaveButton,
 } from "./muiStyledComponents";
+import { useMap, useMapEvents } from "react-leaflet";
 
 const validateForm = () => {
   return true;
@@ -56,6 +57,7 @@ export const AddPointSidebar = ({
   setIsSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [pointType, setPointType] = useState("");
+  const [coords, setCoords] = useState(["", ""]);
 
   const closeSidebar = () => {
     setIsSidebarOpen(false);
@@ -63,6 +65,28 @@ export const AddPointSidebar = ({
 
   const changePointType = (e: SelectChangeEvent) => {
     setPointType(e.target.value as string);
+  };
+
+  const changeLatCoords = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setCoords([coords[0], e.target.value]);
+  };
+
+  const changeLonCoords = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setCoords([e.target.value, coords[1]]);
+  };
+
+  const choosePointOnMap = () => {
+    /*console.log("hi");
+    useMapEvents({
+      click(e) {
+        alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
+        setCoords([String(e.latlng.lng), String(e.latlng.lat)]);
+      },
+    });*/
   };
 
   return (
@@ -83,14 +107,21 @@ export const AddPointSidebar = ({
               id="longitude"
               label="מיקום X"
               autoComplete="off"
+              value={coords[0]}
+              onChange={(e) => changeLonCoords(e)}
             ></CoordsInputField>
             <CoordsInputField
               id="latitude"
               label="מיקום Y"
               autoComplete="off"
+              value={coords[1]}
+              onChange={(e) => changeLatCoords(e)}
             ></CoordsInputField>
           </CoordsInputFields>
-          <LocationButton>
+          <LocationButton
+            onClick={() => choosePointOnMap()}
+            title="בחר נקודה על המפה"
+          >
             <AddLocationAltIcon />
           </LocationButton>
         </CoordsSpan>
