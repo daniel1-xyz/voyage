@@ -18,6 +18,7 @@ import {
   SelectField,
   SelectItem,
   SaveButton,
+  FullHeightFormControl,
 } from "./muiStyledComponents";
 import { useMapEvents } from "react-leaflet";
 
@@ -47,7 +48,7 @@ const validateDescription = (desc: string) => {
 };
 
 const validatePrice = (price: string) => {
-  return parseFloat(price) > 0 && parseFloat(price) % 1 === 0;
+  return parseFloat(price) >= 0 && parseFloat(price) % 1 === 0;
 };
 
 export const AddPointSidebar = ({
@@ -70,6 +71,11 @@ export const AddPointSidebar = ({
     setIsMapPinToggled(false);
     setDescription("");
     setPrice("");
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    closeSidebar();
   };
 
   const validateForm = () => {
@@ -134,78 +140,80 @@ export const AddPointSidebar = ({
         </SidebarTitle>
       </SidebarHeader>
       <DividerLine />
-      <FullHeightForm onSubmit={(e) => e.preventDefault}>
-        <CoordsSpan>
-          <CoordsInputFields>
-            <CoordsInputField
-              id="longitude"
-              type="number"
-              label="מיקום X"
-              autoComplete="off"
-              value={coords[0]}
-              onChange={(e) => changeLonCoords(e)}
-            ></CoordsInputField>
-            <CoordsInputField
-              id="latitude"
-              type="number"
-              label="מיקום Y"
-              autoComplete="off"
-              value={coords[1]}
-              onChange={(e) => changeLatCoords(e)}
-            ></CoordsInputField>
-          </CoordsInputFields>
-          <LocationButton
-            onClick={() => setIsMapPinToggled(true)}
-            title="בחר נקודה על המפה"
-          >
-            <AddLocationAltIcon />
-          </LocationButton>
-        </CoordsSpan>
-        <InputField
-          id="description"
-          label="תיאור הנקודה"
-          autoComplete="off"
-          value={description}
-          onChange={(e) => changeDescription(e)}
-          multiline
-        ></InputField>
-        <SelectField fullWidth>
-          <InputLabel id="point-type-label">סוג הנקודה</InputLabel>
-          <Select
-            label="סוג הנקודה"
-            labelId="point-type-label"
-            id="point-type"
-            value={pointType}
-            onChange={changePointType}
-            sx={{
-              "& .MuiSvgIcon-root": {
-                right: "unset",
-                left: "7px",
-              },
-            }}
-          >
-            {pointTypes.map((type, index) => (
-              <SelectItem value={type} key={index}>
-                {type}
-              </SelectItem>
-            ))}
-          </Select>
-        </SelectField>
-        {pointType === "אטרקציה" && (
+      <FullHeightForm onSubmit={(e) => handleSubmit(e)}>
+        <FullHeightFormControl>
+          <CoordsSpan>
+            <CoordsInputFields>
+              <CoordsInputField
+                id="longitude"
+                type="number"
+                label="מיקום X"
+                autoComplete="off"
+                value={coords[0]}
+                onChange={(e) => changeLonCoords(e)}
+              ></CoordsInputField>
+              <CoordsInputField
+                id="latitude"
+                type="number"
+                label="מיקום Y"
+                autoComplete="off"
+                value={coords[1]}
+                onChange={(e) => changeLatCoords(e)}
+              ></CoordsInputField>
+            </CoordsInputFields>
+            <LocationButton
+              onClick={() => setIsMapPinToggled(true)}
+              title="בחר נקודה על המפה"
+            >
+              <AddLocationAltIcon />
+            </LocationButton>
+          </CoordsSpan>
           <InputField
-            type="number"
-            id="price"
-            label="מחיר"
+            id="description"
+            label="תיאור הנקודה"
             autoComplete="off"
-            value={price}
-            onChange={(e) => changePrice(e)}
+            value={description}
+            onChange={(e) => changeDescription(e)}
+            multiline
           ></InputField>
-        )}
+          <SelectField fullWidth>
+            <InputLabel id="point-type-label">סוג הנקודה</InputLabel>
+            <Select
+              label="סוג הנקודה"
+              labelId="point-type-label"
+              id="point-type"
+              value={pointType}
+              onChange={changePointType}
+              sx={{
+                "& .MuiSvgIcon-root": {
+                  right: "unset",
+                  left: "7px",
+                },
+              }}
+            >
+              {pointTypes.map((type, index) => (
+                <SelectItem value={type} key={index}>
+                  {type}
+                </SelectItem>
+              ))}
+            </Select>
+          </SelectField>
+          {pointType === "אטרקציה" && (
+            <InputField
+              type="number"
+              id="price"
+              label="מחיר"
+              autoComplete="off"
+              value={price}
+              onChange={(e) => changePrice(e)}
+            ></InputField>
+          )}
 
-        <SaveButton type="submit" disabled={!validateForm()}>
-          שמור&nbsp;
-          <SaveIcon />
-        </SaveButton>
+          <SaveButton type="submit" disabled={!validateForm()}>
+            שמור&nbsp;
+            <SaveIcon />
+          </SaveButton>
+        </FullHeightFormControl>
       </FullHeightForm>
     </Drawer>
   );

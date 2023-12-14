@@ -42,7 +42,11 @@ export const SelectField = styled(FormControl)({
   },
 });
 
-export const FullHeightForm = styled(FormControl)({
+export const FullHeightForm = styled("form")({
+  height: "100%",
+});
+
+export const FullHeightFormControl = styled(FormControl)({
   height: "100%",
 });
 
