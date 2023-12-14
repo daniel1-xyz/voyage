@@ -66,7 +66,7 @@ export const AddPointSidebar = ({
   };
 
   return (
-    <Drawer open={isSidebarOpen} anchor="right" dir="rtl">
+    <Drawer open={isSidebarOpen} anchor="right" dir="rtl" variant="persistent">
       <SidebarHeader>
         <CloseButton onClick={() => closeSidebar()} title="סגור הוספת נקודה">
           <CloseIcon />
