@@ -25,28 +25,18 @@ const validateForm = () => {
   return true;
 };
 
-const validateLongitude = (e: SelectChangeEvent) => {
-  const input = e.target.value;
-
-  if (!input.length || parseFloat(input) > 180 || parseFloat(input) < -180) {
-    return false;
-  }
-
-  const regExp = new RegExp("^-?d*.?d+$");
-
-  return regExp.test(input) || false;
+const validateLongitude = (longitude: string) => {
+  return (
+    (longitude.length && parseFloat(longitude) <= 180) ||
+    parseFloat(longitude) >= -180
+  );
 };
 
-const validateLatitude = (e: SelectChangeEvent) => {
-  const input = e.target.value;
-
-  if (!input.length || parseFloat(input) > 90 || parseFloat(input) < -90) {
-    return false;
-  }
-
-  const regExp = new RegExp("^-?d*.?d+$");
-
-  return regExp.test(input) || false;
+const validateLatitude = (latitude: string) => {
+  return (
+    (latitude.length && parseFloat(latitude) <= 90) ||
+    parseFloat(latitude) >= -90
+  );
 };
 
 export const AddPointSidebar = ({
@@ -84,8 +74,8 @@ export const AddPointSidebar = ({
     click(e) {
       if (isMapPinToggled) {
         setCoords([
-          String(((((e.latlng.lng % 360) + 540) % 360) - 180).toFixed(6)),
-          String(e.latlng.lat.toFixed(6)),
+          ((((e.latlng.lng % 360) + 540) % 360) - 180).toFixed(6),
+          e.latlng.lat.toFixed(6),
         ]);
         setIsMapPinToggled(false);
       }
@@ -108,6 +98,7 @@ export const AddPointSidebar = ({
           <CoordsInputFields>
             <CoordsInputField
               id="longitude"
+              type="number"
               label="מיקום X"
               autoComplete="off"
               value={coords[0]}
@@ -115,6 +106,7 @@ export const AddPointSidebar = ({
             ></CoordsInputField>
             <CoordsInputField
               id="latitude"
+              type="number"
               label="מיקום Y"
               autoComplete="off"
               value={coords[1]}
@@ -154,7 +146,12 @@ export const AddPointSidebar = ({
           </Select>
         </SelectField>
         {pointType === "אטרקציה" && (
-          <InputField id="price" label="מחיר" autoComplete="off"></InputField>
+          <InputField
+            type="number"
+            id="price"
+            label="מחיר"
+            autoComplete="off"
+          ></InputField>
         )}
 
         <SaveButton type="submit" disabled={validateForm()}>

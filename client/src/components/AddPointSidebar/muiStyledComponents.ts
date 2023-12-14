@@ -17,6 +17,13 @@ export const InputField = styled(TextField)({
     left: "inherit !important",
     right: "1.75rem !important",
   },
+  "input::-webkit-outer-spin-button, input::-webkit-inner-spin-button": {
+    WebkitAppearance: "none",
+    margin: 0,
+  },
+  "input[type=number]": {
+    MozAppearance: "textfield",
+  },
 });
 
 export const SelectField = styled(FormControl)({
@@ -61,6 +68,13 @@ export const CoordsInputField = styled(TextField)({
     transformOrigin: "right !important",
     left: "inherit !important",
     right: "1.75rem !important",
+  },
+  "input::-webkit-outer-spin-button, input::-webkit-inner-spin-button": {
+    WebkitAppearance: "none",
+    margin: 0,
+  },
+  "input[type=number]": {
+    MozAppearance: "textfield",
   },
 });
 
