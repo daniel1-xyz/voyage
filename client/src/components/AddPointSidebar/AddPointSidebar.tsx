@@ -27,15 +27,15 @@ const validateForm = () => {
 
 const validateLongitude = (longitude: string) => {
   return (
-    (longitude.length && parseFloat(longitude) <= 180) ||
+    longitude.length &&
+    parseFloat(longitude) <= 180 &&
     parseFloat(longitude) >= -180
   );
 };
 
 const validateLatitude = (latitude: string) => {
   return (
-    (latitude.length && parseFloat(latitude) <= 90) ||
-    parseFloat(latitude) >= -90
+    latitude.length && parseFloat(latitude) <= 90 && parseFloat(latitude) >= -90
   );
 };
 
@@ -103,6 +103,7 @@ export const AddPointSidebar = ({
               autoComplete="off"
               value={coords[0]}
               onChange={(e) => changeLonCoords(e)}
+              error={!validateLongitude(coords[0])}
             ></CoordsInputField>
             <CoordsInputField
               id="latitude"
@@ -111,6 +112,7 @@ export const AddPointSidebar = ({
               autoComplete="off"
               value={coords[1]}
               onChange={(e) => changeLatCoords(e)}
+              error={!validateLatitude(coords[1])}
             ></CoordsInputField>
           </CoordsInputFields>
           <LocationButton
