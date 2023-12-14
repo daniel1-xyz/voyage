@@ -84,7 +84,7 @@ export const AddPointSidebar = ({
     click(e) {
       if (isMapPinToggled) {
         setCoords([
-          String(e.latlng.lng.toFixed(6)),
+          String(((((e.latlng.lng % 360) + 540) % 360) - 180).toFixed(6)),
           String(e.latlng.lat.toFixed(6)),
         ]);
         setIsMapPinToggled(false);
