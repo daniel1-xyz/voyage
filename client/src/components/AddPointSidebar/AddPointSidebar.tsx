@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import CloseIcon from "@mui/icons-material/Close";
 import SaveIcon from "@mui/icons-material/Save";
@@ -19,7 +19,7 @@ import {
   SelectItem,
   SaveButton,
 } from "./muiStyledComponents";
-import { useMap, useMapEvents } from "react-leaflet";
+import { useMapEvents } from "react-leaflet";
 
 const validateForm = () => {
   return true;
@@ -58,6 +58,7 @@ export const AddPointSidebar = ({
 }) => {
   const [pointType, setPointType] = useState("");
   const [coords, setCoords] = useState(["", ""]);
+  const [isMapPinToggled, setIsMapPinToggled] = useState(false);
 
   const closeSidebar = () => {
     setIsSidebarOpen(false);
@@ -79,15 +80,17 @@ export const AddPointSidebar = ({
     setCoords([e.target.value, coords[1]]);
   };
 
-  const choosePointOnMap = () => {
-    /*console.log("hi");
-    useMapEvents({
-      click(e) {
-        alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
-        setCoords([String(e.latlng.lng), String(e.latlng.lat)]);
-      },
-    });*/
-  };
+  useMapEvents({
+    click(e) {
+      if (isMapPinToggled) {
+        setCoords([
+          String(e.latlng.lng.toFixed(6)),
+          String(e.latlng.lat.toFixed(6)),
+        ]);
+        setIsMapPinToggled(false);
+      }
+    },
+  });
 
   return (
     <Drawer open={isSidebarOpen} anchor="right" dir="rtl" variant="persistent">
@@ -119,7 +122,7 @@ export const AddPointSidebar = ({
             ></CoordsInputField>
           </CoordsInputFields>
           <LocationButton
-            onClick={() => choosePointOnMap()}
+            onClick={() => setIsMapPinToggled(true)}
             title="בחר נקודה על המפה"
           >
             <AddLocationAltIcon />
