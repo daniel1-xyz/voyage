@@ -2,7 +2,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { styled } from "@mui/material/styles";
 import { AddPointButton } from "../components/AddPointButton";
 import { useState } from "react";
-import { AddPointSidebar } from "../components/AddPointSidebar";
+import { AddPointSidebar } from "../components/AddPointSidebar/AddPointSidebar";
 import "leaflet/dist/leaflet.css";
 
 const exampleCoords = {
