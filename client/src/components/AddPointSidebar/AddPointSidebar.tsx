@@ -21,9 +21,8 @@ import {
 } from "./muiStyledComponents";
 import { useMapEvents } from "react-leaflet";
 
-const validateForm = () => {
-  return true;
-};
+const MAX_CHARACTERS_DESC = 256;
+const pointTypes = ["מסלול טיול", "אטרקציה", "תצפית נוף"];
 
 const validateLongitude = (longitude: string) => {
   return (
@@ -39,6 +38,18 @@ const validateLatitude = (latitude: string) => {
   );
 };
 
+const validatePointType = (pointType: string) => {
+  return pointTypes.find((type) => type === pointType);
+};
+
+const validateDescription = (desc: string) => {
+  return desc.length > 0 && desc.length <= MAX_CHARACTERS_DESC;
+};
+
+const validatePrice = (price: string) => {
+  return parseFloat(price) > 0 && parseFloat(price) % 1 === 0;
+};
+
 export const AddPointSidebar = ({
   isSidebarOpen,
   setIsSidebarOpen,
@@ -49,9 +60,26 @@ export const AddPointSidebar = ({
   const [pointType, setPointType] = useState("");
   const [coords, setCoords] = useState(["", ""]);
   const [isMapPinToggled, setIsMapPinToggled] = useState(false);
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
 
   const closeSidebar = () => {
     setIsSidebarOpen(false);
+    setPointType("");
+    setCoords(["", ""]);
+    setIsMapPinToggled(false);
+    setDescription("");
+    setPrice("");
+  };
+
+  const validateForm = () => {
+    return (
+      validateLongitude(coords[0]) &&
+      validateLatitude(coords[1]) &&
+      validateDescription(description) &&
+      validatePointType(pointType) &&
+      (validatePrice(price) || pointType !== "אטרקציה")
+    );
   };
 
   const changePointType = (e: SelectChangeEvent) => {
@@ -68,6 +96,19 @@ export const AddPointSidebar = ({
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setCoords([e.target.value, coords[1]]);
+  };
+
+  const changeDescription = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const desc = e.target.value;
+    desc.length < MAX_CHARACTERS_DESC && setDescription(desc);
+  };
+
+  const changePrice = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setPrice(e.target.value);
   };
 
   useMapEvents({
@@ -103,7 +144,6 @@ export const AddPointSidebar = ({
               autoComplete="off"
               value={coords[0]}
               onChange={(e) => changeLonCoords(e)}
-              error={!validateLongitude(coords[0])}
             ></CoordsInputField>
             <CoordsInputField
               id="latitude"
@@ -112,7 +152,6 @@ export const AddPointSidebar = ({
               autoComplete="off"
               value={coords[1]}
               onChange={(e) => changeLatCoords(e)}
-              error={!validateLatitude(coords[1])}
             ></CoordsInputField>
           </CoordsInputFields>
           <LocationButton
@@ -126,6 +165,9 @@ export const AddPointSidebar = ({
           id="description"
           label="תיאור הנקודה"
           autoComplete="off"
+          value={description}
+          onChange={(e) => changeDescription(e)}
+          multiline
         ></InputField>
         <SelectField fullWidth>
           <InputLabel id="point-type-label">סוג הנקודה</InputLabel>
@@ -142,9 +184,11 @@ export const AddPointSidebar = ({
               },
             }}
           >
-            <SelectItem value="מסלול טיול">מסלול טיול</SelectItem>
-            <SelectItem value="אטרקציה">אטרקציה</SelectItem>
-            <SelectItem value="תצפית נוף">תצפית נוף</SelectItem>
+            {pointTypes.map((type, index) => (
+              <SelectItem value={type} key={index}>
+                {type}
+              </SelectItem>
+            ))}
           </Select>
         </SelectField>
         {pointType === "אטרקציה" && (
@@ -153,10 +197,12 @@ export const AddPointSidebar = ({
             id="price"
             label="מחיר"
             autoComplete="off"
+            value={price}
+            onChange={(e) => changePrice(e)}
           ></InputField>
         )}
 
-        <SaveButton type="submit" disabled={validateForm()}>
+        <SaveButton type="submit" disabled={!validateForm()}>
           שמור&nbsp;
           <SaveIcon />
         </SaveButton>
