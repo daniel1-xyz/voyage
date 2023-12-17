@@ -6,6 +6,8 @@ const router: Router = Router();
 
 Point.sync();
 
+router.get("/", (req: Request, res: Response) => {});
+
 router.get("/points", async (req: Request, res: Response) => {
   res.send(await Point.findAll());
 });
