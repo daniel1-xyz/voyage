@@ -7,4 +7,5 @@ export const db = new Sequelize({
   password: "Aa123456",
   host: "localhost",
   port: 5432,
+  logging: false,
 });
