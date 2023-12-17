@@ -1,14 +1,11 @@
-const { Client } = require("pg");
+import express from "express";
+import router from "./routes/points";
 
-const client = new Client({
-  user: "postgres",
-  host: "localhost",
-  database: "postgres",
-  password: "Aa123456",
-  port: 5432,
-});
+const app = express();
 
-client.connect(function (err) {
-  if (err) throw err;
-  console.log("Connected!");
-});
+app.use(express.json());
+app.use(router);
+
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT);
