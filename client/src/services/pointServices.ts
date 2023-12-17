@@ -26,7 +26,7 @@ export const createPoint = async (point: Point) => {
     await axios.post("/points/new", {
       latitude: point.latitude,
       longitude: point.longitude,
-      desc: point.desc,
+      description: point.description,
       pointType: point.pointType,
       price: point.price,
     });

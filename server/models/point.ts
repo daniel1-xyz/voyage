@@ -5,7 +5,7 @@ interface PointAttributes {
   id: string;
   latitude: number;
   longitude: number;
-  desc: string;
+  description: string;
   pointType: string;
   price: number;
 }
@@ -14,7 +14,7 @@ export class Point extends Model implements PointAttributes {
   id!: string;
   latitude!: number;
   longitude!: number;
-  desc!: string;
+  description!: string;
   pointType!: string;
   price!: number;
 }
@@ -34,7 +34,7 @@ Point.init(
       type: DataTypes.DECIMAL(9, 6),
       allowNull: false,
     },
-    desc: {
+    description: {
       type: DataTypes.TEXT,
       allowNull: false,
     },

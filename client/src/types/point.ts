@@ -3,7 +3,7 @@ import { PointType } from "./pointTypes";
 export type Point = {
   latitude: number;
   longitude: number;
-  desc: string;
+  description: string;
   pointType: PointType | "";
   price?: number;
 };

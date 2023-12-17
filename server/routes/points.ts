@@ -22,7 +22,7 @@ router.post("/points/new", async (req: Request, res: Response) => {
     id: uniqid(),
     latitude: req.body.latitude,
     longitude: req.body.longitude,
-    desc: req.body.desc,
+    description: req.body.description,
     pointType: req.body.pointType,
     price: req.body.price || null,
   });

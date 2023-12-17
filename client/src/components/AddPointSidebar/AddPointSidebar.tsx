@@ -81,7 +81,7 @@ export const AddPointSidebar = ({
     const point: Point = {
       longitude: parseFloat(coords[0]),
       latitude: parseFloat(coords[1]),
-      desc: description,
+      description: description,
       pointType: pointType,
       price: parseInt(price),
     };
