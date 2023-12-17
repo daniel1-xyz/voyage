@@ -1,9 +1,13 @@
 import axios from "axios";
 import { Point } from "../types/point";
 
-export const getPoint = async (pointId: string) => {
+const server = axios.create({
+  baseURL: "http://localhost:5000",
+});
+
+export const getPoint = async (pointId: string): Promise<Point | undefined> => {
   try {
-    await axios.get(`/point/${pointId}`, {
+    return await server.get(`/point/${pointId}`, {
       params: {
         id: pointId,
       },
@@ -13,9 +17,9 @@ export const getPoint = async (pointId: string) => {
   }
 };
 
-export const getAllPoints = async () => {
+export const getAllPoints = async (): Promise<Array<Point> | undefined> => {
   try {
-    await axios.get("/points");
+    return await server.get("/points");
   } catch (error) {
     console.error(error);
   }
@@ -23,7 +27,7 @@ export const getAllPoints = async () => {
 
 export const createPoint = async (point: Point) => {
   try {
-    await axios.post("/points/new", {
+    await server.post("/points/new", {
       latitude: point.latitude,
       longitude: point.longitude,
       description: point.description,

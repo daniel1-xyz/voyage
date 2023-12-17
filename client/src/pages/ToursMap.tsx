@@ -1,9 +1,11 @@
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
 import { styled } from "@mui/material/styles";
 import { AddPointButton } from "../components/AddPointButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AddPointSidebar } from "../components/AddPointSidebar/AddPointSidebar";
 import "leaflet/dist/leaflet.css";
+import { getAllPoints } from "../services/pointServices";
+import { Point } from "../types/point";
 
 const exampleCoords = {
   lat: 32.08,
@@ -23,6 +25,19 @@ const FullMapContainer = styled(MapContainer)({
 
 export const ToursMap = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [pointsToDisplay, setPointsToDisplay] = useState<
+    Array<Point> | undefined
+  >([]);
+
+  useEffect(() => {
+    const AwaitPointsToDisplay = async () => {
+      const points = await getAllPoints();
+      await setPointsToDisplay(points);
+    };
+
+    AwaitPointsToDisplay();
+  });
+
   return (
     <TourMapWrapper>
       <FullMapContainer
@@ -39,6 +54,15 @@ export const ToursMap = () => {
             A pretty CSS5 popup. <br /> Easily customizable.
           </Popup>
         </Marker>
+        {/* {pointsToDisplay &&
+          pointsToDisplay.map((point, index) => (
+            <Circle
+              radius={300}
+              center={[point.longitude, point.latitude]}
+              fillColor="green"
+              key={index}
+            ></Circle>
+          ))} */}
         {!isSidebarOpen && (
           <AddPointButton setIsSidebarOpen={setIsSidebarOpen} />
         )}
