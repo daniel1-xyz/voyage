@@ -11,7 +11,8 @@ router.get("/points", async (req: Request, res: Response) => {
 });
 
 router.get("/point/:id", async (req: Request, res: Response) => {
-  res.send(await Point.findByPk(req.params.id));
+  const point = await Point.findByPk(req.params.id);
+  point ? res.send(point) : res.status(404).send("point not found");
 });
 
 router.post("/points/new", async (req: Request, res: Response) => {
