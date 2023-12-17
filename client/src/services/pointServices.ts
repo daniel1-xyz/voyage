@@ -1,10 +1,11 @@
 import axios from "axios";
+import { Point } from "../types/point";
 
-export const getUser = async (userId: string) => {
+export const getPoint = async (pointId: string) => {
   try {
-    await axios.get(`/point/${userId}`, {
+    await axios.get(`/point/${pointId}`, {
       params: {
-        id: userId,
+        id: pointId,
       },
     });
   } catch (error) {
@@ -12,7 +13,7 @@ export const getUser = async (userId: string) => {
   }
 };
 
-export const getAllUsers = async () => {
+export const getAllPoints = async () => {
   try {
     await axios.get("/points");
   } catch (error) {
@@ -20,4 +21,16 @@ export const getAllUsers = async () => {
   }
 };
 
-export const createUser = async () => {};
+export const createPoint = async (point: Point) => {
+  try {
+    await axios.post("/points/new", {
+      latitude: point.latitude,
+      longitude: point.longitude,
+      desc: point.desc,
+      pointType: point.pointType,
+      price: point.price,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+};
