@@ -84,7 +84,7 @@ export const AddPointSidebar = ({
       validateLatitude(coords[1]) &&
       validateDescription(description) &&
       validatePointType(pointType) &&
-      (validatePrice(price) || pointType !== "אטרקציה")
+      (pointType !== "אטרקציה" || validatePrice(price))
     );
   };
 
