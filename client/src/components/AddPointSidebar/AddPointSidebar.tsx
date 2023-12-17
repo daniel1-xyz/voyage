@@ -21,9 +21,9 @@ import {
   FullHeightFormControl,
 } from "./muiStyledComponents";
 import { useMapEvents } from "react-leaflet";
+import { pointTypes } from "../../types/pointTypes";
 
 const MAX_CHARACTERS_DESC = 256;
-const pointTypes = ["מסלול טיול", "אטרקציה", "תצפית נוף"];
 
 const validateLongitude = (longitude: string) => {
   return (
@@ -130,7 +130,7 @@ export const AddPointSidebar = ({
   });
 
   return (
-    <Drawer open={isSidebarOpen} anchor="right" dir="rtl" variant="persistent">
+    <Drawer open={isSidebarOpen} anchor="right" variant="persistent">
       <SidebarHeader>
         <CloseButton onClick={() => closeSidebar()} title="סגור הוספת נקודה">
           <CloseIcon />
