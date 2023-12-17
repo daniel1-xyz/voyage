@@ -10,7 +10,7 @@ interface PointAttributes {
   price: number;
 }
 
-class Point extends Model implements PointAttributes {
+export class Point extends Model implements PointAttributes {
   id!: string;
   latitude!: number;
   longitude!: number;
@@ -53,5 +53,3 @@ Point.init(
     schema: "public",
   }
 );
-
-export { Point };
