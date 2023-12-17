@@ -4,6 +4,10 @@ import CloseIcon from "@mui/icons-material/Close";
 import SaveIcon from "@mui/icons-material/Save";
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 import { Select, SelectChangeEvent, InputLabel } from "@mui/material";
+import { useMapEvents } from "react-leaflet";
+import { PointType, pointTypes } from "../../types/pointTypes";
+import { Point } from "../../types/point";
+import { createPoint } from "../../services/pointServices";
 import {
   SidebarHeader,
   CloseButton,
@@ -20,8 +24,6 @@ import {
   SaveButton,
   FullHeightFormControl,
 } from "./muiStyledComponents";
-import { useMapEvents } from "react-leaflet";
-import { pointTypes } from "../../types/pointTypes";
 
 const MAX_CHARACTERS_DESC = 256;
 
@@ -39,7 +41,7 @@ const validateLatitude = (latitude: string) => {
   );
 };
 
-const validatePointType = (pointType: string) => {
+const validatePointType = (pointType: PointType | "") => {
   return pointTypes.find((type) => type === pointType);
 };
 
@@ -58,7 +60,7 @@ export const AddPointSidebar = ({
   isSidebarOpen: boolean;
   setIsSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const [pointType, setPointType] = useState("");
+  const [pointType, setPointType] = useState<PointType | "">("");
   const [coords, setCoords] = useState(["", ""]);
   const [isMapPinToggled, setIsMapPinToggled] = useState(false);
   const [description, setDescription] = useState("");
@@ -75,6 +77,15 @@ export const AddPointSidebar = ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const point: Point = {
+      longitude: parseFloat(coords[0]),
+      latitude: parseFloat(coords[1]),
+      desc: description,
+      pointType: pointType,
+      price: parseInt(price),
+    };
+    createPoint(point);
     closeSidebar();
   };
 
@@ -89,7 +100,7 @@ export const AddPointSidebar = ({
   };
 
   const changePointType = (e: SelectChangeEvent) => {
-    setPointType(e.target.value as string);
+    setPointType(e.target.value as PointType);
   };
 
   const changeLatCoords = (

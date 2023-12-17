@@ -4,6 +4,6 @@ export type Point = {
   latitude: number;
   longitude: number;
   desc: string;
-  pointType: PointType;
+  pointType: PointType | "";
   price?: number;
 };
