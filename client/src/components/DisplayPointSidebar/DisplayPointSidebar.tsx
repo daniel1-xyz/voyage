@@ -10,12 +10,12 @@ export const DisplayPointSidebar = ({
   pointId,
   isSidebarOpen,
   setIsSidebarOpen,
-  setPointId,
+  setPointIdToDisplay,
 }: {
   pointId: string;
   isSidebarOpen: boolean;
   setIsSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setPointId: React.Dispatch<React.SetStateAction<string>>;
+  setPointIdToDisplay: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const [pointDetails, setPointDetails] = useState<Point | undefined>(
     undefined
@@ -31,7 +31,7 @@ export const DisplayPointSidebar = ({
 
   const closeSidebar = () => {
     setIsSidebarOpen(false);
-    setPointId("");
+    setPointIdToDisplay("");
   };
 
   return (
