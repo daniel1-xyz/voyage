@@ -7,14 +7,16 @@ import {
 
 export const SidebarHeader = ({
   closeSidebar,
+  closeButtonTitle,
   headerTitle,
 }: {
   closeSidebar: () => void;
+  closeButtonTitle: string;
   headerTitle: string;
 }) => {
   return (
     <SidebarHeaderWrapper>
-      <CloseButton onClick={() => closeSidebar()} title="סגור הוספת נקודה">
+      <CloseButton onClick={() => closeSidebar()} title={closeButtonTitle}>
         <CloseIcon />
       </CloseButton>
       <SidebarTitle variant="h5">

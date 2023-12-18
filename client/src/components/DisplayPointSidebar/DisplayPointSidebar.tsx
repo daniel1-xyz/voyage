@@ -36,7 +36,11 @@ export const DisplayPointSidebar = ({
 
   return (
     <Drawer open={isSidebarOpen} anchor="right" variant="persistent">
-      <SidebarHeader closeSidebar={closeSidebar} headerTitle="צפייה בנקודה" />
+      <SidebarHeader
+        closeSidebar={closeSidebar}
+        closeButtonTitle="סגור צפייה בנקודה"
+        headerTitle="צפייה בנקודה"
+      />
       <DividerLine />
       <Section>
         <strong>{pointDetails?.pointType}</strong>

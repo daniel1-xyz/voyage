@@ -142,6 +142,7 @@ export const AddPointSidebar = ({
     <Drawer open={isSidebarOpen} anchor="right" variant="persistent">
       <SidebarHeader
         closeSidebar={closeSidebar}
+        closeButtonTitle="סגור הוספת נקודה"
         headerTitle="הוספת נקודה חדשה"
       />
       <DividerLine />
