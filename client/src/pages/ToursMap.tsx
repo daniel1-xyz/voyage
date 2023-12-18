@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
+import { MapContainer, TileLayer, Circle } from "react-leaflet";
 import { styled } from "@mui/material/styles";
 import { AddPointButton } from "../components/AddPointButton";
 import { useEffect, useState } from "react";

@@ -1,4 +1,4 @@
-import { Drawer } from "@mui/material";
+import { ClickAwayListener, Drawer } from "@mui/material";
 import { SidebarHeader } from "../SidebarHeader/SidebarHeader";
 import { DividerLine } from "../AddPointSidebar/muiStyledComponents";
 import { Section, Paragraph } from "./muiStyledComponents";
@@ -35,37 +35,39 @@ export const DisplayPointSidebar = ({
   };
 
   return (
-    <Drawer open={isSidebarOpen} anchor="right" variant="persistent">
-      <SidebarHeader
-        closeSidebar={closeSidebar}
-        closeButtonTitle="סגור צפייה בנקודה"
-        headerTitle="צפייה בנקודה"
-      />
-      <DividerLine />
-      <Section>
-        <strong>{pointDetails?.pointType}</strong>
-      </Section>
-      <Section>
-        <strong>תיאור הנקודה</strong>
-        <Paragraph>{pointDetails?.description}</Paragraph>
-      </Section>
-      {pointDetails?.pointType === "אטרקציה" && (
+    <ClickAwayListener onClickAway={closeSidebar}>
+      <Drawer open={isSidebarOpen} anchor="right" variant="persistent">
+        <SidebarHeader
+          closeSidebar={closeSidebar}
+          closeButtonTitle="סגור צפייה בנקודה"
+          headerTitle="צפייה בנקודה"
+        />
+        <DividerLine />
         <Section>
-          <strong>מחיר</strong>
-          <Paragraph>{pointDetails?.price?.toString()}</Paragraph>
+          <strong>{pointDetails?.pointType}</strong>
         </Section>
-      )}
-      <Section>
-        <strong>מיקום הנקודה</strong>
-        <div>
-          <strong>מיקום X</strong>
-          <Paragraph>{pointDetails?.longitude.toString()}</Paragraph>
-        </div>
-        <div>
-          <strong>מיקום Y</strong>
-          <Paragraph>{pointDetails?.latitude.toString()}</Paragraph>
-        </div>
-      </Section>
-    </Drawer>
+        <Section>
+          <strong>תיאור הנקודה</strong>
+          <Paragraph>{pointDetails?.description}</Paragraph>
+        </Section>
+        {pointDetails?.pointType === "אטרקציה" && (
+          <Section>
+            <strong>מחיר</strong>
+            <Paragraph>{pointDetails?.price?.toString()}</Paragraph>
+          </Section>
+        )}
+        <Section>
+          <strong>מיקום הנקודה</strong>
+          <div>
+            <strong>מיקום X</strong>
+            <Paragraph>{pointDetails?.longitude.toString()}</Paragraph>
+          </div>
+          <div>
+            <strong>מיקום Y</strong>
+            <Paragraph>{pointDetails?.latitude.toString()}</Paragraph>
+          </div>
+        </Section>
+      </Drawer>
+    </ClickAwayListener>
   );
 };
