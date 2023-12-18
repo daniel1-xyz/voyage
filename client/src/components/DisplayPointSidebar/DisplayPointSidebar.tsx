@@ -51,7 +51,17 @@ export const DisplayPointSidebar = ({
           <Paragraph>{pointDetails?.price?.toString() || "0"}</Paragraph>
         </Section>
       )}
-      <Section></Section>
+      <Section>
+        <strong>מיקום הנקודה</strong>
+        <div>
+          <strong>מיקום X</strong>
+          <Paragraph>{pointDetails?.longitude.toString()}</Paragraph>
+        </div>
+        <div>
+          <strong>מיקום Y</strong>
+          <Paragraph>{pointDetails?.latitude.toString()}</Paragraph>
+        </div>
+      </Section>
     </Drawer>
   );
 };
