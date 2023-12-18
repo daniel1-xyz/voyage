@@ -8,10 +8,8 @@ import { useMapEvents } from "react-leaflet";
 import { PointType, pointTypes } from "../../types/pointTypes";
 import { Point } from "../../types/point";
 import { createPoint } from "../../services/pointServices";
+import { SidebarHeader } from "../SidebarHeader/SidebarHeader";
 import {
-  SidebarHeader,
-  CloseButton,
-  SidebarTitle,
   DividerLine,
   FullHeightForm,
   CoordsSpan,
@@ -142,14 +140,10 @@ export const AddPointSidebar = ({
 
   return (
     <Drawer open={isSidebarOpen} anchor="right" variant="persistent">
-      <SidebarHeader>
-        <CloseButton onClick={() => closeSidebar()} title="סגור הוספת נקודה">
-          <CloseIcon />
-        </CloseButton>
-        <SidebarTitle variant="h5">
-          <strong>הוספת נקודה חדשה</strong>
-        </SidebarTitle>
-      </SidebarHeader>
+      <SidebarHeader
+        closeSidebar={closeSidebar}
+        headerTitle="הוספת נקודה חדשה"
+      />
       <DividerLine />
       <FullHeightForm onSubmit={(e) => handleSubmit(e)}>
         <FullHeightFormControl>
