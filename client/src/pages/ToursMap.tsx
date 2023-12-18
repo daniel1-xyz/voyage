@@ -96,10 +96,10 @@ export const ToursMap = () => {
           setIsSidebarOpen={setIsAddSidebarOpen}
         />
         <DisplayPointSidebar
-          id={displaySidebarId}
+          pointId={displaySidebarId}
           isSidebarOpen={isDisplaySidebarOpen}
           setIsSidebarOpen={setIsDisplaySidebarOpen}
-          setId={setDisplaySidebarId}
+          setPointId={setDisplaySidebarId}
         />
       </FullMapContainer>
     </TourMapWrapper>

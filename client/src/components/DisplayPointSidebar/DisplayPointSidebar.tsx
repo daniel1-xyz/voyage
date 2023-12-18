@@ -7,15 +7,15 @@ import { getPoint } from "../../services/pointServices";
 import { Point } from "../../types/point";
 
 export const DisplayPointSidebar = ({
-  id,
+  pointId,
   isSidebarOpen,
   setIsSidebarOpen,
-  setId,
+  setPointId,
 }: {
-  id: string;
+  pointId: string;
   isSidebarOpen: boolean;
   setIsSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setId: React.Dispatch<React.SetStateAction<string>>;
+  setPointId: React.Dispatch<React.SetStateAction<string>>;
 }) => {
   const [pointDetails, setPointDetails] = useState<Point | undefined>(
     undefined
@@ -23,15 +23,15 @@ export const DisplayPointSidebar = ({
 
   useEffect(() => {
     const getPointDetailsById = async () => {
-      const point = await getPoint(id);
+      const point = await getPoint(pointId);
       setPointDetails(point ? point.data : undefined);
     };
-    id && getPointDetailsById();
+    pointId && getPointDetailsById();
   });
 
   const closeSidebar = () => {
     setIsSidebarOpen(false);
-    setId("");
+    setPointId("");
   };
 
   return (
