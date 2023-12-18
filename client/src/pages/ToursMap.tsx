@@ -7,6 +7,7 @@ import "leaflet/dist/leaflet.css";
 import { getAllPoints } from "../services/pointServices";
 import { Point } from "../types/point";
 import { PointType } from "../types/pointTypes";
+import { DisplayPointSidebar } from "../components/DisplayPointSidebar/DisplayPointSidebar";
 
 const CIRCLE_RADIUS = 50;
 const CIRCLE_OPACITY = 50;
@@ -43,6 +44,7 @@ const getColorByPointType = (pointType: PointType | "") => {
 export const ToursMap = () => {
   const [isAddSidebarOpen, setIsAddSidebarOpen] = useState(false);
   const [isDisplaySidebarOpen, setIsDisplaySidebarOpen] = useState(false);
+  const [displaySidebarId, setDisplaySidebarId] = useState("");
   const [pointsToDisplay, setPointsToDisplay] = useState<
     Array<Point> | undefined
   >(undefined);
@@ -76,7 +78,9 @@ export const ToursMap = () => {
             eventHandlers={{
               click: (e) => {
                 setIsAddSidebarOpen(false);
-                setIsDisplaySidebarOpen(false);
+                setIsDisplaySidebarOpen(true);
+                setDisplaySidebarId(e.target.key);
+                console.log(isDisplaySidebarOpen);
               },
             }}
           />
@@ -85,11 +89,18 @@ export const ToursMap = () => {
           <AddPointButton
             setIsAddSidebarOpen={setIsAddSidebarOpen}
             setIsDisplaySidebarOpen={setIsDisplaySidebarOpen}
+            setDisplaySidebarId={setDisplaySidebarId}
           />
         )}
         <AddPointSidebar
           isSidebarOpen={isAddSidebarOpen}
           setIsSidebarOpen={setIsAddSidebarOpen}
+        />
+        <DisplayPointSidebar
+          id={displaySidebarId}
+          isSidebarOpen={isDisplaySidebarOpen}
+          setIsSidebarOpen={setIsDisplaySidebarOpen}
+          setSidebarId={setDisplaySidebarId}
         />
       </FullMapContainer>
     </TourMapWrapper>

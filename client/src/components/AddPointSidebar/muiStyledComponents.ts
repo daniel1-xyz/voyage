@@ -4,8 +4,8 @@ import TextField from "@mui/material/TextField";
 import { MenuItem, styled, FormControl } from "@mui/material";
 
 export const InputField = styled(TextField)({
-  marginBlock: "0.5vh",
-  marginInline: "2vh",
+  marginBlock: "0.5rem",
+  marginInline: "2rem",
   direction: "inherit",
   textAlign: "start",
   width: "20rem",
@@ -27,8 +27,8 @@ export const InputField = styled(TextField)({
 });
 
 export const SelectField = styled(FormControl)({
-  marginBlock: "0.5vh",
-  marginInline: "2vh",
+  marginBlock: "0.5rem",
+  marginInline: "2rem",
   direction: "inherit",
   textAlign: "start",
   width: "20rem",
@@ -51,7 +51,7 @@ export const FullHeightFormControl = styled(FormControl)({
 });
 
 export const CoordsSpan = styled("span")({
-  marginInline: "2vh",
+  marginInline: "2rem",
   display: "flex",
   alignItems: "center",
   direction: "inherit",
@@ -64,7 +64,7 @@ export const CoordsInputFields = styled("div")({
 
 export const CoordsInputField = styled(TextField)({
   width: "100%",
-  marginBlock: "0.5vh",
+  marginBlock: "0.5rem",
   "& legend": {
     textAlign: "start",
   },
