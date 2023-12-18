@@ -52,7 +52,7 @@ export const DisplayPointSidebar = ({
       {pointDetails?.pointType === "אטרקציה" && (
         <Section>
           <strong>מחיר</strong>
-          <Paragraph>{pointDetails?.price?.toString() || "0"}</Paragraph>
+          <Paragraph>{pointDetails?.price?.toString()}</Paragraph>
         </Section>
       )}
       <Section>
