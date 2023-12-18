@@ -50,11 +50,11 @@ export const ToursMap = () => {
   >(undefined);
 
   useEffect(() => {
-    const AwaitPointsToDisplay = async () => {
+    const getPointsToDisplay = async () => {
       const points = await getAllPoints();
       setPointsToDisplay(points ? points.data : undefined);
     };
-    AwaitPointsToDisplay();
+    getPointsToDisplay();
   });
 
   return (
