@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import TextField from "@mui/material/TextField";
-import { MenuItem, Typography, styled, FormControl } from "@mui/material";
+import { MenuItem, styled, FormControl } from "@mui/material";
 
 export const InputField = styled(TextField)({
   marginBlock: "0.5vh",
