@@ -22,12 +22,15 @@ const NewPointButton = styled(Button)({
 });
 
 export const AddPointButton = ({
-  setIsSidebarOpen,
+  setIsAddSidebarOpen,
+  setIsDisplaySidebarOpen,
 }: {
-  setIsSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsAddSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsDisplaySidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const openSidebar = () => {
-    setIsSidebarOpen(true);
+    setIsDisplaySidebarOpen(false);
+    setIsAddSidebarOpen(true);
   };
   return (
     <NewPointButton

@@ -41,7 +41,8 @@ const getColorByPointType = (pointType: PointType | "") => {
 };
 
 export const ToursMap = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isAddSidebarOpen, setIsAddSidebarOpen] = useState(false);
+  const [isDisplaySidebarOpen, setIsDisplaySidebarOpen] = useState(false);
   const [pointsToDisplay, setPointsToDisplay] = useState<
     Array<Point> | undefined
   >(undefined);
@@ -65,21 +66,30 @@ export const ToursMap = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {pointsToDisplay?.map((point, index) => (
+        {pointsToDisplay?.map((point) => (
           <Circle
             radius={CIRCLE_RADIUS}
             center={[point.latitude, point.longitude]}
             color={getColorByPointType(point.pointType)}
             fillOpacity={CIRCLE_OPACITY}
-            key={index}
-          ></Circle>
+            key={point.id}
+            eventHandlers={{
+              click: (e) => {
+                setIsAddSidebarOpen(false);
+                setIsDisplaySidebarOpen(false);
+              },
+            }}
+          />
         ))}
-        {!isSidebarOpen && (
-          <AddPointButton setIsSidebarOpen={setIsSidebarOpen} />
+        {!isAddSidebarOpen && (
+          <AddPointButton
+            setIsAddSidebarOpen={setIsAddSidebarOpen}
+            setIsDisplaySidebarOpen={setIsDisplaySidebarOpen}
+          />
         )}
         <AddPointSidebar
-          isSidebarOpen={isSidebarOpen}
-          setIsSidebarOpen={setIsSidebarOpen}
+          isSidebarOpen={isAddSidebarOpen}
+          setIsSidebarOpen={setIsAddSidebarOpen}
         />
       </FullMapContainer>
     </TourMapWrapper>

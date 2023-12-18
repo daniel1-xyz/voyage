@@ -6,4 +6,5 @@ export type Point = {
   description: string;
   pointType: PointType | "";
   price?: number;
+  id?: string;
 };
