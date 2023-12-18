@@ -8,6 +8,9 @@ import { getAllPoints } from "../services/pointServices";
 import { Point } from "../types/point";
 import { PointType } from "../types/pointTypes";
 
+const CIRCLE_RADIUS = 50;
+const CIRCLE_OPACITY = 50;
+
 const exampleCoords = {
   lat: 32.08,
   lon: 34.78,
@@ -29,7 +32,7 @@ const getColorByPointType = (pointType: PointType | "") => {
     case "אטרקציה":
       return "blue";
     case "מסלול טיול":
-      return "green";
+      return "#4f4";
     case "תצפית נוף":
       return "red";
     default:
@@ -69,9 +72,10 @@ export const ToursMap = () => {
         </Marker>
         {pointsToDisplay?.map((point, index) => (
           <Circle
-            radius={50}
+            radius={CIRCLE_RADIUS}
             center={[point.latitude, point.longitude]}
             color={getColorByPointType(point.pointType)}
+            fillOpacity={CIRCLE_OPACITY}
             key={index}
           ></Circle>
         ))}
