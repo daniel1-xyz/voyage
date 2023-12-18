@@ -6,6 +6,7 @@ import { AddPointSidebar } from "../components/AddPointSidebar/AddPointSidebar";
 import "leaflet/dist/leaflet.css";
 import { getAllPoints } from "../services/pointServices";
 import { Point } from "../types/point";
+import { PointType } from "../types/pointTypes";
 
 const exampleCoords = {
   lat: 32.08,
@@ -23,18 +24,30 @@ const FullMapContainer = styled(MapContainer)({
   width: "100%",
 });
 
+const getColorByPointType = (pointType: PointType | "") => {
+  switch (pointType) {
+    case "אטרקציה":
+      return "blue";
+    case "מסלול טיול":
+      return "green";
+    case "תצפית נוף":
+      return "red";
+    default:
+      return;
+  }
+};
+
 export const ToursMap = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [pointsToDisplay, setPointsToDisplay] = useState<
     Array<Point> | undefined
-  >([]);
+  >(undefined);
 
   useEffect(() => {
     const AwaitPointsToDisplay = async () => {
       const points = await getAllPoints();
-      await setPointsToDisplay(points);
+      setPointsToDisplay(points ? points.data : undefined);
     };
-
     AwaitPointsToDisplay();
   });
 
@@ -54,15 +67,14 @@ export const ToursMap = () => {
             A pretty CSS5 popup. <br /> Easily customizable.
           </Popup>
         </Marker>
-        {/* {pointsToDisplay &&
-          pointsToDisplay.map((point, index) => (
-            <Circle
-              radius={300}
-              center={[point.longitude, point.latitude]}
-              fillColor="green"
-              key={index}
-            ></Circle>
-          ))} */}
+        {pointsToDisplay?.map((point, index) => (
+          <Circle
+            radius={50}
+            center={[point.latitude, point.longitude]}
+            color={getColorByPointType(point.pointType)}
+            key={index}
+          ></Circle>
+        ))}
         {!isSidebarOpen && (
           <AddPointButton setIsSidebarOpen={setIsSidebarOpen} />
         )}

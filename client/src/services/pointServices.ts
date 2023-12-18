@@ -17,7 +17,7 @@ export const getPoint = async (pointId: string): Promise<Point | undefined> => {
   }
 };
 
-export const getAllPoints = async (): Promise<Array<Point> | undefined> => {
+export const getAllPoints = async () => {
   try {
     return await server.get("/points");
   } catch (error) {
