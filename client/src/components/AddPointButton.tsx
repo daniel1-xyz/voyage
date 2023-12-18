@@ -30,7 +30,11 @@ export const AddPointButton = ({
     setIsSidebarOpen(true);
   };
   return (
-    <NewPointButton variant="text" onClick={() => openSidebar()}>
+    <NewPointButton
+      variant="text"
+      title="הוספת נקודה חדשה"
+      onClick={() => openSidebar()}
+    >
       +
     </NewPointButton>
   );

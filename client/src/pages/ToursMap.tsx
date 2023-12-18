@@ -65,11 +65,6 @@ export const ToursMap = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={[exampleCoords.lat, exampleCoords.lon]}>
-          <Popup>
-            A pretty CSS5 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
         {pointsToDisplay?.map((point, index) => (
           <Circle
             radius={CIRCLE_RADIUS}
