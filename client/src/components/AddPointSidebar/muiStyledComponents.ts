@@ -86,20 +86,6 @@ export const DividerLine = styled(Divider)({
   marginBottom: "1vh",
 });
 
-export const CloseButton = styled(Button)({
-  position: "absolute",
-  top: "1.5vh",
-  left: "0",
-  color: "#888",
-  "&:focus": {
-    border: "none",
-    outline: "none",
-  },
-  "&:hover": {
-    backgroundColor: "transparent",
-  },
-});
-
 export const LocationButton = styled(Button)({
   borderRadius: "100%",
   height: "4rem",
@@ -128,17 +114,6 @@ export const SaveButton = styled(Button)({
   "&:hover": {
     backgroundColor: "transparent",
   },
-});
-
-export const SidebarHeader = styled("div")({
-  textAlign: "center",
-  direction: "inherit",
-});
-
-export const SidebarTitle = styled(Typography)({
-  width: "100%",
-  marginBlock: "1.5vh",
-  fontFamily: "calibri",
 });
 
 export const SelectItem = styled(MenuItem)({
