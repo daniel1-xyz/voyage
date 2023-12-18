@@ -79,8 +79,7 @@ export const ToursMap = () => {
               click: (e) => {
                 setIsAddSidebarOpen(false);
                 setIsDisplaySidebarOpen(true);
-                setDisplaySidebarId(e.target.key);
-                console.log(isDisplaySidebarOpen);
+                setDisplaySidebarId(String(point.id));
               },
             }}
           />

@@ -5,7 +5,7 @@ const server = axios.create({
   baseURL: "http://localhost:5000",
 });
 
-export const getPoint = async (pointId: string): Promise<Point | undefined> => {
+export const getPoint = async (pointId: string) => {
   try {
     return await server.get(`/point/${pointId}`, {
       params: {
