@@ -54,23 +54,15 @@ export const AddPointSidebar = ({
     setNewPoint({});
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const point: Point = {
-      longitude: newPoint.longitude as number,
-      latitude: newPoint.latitude as number,
-      description: newPoint.description as string,
-      pointType: newPoint.pointType as PointType,
-      price: newPoint.price,
-    };
-
-    createPoint(point);
-    handleCloseSidebar();
+  const handleSubmit = () => {
+    if (isPointValid(newPoint)) {
+      createPoint(newPoint);
+      handleCloseSidebar();
+    }
   };
 
-  const validateForm = () => {
-    const { latitude, longitude, description, pointType, price } = newPoint;
+  const isPointValid = (point: Partial<Point>): point is Point => {
+    const { latitude, longitude, description, pointType, price } = point;
 
     const isCoordsValid =
       (longitude || longitude === 0) &&
@@ -90,8 +82,11 @@ export const AddPointSidebar = ({
       (price && price > 0 && price % 1 === 0) ||
       price === 0;
 
-    return (
-      isCoordsValid && isDescriptionValid && isPointTypeValid && isPriceValid
+    return !!(
+      isCoordsValid &&
+      isDescriptionValid &&
+      isPointTypeValid &&
+      isPriceValid
     );
   };
 
@@ -118,7 +113,12 @@ export const AddPointSidebar = ({
         headerTitle="הוספת נקודה חדשה"
       />
       <DividerLine />
-      <FullHeightForm onSubmit={(e) => handleSubmit(e)}>
+      <FullHeightForm
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+      >
         <FullHeightFormControl>
           <CoordsSpan>
             <CoordsInputFields>
@@ -202,7 +202,7 @@ export const AddPointSidebar = ({
             ></InputField>
           )}
 
-          <SaveButton type="submit" disabled={!validateForm()}>
+          <SaveButton type="submit" disabled={!isPointValid(newPoint)}>
             שמור&nbsp;
             <SaveIcon />
           </SaveButton>
