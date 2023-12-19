@@ -23,20 +23,6 @@ import {
 } from "./muiStyledComponents";
 import { number } from "prop-types";
 
-const validateCoords = (
-  latitude: number | undefined,
-  longitude: number | undefined
-) => {
-  return (
-    (longitude || longitude === 0) &&
-    longitude <= 180 &&
-    longitude >= -180 &&
-    (latitude || latitude === 0) &&
-    latitude <= 90 &&
-    latitude >= -90
-  );
-};
-
 const MAX_CHARACTERS_DESC = 256;
 
 export const AddPointSidebar = ({
@@ -86,16 +72,23 @@ export const AddPointSidebar = ({
   const validateForm = () => {
     const { latitude, longitude, description, pointType, price } = newPoint;
 
-    const isCoordsValid = validateCoords(latitude, longitude);
+    const isCoordsValid =
+      (longitude || longitude === 0) &&
+      longitude <= 180 &&
+      longitude >= -180 &&
+      (latitude || latitude === 0) &&
+      latitude <= 90 &&
+      latitude >= -90;
 
     const isDescriptionValid =
       description?.length && description.length <= MAX_CHARACTERS_DESC;
 
-    const isPointTypeValid = pointType && pointTypes.includes(pointType);
+    const isPointTypeValid = pointType;
 
     const isPriceValid =
-      pointType !== "אטרקציה" ??
-      ((price && price > 0 && price % 1 === 0) || price === 0);
+      pointType !== "אטרקציה" ||
+      (price && price > 0 && price % 1 === 0) ||
+      price === 0;
 
     return (
       isCoordsValid && isDescriptionValid && isPointTypeValid && isPriceValid
