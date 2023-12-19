@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Drawer from "@mui/material/Drawer";
-import CloseIcon from "@mui/icons-material/Close";
 import SaveIcon from "@mui/icons-material/Save";
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 import { Select, SelectChangeEvent, InputLabel } from "@mui/material";
@@ -24,33 +23,21 @@ import {
 } from "./muiStyledComponents";
 import { number } from "prop-types";
 
+const validateCoords = (
+  latitude: number | undefined,
+  longitude: number | undefined
+) => {
+  return (
+    (longitude || longitude === 0) &&
+    longitude <= 180 &&
+    longitude >= -180 &&
+    (latitude || latitude === 0) &&
+    latitude <= 90 &&
+    latitude >= -90
+  );
+};
+
 const MAX_CHARACTERS_DESC = 256;
-
-const validateLongitude = (longitude: string) => {
-  return (
-    longitude.length &&
-    parseFloat(longitude) <= 180 &&
-    parseFloat(longitude) >= -180
-  );
-};
-
-const validateLatitude = (latitude: string) => {
-  return (
-    latitude.length && parseFloat(latitude) <= 90 && parseFloat(latitude) >= -90
-  );
-};
-
-const validatePointType = (pointType: PointType | "") => {
-  return pointTypes.find((type) => type === pointType);
-};
-
-const validateDescription = (desc: string) => {
-  return desc.length > 0 && desc.length <= MAX_CHARACTERS_DESC;
-};
-
-const validatePrice = (price: string) => {
-  return parseFloat(price) >= 0 && parseFloat(price) % 1 === 0;
-};
 
 export const AddPointSidebar = ({
   isSidebarOpen,
@@ -61,17 +48,21 @@ export const AddPointSidebar = ({
 }) => {
   const [isMapPinToggled, setIsMapPinToggled] = useState<boolean>(false);
   const [newPoint, setNewPoint] = useState<Partial<Point>>({});
+
   const setLongitude = (longitude: Point["longitude"] | undefined) =>
-    setNewPoint({ ...newPoint, longitude });
+    setNewPoint((prev) => ({ ...prev, longitude }));
+
   const setLatitude = (latitude: Point["latitude"] | undefined) =>
-    setNewPoint({ ...newPoint, latitude });
+    setNewPoint((prev) => ({ ...prev, latitude }));
+
   const setDescription = (description: Point["description"]) =>
-    setNewPoint({ ...newPoint, description });
+    setNewPoint((prev) => ({ ...prev, description }));
+
   const setPointType = (pointType: Point["pointType"]) =>
-    setNewPoint({ ...newPoint, pointType });
-  const setPrice = (price: Point["price"] | undefined) => {
-    setNewPoint({ ...newPoint, price });
-  };
+    setNewPoint((prev) => ({ ...prev, pointType }));
+
+  const setPrice = (price: Point["price"] | undefined) =>
+    setNewPoint((prev) => ({ ...prev, price }));
 
   const handleCloseSidebar = () => {
     closeSidebar();
@@ -81,41 +72,41 @@ export const AddPointSidebar = ({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // const point: Point = {
-    //   longitude: newPoint.longitude,
-    //   latitude: newPoint.latitude,
-    //   description: newPoint.description,
-    //   pointType: newPoint.pointType,
-    //   price: newPoint.price,
-    // };
-    // createPoint(point);
+    const point: Point = {
+      longitude: newPoint.longitude as number,
+      latitude: newPoint.latitude as number,
+      description: newPoint.description as string,
+      pointType: newPoint.pointType as PointType,
+      price: newPoint.price,
+    };
+    createPoint(point);
     handleCloseSidebar();
   };
 
   const validateForm = () => {
     return (
-      (newPoint.longitude || newPoint.longitude === 0) &&
-      newPoint.longitude <= 180 &&
-      newPoint.longitude >= -180 &&
-      (newPoint.latitude || newPoint.latitude === 0) &&
-      newPoint.latitude <= 90 &&
-      newPoint.latitude >= -90 &&
+      validateCoords(newPoint?.latitude, newPoint?.longitude) &&
       newPoint.description?.length &&
       newPoint.description.length <= MAX_CHARACTERS_DESC &&
       pointTypes.find((pointType) => pointType === newPoint.pointType) &&
       (newPoint.pointType === "אטרקציה"
-        ? newPoint?.price || newPoint.price === 0
+        ? (newPoint?.price && newPoint.price > 0 && newPoint.price % 1 === 0) ||
+          newPoint.price === 0
         : true)
     );
   };
 
   useMapEvents({
-    async click(e) {
+    click(e) {
       if (isMapPinToggled) {
-        await setLatitude(Number(e.latlng.lat.toFixed(6)));
-        await setLongitude(
-          Number(((((e.latlng.lng % 360) + 540) % 360) - 180).toFixed(6))
-        );
+        const a = {
+          lat: Number(e.latlng.lat.toFixed(6)),
+          long: Number(((((e.latlng.lng % 360) + 540) % 360) - 180).toFixed(6)),
+        };
+        setLatitude(a.lat);
+
+        setLongitude(a.long);
+
         setIsMapPinToggled(false);
       }
     },
@@ -138,7 +129,9 @@ export const AddPointSidebar = ({
                 type="number"
                 label="מיקום X"
                 autoComplete="off"
-                value={newPoint.longitude}
+                value={
+                  newPoint.longitude !== undefined ? newPoint.longitude : ""
+                }
                 onChange={(e) =>
                   setLongitude(
                     e.target.value ? Number(e.target.value) : undefined
@@ -150,7 +143,7 @@ export const AddPointSidebar = ({
                 type="number"
                 label="מיקום Y"
                 autoComplete="off"
-                value={newPoint.latitude}
+                value={newPoint.latitude !== undefined ? newPoint.latitude : ""}
                 onChange={(e) =>
                   setLatitude(
                     e.target.value ? Number(e.target.value) : undefined
@@ -169,7 +162,7 @@ export const AddPointSidebar = ({
             id="description"
             label="תיאור הנקודה"
             autoComplete="off"
-            value={newPoint.description}
+            value={newPoint?.description || ""}
             onChange={(e) =>
               e.target.value.length < MAX_CHARACTERS_DESC &&
               setDescription(e.target.value)
@@ -182,7 +175,7 @@ export const AddPointSidebar = ({
               label="סוג הנקודה"
               labelId="point-type-label"
               id="point-type"
-              value={newPoint.pointType || ""}
+              value={newPoint?.pointType || ""}
               onChange={(e) => setPointType(e.target.value as PointType)}
               sx={{
                 "& .MuiSvgIcon-root": {
@@ -204,7 +197,7 @@ export const AddPointSidebar = ({
               id="price"
               label="מחיר"
               autoComplete="off"
-              value={newPoint.price}
+              value={newPoint?.price !== undefined ? newPoint.price : ""}
               onChange={(e) =>
                 setPrice(e.target.value ? Number(e.target.value) : undefined)
               }
