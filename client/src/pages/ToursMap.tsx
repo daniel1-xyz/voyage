@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
+import { MapContainer, TileLayer, Circle } from "react-leaflet";
 import { styled } from "@mui/material/styles";
 import { AddPointButton } from "../components/AddPointButton";
 import { useEffect, useState } from "react";
@@ -57,6 +57,12 @@ export const ToursMap = () => {
     getPointsToDisplay();
   });
 
+  const openSidebar = () => {
+    setIsDisplaySidebarOpen(false);
+    setDisplaySidebarId("");
+    setIsAddSidebarOpen(true);
+  };
+
   return (
     <TourMapWrapper>
       <FullMapContainer
@@ -84,13 +90,7 @@ export const ToursMap = () => {
             }}
           />
         ))}
-        {!isAddSidebarOpen && (
-          <AddPointButton
-            setIsAddSidebarOpen={setIsAddSidebarOpen}
-            setIsDisplaySidebarOpen={setIsDisplaySidebarOpen}
-            setDisplaySidebarId={setDisplaySidebarId}
-          />
-        )}
+        {!isAddSidebarOpen && <AddPointButton openAddSidebar={openSidebar} />}
         <AddPointSidebar
           isSidebarOpen={isAddSidebarOpen}
           setIsSidebarOpen={setIsAddSidebarOpen}
