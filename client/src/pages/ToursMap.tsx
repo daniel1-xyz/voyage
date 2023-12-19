@@ -57,11 +57,23 @@ export const ToursMap = () => {
     getPointsToDisplay();
   });
 
-  const openSidebar = () => {
+  const openAddSidebar = () => {
     setIsDisplaySidebarOpen(false);
     setDisplaySidebarId("");
     setIsAddSidebarOpen(true);
   };
+
+  const closeAddSidebar = () => {
+    setIsAddSidebarOpen(false);
+  };
+
+  const openDisplaySidebar = (pointId: string) => {
+    setIsAddSidebarOpen(false);
+    setIsDisplaySidebarOpen(true);
+    setDisplaySidebarId(pointId);
+  };
+
+  const closeDisplaySidebar = () => {};
 
   return (
     <TourMapWrapper>
@@ -83,17 +95,17 @@ export const ToursMap = () => {
             key={point.id}
             eventHandlers={{
               click: (e) => {
-                setIsAddSidebarOpen(false);
-                setIsDisplaySidebarOpen(true);
-                setDisplaySidebarId(String(point.id));
+                openDisplaySidebar(String(point.id));
               },
             }}
           />
         ))}
-        {!isAddSidebarOpen && <AddPointButton openAddSidebar={openSidebar} />}
+        {!isAddSidebarOpen && (
+          <AddPointButton openAddSidebar={openAddSidebar} />
+        )}
         <AddPointSidebar
           isSidebarOpen={isAddSidebarOpen}
-          setIsSidebarOpen={setIsAddSidebarOpen}
+          closeSidebar={closeAddSidebar}
         />
         <DisplayPointSidebar
           pointId={displaySidebarId}
