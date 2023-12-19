@@ -1,23 +1,26 @@
 import { Button } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { makeStyles } from "@mui/styles";
+import AddIcon from "@mui/icons-material/Add";
 
-const NewPointButton = styled(Button)({
-  position: "absolute",
-  bottom: "1%",
-  left: "1%",
-  height: "5rem",
-  width: "5rem",
-  fontSize: "3rem",
-  zIndex: 1000,
-  borderRadius: "100%",
-  backgroundColor: "#fff",
-  color: "#000",
-  "&:hover": {
-    backgroundColor: "#eee",
-  },
-  "&:focus": {
-    border: "none",
-    outline: "none",
+const useStyles = makeStyles({
+  addButton: {
+    position: "absolute",
+    bottom: "1%",
+    left: "1%",
+    height: "5rem",
+    width: "5rem",
+    fontSize: "3rem",
+    zIndex: 1000,
+    borderRadius: "100%",
+    backgroundColor: "#fff",
+    color: "#000",
+    "&:hover": {
+      backgroundColor: "#eee",
+    },
+    "&:focus": {
+      border: "none",
+      outline: "none",
+    },
   },
 });
 
@@ -26,13 +29,15 @@ export const AddPointButton = ({
 }: {
   openAddSidebar: () => void;
 }) => {
+  const classes = useStyles();
   return (
-    <NewPointButton
+    <Button
       variant="text"
       title="הוספת נקודה חדשה"
       onClick={openAddSidebar}
+      className={classes.addButton}
     >
-      +
-    </NewPointButton>
+      <AddIcon />
+    </Button>
   );
 };
