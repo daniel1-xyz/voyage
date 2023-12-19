@@ -73,7 +73,10 @@ export const ToursMap = () => {
     setDisplaySidebarId(pointId);
   };
 
-  const closeDisplaySidebar = () => {};
+  const closeDisplaySidebar = () => {
+    setIsDisplaySidebarOpen(false);
+    setDisplaySidebarId("");
+  };
 
   return (
     <TourMapWrapper>
@@ -110,8 +113,7 @@ export const ToursMap = () => {
         <DisplayPointSidebar
           pointId={displaySidebarId}
           isSidebarOpen={isDisplaySidebarOpen}
-          setIsSidebarOpen={setIsDisplaySidebarOpen}
-          setPointIdToDisplay={setDisplaySidebarId}
+          closeSidebar={closeDisplaySidebar}
         />
       </FullMapContainer>
     </TourMapWrapper>
