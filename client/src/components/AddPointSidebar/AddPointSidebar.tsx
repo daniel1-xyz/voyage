@@ -65,6 +65,7 @@ export const AddPointSidebar = ({
       pointType: newPoint.pointType as PointType,
       price: newPoint.price,
     };
+
     createPoint(point);
     handleCloseSidebar();
   };
@@ -102,10 +103,9 @@ export const AddPointSidebar = ({
           lat: Number(e.latlng.lat.toFixed(6)),
           long: Number(((((e.latlng.lng % 360) + 540) % 360) - 180).toFixed(6)),
         };
+
         setLatitude(coords.lat);
-
         setLongitude(coords.long);
-
         setIsMapPinToggled(false);
       }
     },
