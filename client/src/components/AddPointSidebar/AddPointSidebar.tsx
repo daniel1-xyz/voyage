@@ -84,28 +84,34 @@ export const AddPointSidebar = ({
   };
 
   const validateForm = () => {
+    const { latitude, longitude, description, pointType, price } = newPoint;
+
+    const isCoordsValid = validateCoords(latitude, longitude);
+
+    const isDescriptionValid =
+      description?.length && description.length <= MAX_CHARACTERS_DESC;
+
+    const isPointTypeValid = pointType && pointTypes.includes(pointType);
+
+    const isPriceValid =
+      pointType !== "אטרקציה" ??
+      ((price && price > 0 && price % 1 === 0) || price === 0);
+
     return (
-      validateCoords(newPoint?.latitude, newPoint?.longitude) &&
-      newPoint.description?.length &&
-      newPoint.description.length <= MAX_CHARACTERS_DESC &&
-      pointTypes.find((pointType) => pointType === newPoint.pointType) &&
-      (newPoint.pointType === "אטרקציה"
-        ? (newPoint?.price && newPoint.price > 0 && newPoint.price % 1 === 0) ||
-          newPoint.price === 0
-        : true)
+      isCoordsValid && isDescriptionValid && isPointTypeValid && isPriceValid
     );
   };
 
   useMapEvents({
     click(e) {
       if (isMapPinToggled) {
-        const a = {
+        const coords = {
           lat: Number(e.latlng.lat.toFixed(6)),
           long: Number(((((e.latlng.lng % 360) + 540) % 360) - 180).toFixed(6)),
         };
-        setLatitude(a.lat);
+        setLatitude(coords.lat);
 
-        setLongitude(a.long);
+        setLongitude(coords.long);
 
         setIsMapPinToggled(false);
       }
