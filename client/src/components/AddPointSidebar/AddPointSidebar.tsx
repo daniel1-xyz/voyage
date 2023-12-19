@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import SaveIcon from "@mui/icons-material/Save";
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
@@ -61,7 +61,7 @@ export const AddPointSidebar = ({
     }
   };
 
-  const isPointValid = (point: Partial<Point>): point is Point => {
+  const isPointValid = useCallback((point: Partial<Point>): point is Point => {
     const { latitude, longitude, description, pointType, price } = point;
 
     const isCoordsValid =
@@ -88,7 +88,7 @@ export const AddPointSidebar = ({
       isPointTypeValid &&
       isPriceValid
     );
-  };
+  }, []);
 
   useMapEvents({
     click(e) {
