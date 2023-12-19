@@ -31,11 +31,11 @@ const FullMapContainer = styled(MapContainer)({
 const getColorByPointType = (pointType: PointType | "") => {
   switch (pointType) {
     case "אטרקציה":
-      return "blue";
+      return "#48f";
     case "מסלול טיול":
       return "#4f4";
     case "תצפית נוף":
-      return "red";
+      return "#f84";
     default:
       return;
   }
