@@ -22,6 +22,10 @@ const useStyles = makeStyles({
       outline: "none",
     },
   },
+  largerIcon: {
+    height: "2.5rem",
+    width: "2.5rem",
+  },
 });
 
 export const AddPointButton = ({
@@ -37,7 +41,7 @@ export const AddPointButton = ({
       onClick={openAddSidebar}
       className={classes.addButton}
     >
-      <AddIcon />
+      <AddIcon className={classes.largerIcon} />
     </Button>
   );
 };
