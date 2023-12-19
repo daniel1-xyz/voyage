@@ -33,7 +33,7 @@ const getColorByPointType = (pointType: PointType | "") => {
     case "אטרקציה":
       return "#48f";
     case "מסלול טיול":
-      return "#4f4";
+      return "#8f4";
     case "תצפית נוף":
       return "#f84";
     default:
