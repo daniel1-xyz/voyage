@@ -2,7 +2,7 @@ import { useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import SaveIcon from "@mui/icons-material/Save";
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
-import { Select, SelectChangeEvent, InputLabel } from "@mui/material";
+import { Select, InputLabel } from "@mui/material";
 import { useMapEvents } from "react-leaflet";
 import { PointType, pointTypes } from "../../types/pointTypes";
 import { Point } from "../../types/point";
@@ -21,7 +21,6 @@ import {
   SaveButton,
   FullHeightFormControl,
 } from "./muiStyledComponents";
-import { number } from "prop-types";
 
 const MAX_CHARACTERS_DESC = 256;
 
