@@ -99,6 +99,7 @@ export const ToursMap = () => {
             eventHandlers={{
               click: (e) => {
                 openDisplaySidebar(String(point.id));
+                e.originalEvent.stopPropagation();
               },
             }}
           />
