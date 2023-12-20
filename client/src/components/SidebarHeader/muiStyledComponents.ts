@@ -8,7 +8,7 @@ export const SidebarHeaderWrapper = styled("span")({
 
 export const SidebarTitle = styled(Typography)({
   width: "100%",
-  marginInline: "auto",
+  justifyContent: "center",
   fontFamily: "calibri",
 });
 
