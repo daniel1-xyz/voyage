@@ -75,9 +75,8 @@ export const ToursMap = () => {
   };
 
   const closeDisplaySidebar = () => {
-    isClosable
-      ? (setIsDisplaySidebarOpen(false), setDisplaySidebarId(""))
-      : setIsClosable(true);
+    setIsDisplaySidebarOpen(false);
+    setDisplaySidebarId("");
   };
 
   return (
@@ -116,6 +115,8 @@ export const ToursMap = () => {
         <DisplayPointSidebar
           pointId={displaySidebarId}
           isSidebarOpen={isDisplaySidebarOpen}
+          isClosable={isClosable}
+          makeClosable={() => setIsClosable(true)}
           closeSidebar={closeDisplaySidebar}
         />
       </FullMapContainer>
