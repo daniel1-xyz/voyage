@@ -1,21 +1,21 @@
-import { Typography, Button, styled } from "@mui/material";
+import { Typography, IconButton, styled } from "@mui/material";
 
-export const SidebarHeaderWrapper = styled("div")({
-  textAlign: "center",
+export const SidebarHeaderWrapper = styled("span")({
   direction: "inherit",
+  marginBlock: "1.25rem",
+  display: "flex",
 });
 
 export const SidebarTitle = styled(Typography)({
   width: "100%",
-  marginBlock: "1.25rem",
+  marginInline: "auto",
   fontFamily: "calibri",
 });
 
-export const CloseButton = styled(Button)({
-  position: "absolute",
-  top: "1.25rem",
-  left: "0",
+export const CloseButton = styled(IconButton)({
   color: "#888",
+  paddingBlock: "0",
+  height: "100% !important",
   "&:focus": {
     border: "none",
     outline: "none",

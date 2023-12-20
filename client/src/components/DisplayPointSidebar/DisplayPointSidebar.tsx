@@ -28,7 +28,7 @@ export const DisplayPointSidebar = ({
   });
 
   return (
-    <ClickAwayListener onClickAway={closeSidebar}>
+    <ClickAwayListener onClickAway={(e) => console.log(e.target)}>
       <Drawer open={isSidebarOpen} anchor="right" variant="persistent">
         <SidebarHeader
           closeSidebar={closeSidebar}
