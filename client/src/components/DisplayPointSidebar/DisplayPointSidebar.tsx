@@ -1,7 +1,12 @@
 import { ClickAwayListener, Drawer } from "@mui/material";
 import { SidebarHeader } from "../SidebarHeader/SidebarHeader";
 import { DividerLine } from "../AddPointSidebar/muiStyledComponents";
-import { Section, Paragraph } from "./muiStyledComponents";
+import {
+  Section,
+  Paragraph,
+  AddRatingButton,
+  CenteredRating,
+} from "./muiStyledComponents";
 import { useEffect, useState } from "react";
 import { getPoint } from "../../services/pointServices";
 import { MapPoint } from "../../types/point";
@@ -16,10 +21,15 @@ export const DisplayPointSidebar = ({
   isSidebarOpen: boolean;
   closeSidebar: () => void;
 }) => {
+  const [isRatingOptionEnabled, SetIsRatingOptionEnabled] = useState(false);
   const [pointRating, setPointRating] = useState<PointRating | 0>(0);
   const [pointDetails, setPointDetails] = useState<MapPoint | undefined>(
     undefined
   );
+
+  const enableRatingOption = () => {
+    SetIsRatingOptionEnabled(true);
+  };
 
   useEffect(() => {
     const getPointDetailsById = async () => {
@@ -62,6 +72,24 @@ export const DisplayPointSidebar = ({
             <Paragraph>{pointDetails?.latitude.toString()}</Paragraph>
           </div>
         </Section>
+        <Section>
+          <strong>דירוג</strong>
+          <Paragraph>
+            אין דירוג
+            <AddRatingButton onClick={enableRatingOption}>
+              הוספת דירוג
+            </AddRatingButton>
+          </Paragraph>
+        </Section>
+        {isRatingOptionEnabled && (
+          <Section>
+            <CenteredRating
+              dir="ltr"
+              value={pointRating}
+              size="large"
+            ></CenteredRating>
+          </Section>
+        )}
       </Drawer>
     </ClickAwayListener>
   );
