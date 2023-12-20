@@ -16,12 +16,12 @@ export const SidebarHeader = ({
 }) => {
   return (
     <SidebarHeaderWrapper>
-      <CloseButton onClick={() => closeSidebar()} title={closeButtonTitle}>
-        <CloseIcon />
-      </CloseButton>
       <SidebarTitle variant="h5">
         <strong>{headerTitle}</strong>
       </SidebarTitle>
+      <CloseButton onClick={() => closeSidebar()} title={closeButtonTitle}>
+        <CloseIcon />
+      </CloseButton>
     </SidebarHeaderWrapper>
   );
 };

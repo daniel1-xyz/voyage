@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import AddIcon from "@mui/icons-material/Add";
 
@@ -35,13 +35,12 @@ export const AddPointButton = ({
 }) => {
   const classes = useStyles();
   return (
-    <Button
-      variant="text"
+    <IconButton
       title="הוספת נקודה חדשה"
       onClick={openAddSidebar}
       className={classes.addButton}
     >
       <AddIcon className={classes.largerIcon} />
-    </Button>
+    </IconButton>
   );
 };
