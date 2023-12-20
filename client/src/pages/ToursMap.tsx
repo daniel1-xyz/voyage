@@ -44,6 +44,7 @@ const getColorByPointType = (pointType: PointType | "") => {
 export const ToursMap = () => {
   const [isAddSidebarOpen, setIsAddSidebarOpen] = useState(false);
   const [isDisplaySidebarOpen, setIsDisplaySidebarOpen] = useState(false);
+  const [isClosable, setIsClosable] = useState(true);
   const [displaySidebarId, setDisplaySidebarId] = useState("");
   const [pointsToDisplay, setPointsToDisplay] = useState<
     Array<Point> | undefined
@@ -74,8 +75,9 @@ export const ToursMap = () => {
   };
 
   const closeDisplaySidebar = () => {
-    setIsDisplaySidebarOpen(false);
-    setDisplaySidebarId("");
+    isClosable
+      ? (setIsDisplaySidebarOpen(false), setDisplaySidebarId(""))
+      : setIsClosable(true);
   };
 
   return (
@@ -100,6 +102,7 @@ export const ToursMap = () => {
               click: (e) => {
                 // I know it's really bad but I have no Idea what should I do instead
                 setTimeout(() => openDisplaySidebar(String(point.id)));
+                setIsClosable(false);
               },
             }}
           />
