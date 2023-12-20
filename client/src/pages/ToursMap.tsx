@@ -101,7 +101,7 @@ export const ToursMap = () => {
             eventHandlers={{
               click: (e) => {
                 // I know it's really bad but I have no Idea what should I do instead
-                setTimeout(() => openDisplaySidebar(String(point.id)));
+                openDisplaySidebar(String(point.id));
                 setIsClosable(false);
               },
             }}
