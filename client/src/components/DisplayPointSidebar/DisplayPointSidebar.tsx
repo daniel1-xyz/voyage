@@ -9,13 +9,11 @@ import { Point } from "../../types/point";
 export const DisplayPointSidebar = ({
   pointId,
   isSidebarOpen,
-  setIsSidebarOpen,
-  setPointIdToDisplay,
+  closeSidebar,
 }: {
   pointId: string;
   isSidebarOpen: boolean;
-  setIsSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setPointIdToDisplay: React.Dispatch<React.SetStateAction<string>>;
+  closeSidebar: () => void;
 }) => {
   const [pointDetails, setPointDetails] = useState<Point | undefined>(
     undefined
@@ -28,11 +26,6 @@ export const DisplayPointSidebar = ({
     };
     pointId && getPointDetailsById();
   });
-
-  const closeSidebar = () => {
-    setIsSidebarOpen(false);
-    setPointIdToDisplay("");
-  };
 
   return (
     <ClickAwayListener onClickAway={closeSidebar}>

@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import Drawer from "@mui/material/Drawer";
-import CloseIcon from "@mui/icons-material/Close";
 import SaveIcon from "@mui/icons-material/Save";
 import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
-import { Select, SelectChangeEvent, InputLabel } from "@mui/material";
+import { Select, InputLabel } from "@mui/material";
 import { useMapEvents } from "react-leaflet";
 import { PointType, pointTypes } from "../../types/pointTypes";
 import { Point } from "../../types/point";
@@ -25,114 +24,82 @@ import {
 
 const MAX_CHARACTERS_DESC = 256;
 
-const validateLongitude = (longitude: string) => {
-  return (
-    longitude.length &&
-    parseFloat(longitude) <= 180 &&
-    parseFloat(longitude) >= -180
-  );
-};
-
-const validateLatitude = (latitude: string) => {
-  return (
-    latitude.length && parseFloat(latitude) <= 90 && parseFloat(latitude) >= -90
-  );
-};
-
-const validatePointType = (pointType: PointType | "") => {
-  return pointTypes.find((type) => type === pointType);
-};
-
-const validateDescription = (desc: string) => {
-  return desc.length > 0 && desc.length <= MAX_CHARACTERS_DESC;
-};
-
-const validatePrice = (price: string) => {
-  return parseFloat(price) >= 0 && parseFloat(price) % 1 === 0;
-};
-
 export const AddPointSidebar = ({
   isSidebarOpen,
-  setIsSidebarOpen,
+  closeSidebar,
 }: {
   isSidebarOpen: boolean;
-  setIsSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  closeSidebar: () => void;
 }) => {
-  const [pointType, setPointType] = useState<PointType | "">("");
-  const [coords, setCoords] = useState(["", ""]);
-  const [isMapPinToggled, setIsMapPinToggled] = useState(false);
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
+  const [isMapPinToggled, setIsMapPinToggled] = useState<boolean>(false);
+  const [newPoint, setNewPoint] = useState<Partial<Point>>({});
 
-  const closeSidebar = () => {
-    setIsSidebarOpen(false);
-    setPointType("");
-    setCoords(["", ""]);
-    setIsMapPinToggled(false);
-    setDescription("");
-    setPrice("");
-  };
+  const setLongitude = (longitude: Point["longitude"] | undefined) =>
+    setNewPoint((prev) => ({ ...prev, longitude }));
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const setLatitude = (latitude: Point["latitude"] | undefined) =>
+    setNewPoint((prev) => ({ ...prev, latitude }));
 
-    const point: Point = {
-      longitude: parseFloat(coords[0]),
-      latitude: parseFloat(coords[1]),
-      description: description,
-      pointType: pointType,
-      price: parseInt(price),
-    };
-    createPoint(point);
+  const setDescription = (description: Point["description"]) =>
+    setNewPoint((prev) => ({ ...prev, description }));
+
+  const setPointType = (pointType: Point["pointType"]) =>
+    setNewPoint((prev) => ({ ...prev, pointType }));
+
+  const setPrice = (price: Point["price"] | undefined) =>
+    setNewPoint((prev) => ({ ...prev, price }));
+
+  const handleCloseSidebar = () => {
     closeSidebar();
+    setNewPoint({});
   };
 
-  const validateForm = () => {
-    return (
-      validateLongitude(coords[0]) &&
-      validateLatitude(coords[1]) &&
-      validateDescription(description) &&
-      validatePointType(pointType) &&
-      (pointType !== "אטרקציה" || validatePrice(price))
+  const handleSubmit = () => {
+    if (isPointValid(newPoint)) {
+      createPoint(newPoint);
+      handleCloseSidebar();
+    }
+  };
+
+  const isPointValid = useCallback((point: Partial<Point>): point is Point => {
+    const { latitude, longitude, description, pointType, price } = point;
+
+    const isCoordsValid =
+      (longitude || longitude === 0) &&
+      longitude <= 180 &&
+      longitude >= -180 &&
+      (latitude || latitude === 0) &&
+      latitude <= 90 &&
+      latitude >= -90;
+
+    const isDescriptionValid =
+      description?.length && description.length <= MAX_CHARACTERS_DESC;
+
+    const isPointTypeValid = pointType;
+
+    const isPriceValid =
+      pointType !== "אטרקציה" ||
+      (price && price > 0 && price % 1 === 0) ||
+      price === 0;
+
+    return !!(
+      isCoordsValid &&
+      isDescriptionValid &&
+      isPointTypeValid &&
+      isPriceValid
     );
-  };
-
-  const changePointType = (e: SelectChangeEvent) => {
-    setPointType(e.target.value as PointType);
-  };
-
-  const changeLatCoords = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setCoords([coords[0], e.target.value]);
-  };
-
-  const changeLonCoords = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setCoords([e.target.value, coords[1]]);
-  };
-
-  const changeDescription = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const desc = e.target.value;
-    desc.length < MAX_CHARACTERS_DESC && setDescription(desc);
-  };
-
-  const changePrice = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setPrice(e.target.value);
-  };
+  }, []);
 
   useMapEvents({
     click(e) {
       if (isMapPinToggled) {
-        setCoords([
-          ((((e.latlng.lng % 360) + 540) % 360) - 180).toFixed(6),
-          e.latlng.lat.toFixed(6),
-        ]);
+        const coords = {
+          lat: Number(e.latlng.lat.toFixed(6)),
+          long: Number(((((e.latlng.lng % 360) + 540) % 360) - 180).toFixed(6)),
+        };
+
+        setLatitude(coords.lat);
+        setLongitude(coords.long);
         setIsMapPinToggled(false);
       }
     },
@@ -141,12 +108,17 @@ export const AddPointSidebar = ({
   return (
     <Drawer open={isSidebarOpen} anchor="right" variant="persistent">
       <SidebarHeader
-        closeSidebar={closeSidebar}
+        closeSidebar={handleCloseSidebar}
         closeButtonTitle="סגור הוספת נקודה"
         headerTitle="הוספת נקודה חדשה"
       />
       <DividerLine />
-      <FullHeightForm onSubmit={(e) => handleSubmit(e)}>
+      <FullHeightForm
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+      >
         <FullHeightFormControl>
           <CoordsSpan>
             <CoordsInputFields>
@@ -155,16 +127,26 @@ export const AddPointSidebar = ({
                 type="number"
                 label="מיקום X"
                 autoComplete="off"
-                value={coords[0]}
-                onChange={(e) => changeLonCoords(e)}
+                value={
+                  newPoint.longitude !== undefined ? newPoint.longitude : ""
+                }
+                onChange={(e) =>
+                  setLongitude(
+                    e.target.value ? Number(e.target.value) : undefined
+                  )
+                }
               ></CoordsInputField>
               <CoordsInputField
                 id="latitude"
                 type="number"
                 label="מיקום Y"
                 autoComplete="off"
-                value={coords[1]}
-                onChange={(e) => changeLatCoords(e)}
+                value={newPoint.latitude !== undefined ? newPoint.latitude : ""}
+                onChange={(e) =>
+                  setLatitude(
+                    e.target.value ? Number(e.target.value) : undefined
+                  )
+                }
               ></CoordsInputField>
             </CoordsInputFields>
             <LocationButton
@@ -178,8 +160,11 @@ export const AddPointSidebar = ({
             id="description"
             label="תיאור הנקודה"
             autoComplete="off"
-            value={description}
-            onChange={(e) => changeDescription(e)}
+            value={newPoint?.description || ""}
+            onChange={(e) =>
+              e.target.value.length < MAX_CHARACTERS_DESC &&
+              setDescription(e.target.value)
+            }
             multiline
           ></InputField>
           <SelectField fullWidth>
@@ -188,8 +173,8 @@ export const AddPointSidebar = ({
               label="סוג הנקודה"
               labelId="point-type-label"
               id="point-type"
-              value={pointType}
-              onChange={changePointType}
+              value={newPoint?.pointType || ""}
+              onChange={(e) => setPointType(e.target.value as PointType)}
               sx={{
                 "& .MuiSvgIcon-root": {
                   right: "unset",
@@ -204,18 +189,20 @@ export const AddPointSidebar = ({
               ))}
             </Select>
           </SelectField>
-          {pointType === "אטרקציה" && (
+          {newPoint.pointType === "אטרקציה" && (
             <InputField
               type="number"
               id="price"
               label="מחיר"
               autoComplete="off"
-              value={price}
-              onChange={(e) => changePrice(e)}
+              value={newPoint?.price !== undefined ? newPoint.price : ""}
+              onChange={(e) =>
+                setPrice(e.target.value ? Number(e.target.value) : undefined)
+              }
             ></InputField>
           )}
 
-          <SaveButton type="submit" disabled={!validateForm()}>
+          <SaveButton type="submit" disabled={!isPointValid(newPoint)}>
             שמור&nbsp;
             <SaveIcon />
           </SaveButton>

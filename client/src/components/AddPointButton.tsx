@@ -1,47 +1,47 @@
 import { Button } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { makeStyles } from "@mui/styles";
+import AddIcon from "@mui/icons-material/Add";
 
-const NewPointButton = styled(Button)({
-  position: "absolute",
-  bottom: "1%",
-  left: "1%",
-  height: "5rem",
-  width: "5rem",
-  fontSize: "3rem",
-  zIndex: 1000,
-  borderRadius: "100%",
-  backgroundColor: "#fff",
-  color: "#000",
-  "&:hover": {
-    backgroundColor: "#eee",
+const useStyles = makeStyles({
+  addButton: {
+    position: "absolute",
+    bottom: "1%",
+    left: "1%",
+    height: "5rem",
+    width: "5rem",
+    fontSize: "3rem",
+    zIndex: 1000,
+    borderRadius: "100%",
+    backgroundColor: "#fff",
+    color: "#000",
+    "&:hover": {
+      backgroundColor: "#eee",
+    },
+    "&:focus": {
+      border: "none",
+      outline: "none",
+    },
   },
-  "&:focus": {
-    border: "none",
-    outline: "none",
+  largerIcon: {
+    height: "2.5rem",
+    width: "2.5rem",
   },
 });
 
 export const AddPointButton = ({
-  setIsAddSidebarOpen,
-  setIsDisplaySidebarOpen,
-  setDisplaySidebarId,
+  openAddSidebar,
 }: {
-  setIsAddSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setIsDisplaySidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setDisplaySidebarId: React.Dispatch<React.SetStateAction<string>>;
+  openAddSidebar: () => void;
 }) => {
-  const openSidebar = () => {
-    setIsDisplaySidebarOpen(false);
-    setDisplaySidebarId("");
-    setIsAddSidebarOpen(true);
-  };
+  const classes = useStyles();
   return (
-    <NewPointButton
+    <Button
       variant="text"
       title="הוספת נקודה חדשה"
-      onClick={() => openSidebar()}
+      onClick={openAddSidebar}
+      className={classes.addButton}
     >
-      +
-    </NewPointButton>
+      <AddIcon className={classes.largerIcon} />
+    </Button>
   );
 };

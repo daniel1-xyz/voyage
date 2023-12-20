@@ -31,11 +31,11 @@ const FullMapContainer = styled(MapContainer)({
 const getColorByPointType = (pointType: PointType | "") => {
   switch (pointType) {
     case "אטרקציה":
-      return "blue";
+      return "#48f";
     case "מסלול טיול":
-      return "#4f4";
+      return "#8f4";
     case "תצפית נוף":
-      return "red";
+      return "#f84";
     default:
       return;
   }
@@ -57,6 +57,27 @@ export const ToursMap = () => {
     getPointsToDisplay();
   });
 
+  const openAddSidebar = () => {
+    setIsDisplaySidebarOpen(false);
+    setDisplaySidebarId("");
+    setIsAddSidebarOpen(true);
+  };
+
+  const closeAddSidebar = () => {
+    setIsAddSidebarOpen(false);
+  };
+
+  const openDisplaySidebar = (pointId: string) => {
+    setIsAddSidebarOpen(false);
+    setIsDisplaySidebarOpen(true);
+    setDisplaySidebarId(pointId);
+  };
+
+  const closeDisplaySidebar = () => {
+    setIsDisplaySidebarOpen(false);
+    setDisplaySidebarId("");
+  };
+
   return (
     <TourMapWrapper>
       <FullMapContainer
@@ -77,29 +98,22 @@ export const ToursMap = () => {
             key={point.id}
             eventHandlers={{
               click: (e) => {
-                setIsAddSidebarOpen(false);
-                setIsDisplaySidebarOpen(true);
-                setDisplaySidebarId(String(point.id));
+                openDisplaySidebar(String(point.id));
               },
             }}
           />
         ))}
         {!isAddSidebarOpen && (
-          <AddPointButton
-            setIsAddSidebarOpen={setIsAddSidebarOpen}
-            setIsDisplaySidebarOpen={setIsDisplaySidebarOpen}
-            setDisplaySidebarId={setDisplaySidebarId}
-          />
+          <AddPointButton openAddSidebar={openAddSidebar} />
         )}
         <AddPointSidebar
           isSidebarOpen={isAddSidebarOpen}
-          setIsSidebarOpen={setIsAddSidebarOpen}
+          closeSidebar={closeAddSidebar}
         />
         <DisplayPointSidebar
           pointId={displaySidebarId}
           isSidebarOpen={isDisplaySidebarOpen}
-          setIsSidebarOpen={setIsDisplaySidebarOpen}
-          setPointIdToDisplay={setDisplaySidebarId}
+          closeSidebar={closeDisplaySidebar}
         />
       </FullMapContainer>
     </TourMapWrapper>
