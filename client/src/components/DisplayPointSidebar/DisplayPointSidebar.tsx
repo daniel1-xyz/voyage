@@ -23,6 +23,9 @@ export const DisplayPointSidebar = ({
 }) => {
   const [isRatingOptionEnabled, SetIsRatingOptionEnabled] = useState(false);
   const [pointRating, setPointRating] = useState<PointRating | 0>(0);
+  const [averageRating, serAverageRating] = useState<number | undefined>(
+    undefined
+  );
   const [pointDetails, setPointDetails] = useState<MapPoint | undefined>(
     undefined
   );
@@ -75,7 +78,7 @@ export const DisplayPointSidebar = ({
         <Section>
           <strong>דירוג</strong>
           <Paragraph>
-            אין דירוג
+            {averageRating ? averageRating : "אין דירוג"}
             <AddRatingButton onClick={enableRatingOption}>
               הוספת דירוג
             </AddRatingButton>
@@ -86,6 +89,7 @@ export const DisplayPointSidebar = ({
             <CenteredRating
               dir="ltr"
               value={pointRating}
+              onChange={(e, value) => setPointRating(value as PointRating)}
               size="large"
             ></CenteredRating>
           </Section>
