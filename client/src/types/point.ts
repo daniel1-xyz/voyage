@@ -1,6 +1,6 @@
 import { PointType } from "./pointTypes";
 
-export type Point = {
+export type MapPoint = {
   latitude: number;
   longitude: number;
   description: string;
