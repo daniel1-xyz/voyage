@@ -13,9 +13,12 @@ export const SidebarTitle = styled(Typography)({
 });
 
 export const CloseButton = styled(IconButton)({
+  position: "absolute",
+  left: "0",
+  top: "calc(1.25rem + 1px)",
   color: "#888",
-  paddingBlock: "0",
-  height: "100% !important",
+  paddingBlock: "0.25rem",
+  height: "inherit !important",
   "&:focus": {
     border: "none",
     outline: "none",
