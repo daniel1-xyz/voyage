@@ -22,7 +22,7 @@ export const DisplayPointSidebar = ({
   closeSidebar: () => void;
 }) => {
   const [isRatingOptionEnabled, SetIsRatingOptionEnabled] = useState(false);
-  const [pointRating, setPointRating] = useState<PointRating | 0>(0);
+  const [userRating, setUserRating] = useState<PointRating | 0>(0);
   const [averageRating, serAverageRating] = useState<number | undefined>(
     undefined
   );
@@ -88,8 +88,8 @@ export const DisplayPointSidebar = ({
           <Section>
             <CenteredRating
               dir="ltr"
-              value={pointRating}
-              onChange={(e, value) => setPointRating(value as PointRating)}
+              value={userRating}
+              onChange={(e, value) => setUserRating(value as PointRating)}
               size="large"
             ></CenteredRating>
           </Section>
