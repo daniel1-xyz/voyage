@@ -44,7 +44,6 @@ const getColorByPointType = (pointType: PointType | "") => {
 export const ToursMap = () => {
   const [isAddSidebarOpen, setIsAddSidebarOpen] = useState(false);
   const [isDisplaySidebarOpen, setIsDisplaySidebarOpen] = useState(false);
-  const [isClosable, setIsClosable] = useState(true);
   const [displaySidebarId, setDisplaySidebarId] = useState("");
   const [pointsToDisplay, setPointsToDisplay] = useState<
     Array<Point> | undefined
@@ -100,7 +99,7 @@ export const ToursMap = () => {
             eventHandlers={{
               click: (e) => {
                 openDisplaySidebar(String(point.id));
-                setIsClosable(false);
+                e.originalEvent.stopPropagation();
               },
             }}
           />
@@ -115,8 +114,6 @@ export const ToursMap = () => {
         <DisplayPointSidebar
           pointId={displaySidebarId}
           isSidebarOpen={isDisplaySidebarOpen}
-          isClosable={isClosable}
-          makeClosable={() => setIsClosable(true)}
           closeSidebar={closeDisplaySidebar}
         />
       </FullMapContainer>

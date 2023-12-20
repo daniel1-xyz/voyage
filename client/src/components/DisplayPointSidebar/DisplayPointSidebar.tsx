@@ -9,14 +9,10 @@ import { Point } from "../../types/point";
 export const DisplayPointSidebar = ({
   pointId,
   isSidebarOpen,
-  isClosable,
-  makeClosable,
   closeSidebar,
 }: {
   pointId: string;
   isSidebarOpen: boolean;
-  isClosable: boolean;
-  makeClosable: () => void;
   closeSidebar: () => void;
 }) => {
   const [pointDetails, setPointDetails] = useState<Point | undefined>(
@@ -32,7 +28,7 @@ export const DisplayPointSidebar = ({
   });
 
   return (
-    <ClickAwayListener onClickAway={isClosable ? closeSidebar : makeClosable}>
+    <ClickAwayListener onClickAway={closeSidebar}>
       <Drawer open={isSidebarOpen} anchor="right" variant="persistent">
         <SidebarHeader
           closeSidebar={closeSidebar}
