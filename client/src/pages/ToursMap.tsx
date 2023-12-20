@@ -100,7 +100,6 @@ export const ToursMap = () => {
             key={point.id}
             eventHandlers={{
               click: (e) => {
-                // I know it's really bad but I have no Idea what should I do instead
                 openDisplaySidebar(String(point.id));
                 setIsClosable(false);
               },
