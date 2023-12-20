@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { AddPointSidebar } from "../components/AddPointSidebar/AddPointSidebar";
 import "leaflet/dist/leaflet.css";
 import { getAllPoints } from "../services/pointServices";
-import { Point } from "../types/point";
+import { MapPoint } from "../types/point";
 import { PointType } from "../types/pointTypes";
 import { DisplayPointSidebar } from "../components/DisplayPointSidebar/DisplayPointSidebar";
 
@@ -46,7 +46,7 @@ export const ToursMap = () => {
   const [isDisplaySidebarOpen, setIsDisplaySidebarOpen] = useState(false);
   const [displaySidebarId, setDisplaySidebarId] = useState("");
   const [pointsToDisplay, setPointsToDisplay] = useState<
-    Array<Point> | undefined
+    Array<MapPoint> | undefined
   >(undefined);
 
   useEffect(() => {

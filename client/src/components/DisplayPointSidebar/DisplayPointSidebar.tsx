@@ -4,7 +4,7 @@ import { DividerLine } from "../AddPointSidebar/muiStyledComponents";
 import { Section, Paragraph } from "./muiStyledComponents";
 import { useEffect, useState } from "react";
 import { getPoint } from "../../services/pointServices";
-import { Point } from "../../types/point";
+import { MapPoint } from "../../types/point";
 import { PointRating } from "../../types/pointRating";
 
 export const DisplayPointSidebar = ({
@@ -17,7 +17,7 @@ export const DisplayPointSidebar = ({
   closeSidebar: () => void;
 }) => {
   const [pointRating, setPointRating] = useState<PointRating | 0>(0);
-  const [pointDetails, setPointDetails] = useState<Point | undefined>(
+  const [pointDetails, setPointDetails] = useState<MapPoint | undefined>(
     undefined
   );
 
