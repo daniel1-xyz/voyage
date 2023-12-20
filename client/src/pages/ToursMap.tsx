@@ -98,7 +98,7 @@ export const ToursMap = () => {
             key={point.id}
             eventHandlers={{
               click: (e) => {
-                openDisplaySidebar(String(point.id));
+                setTimeout(() => openDisplaySidebar(String(point.id)));
               },
             }}
           />
