@@ -5,6 +5,7 @@ import { Section, Paragraph } from "./muiStyledComponents";
 import { useEffect, useState } from "react";
 import { getPoint } from "../../services/pointServices";
 import { Point } from "../../types/point";
+import { PointRating } from "../../types/pointRating";
 
 export const DisplayPointSidebar = ({
   pointId,
@@ -15,6 +16,7 @@ export const DisplayPointSidebar = ({
   isSidebarOpen: boolean;
   closeSidebar: () => void;
 }) => {
+  const [pointRating, setPointRating] = useState<PointRating | 0>(0);
   const [pointDetails, setPointDetails] = useState<Point | undefined>(
     undefined
   );
