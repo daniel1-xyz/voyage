@@ -17,7 +17,8 @@ export const CloseButton = styled(IconButton)({
   left: "0",
   top: "calc(1.25rem + 1px)",
   color: "#888",
-  paddingBlock: "0.25rem",
+  padding: "0.25rem",
+  marginInline: "0.25rem",
   height: "inherit !important",
   "&:focus": {
     border: "none",
