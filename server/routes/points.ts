@@ -36,7 +36,10 @@ router.post("/points/new", async (req: Request, res: Response) => {
 
 router.get("/ratings/:pointId", async (req: Request, res: Response) => {
   res.send(
-    await PointRating.findAll({ where: { pointId: req.params.pointId } })
+    await PointRating.findAll({
+      where: { pointId: req.params.pointId },
+      attributes: ["rating"],
+    })
   );
 });
 

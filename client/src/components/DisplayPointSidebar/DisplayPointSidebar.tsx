@@ -11,7 +11,10 @@ import { useEffect, useState } from "react";
 import { getPoint } from "../../services/pointServices";
 import { MapPoint } from "../../types/point";
 import { PointRating } from "../../types/pointRating";
-import { addRatingForPoint } from "../../services/pointRatingServices";
+import {
+  addRatingForPoint,
+  getAllRatingsForPoint,
+} from "../../services/pointRatingServices";
 
 export const DisplayPointSidebar = ({
   pointId,
@@ -25,12 +28,10 @@ export const DisplayPointSidebar = ({
   //TODO: fix the hooks so the userRating and isRatingOptionEnabled won't apply to all points
   const [isRatingOptionEnabled, setIsRatingOptionEnabled] = useState(false);
   const [userRating, setUserRating] = useState<PointRating | 0>(0);
+  const [averageRating, setAverageRating] = useState<number>(0);
   const [pointDetails, setPointDetails] = useState<MapPoint | undefined>(
     undefined
   );
-
-  // TEST
-  const averageRating = 3;
 
   const handleClose = () => {
     userRating && addRatingForPoint(pointId, userRating);
@@ -48,7 +49,17 @@ export const DisplayPointSidebar = ({
       const point = await getPoint(pointId);
       setPointDetails(point ? point.data : undefined);
     };
-    pointId && getPointDetailsById();
+
+    const getAverageRating = async () => {
+      const ratings = await getAllRatingsForPoint(pointId);
+      let sum = 0;
+      ratings?.data.length
+        ? (ratings?.data.forEach((row: any) => (sum += row.rating)),
+          setAverageRating(parseFloat((sum / ratings?.data.length).toFixed(1))))
+        : setAverageRating(0);
+    };
+
+    pointId && (getPointDetailsById(), getAverageRating());
   });
 
   return (
@@ -87,7 +98,7 @@ export const DisplayPointSidebar = ({
         <Section>
           <strong>דירוג</strong>
           <Paragraph>
-            {averageRating ? averageRating : "אין דירוג"}
+            {averageRating}
             <AddRatingButton onClick={enableRatingOption}>
               הוספת דירוג
             </AddRatingButton>
