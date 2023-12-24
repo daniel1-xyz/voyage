@@ -25,7 +25,6 @@ export const DisplayPointSidebar = ({
   isSidebarOpen: boolean;
   closeSidebar: () => void;
 }) => {
-  //TODO: fix the hooks so the userRating and isRatingOptionEnabled won't apply to all points
   const [isRatingOptionEnabled, setIsRatingOptionEnabled] = useState(false);
   const [userRating, setUserRating] = useState<PointRating | 0>(0);
   const [averageRating, setAverageRating] = useState<number>(0);
