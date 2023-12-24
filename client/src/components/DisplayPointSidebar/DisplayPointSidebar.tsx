@@ -22,17 +22,23 @@ export const DisplayPointSidebar = ({
   closeSidebar: () => void;
 }) => {
   //TODO: fix the hooks so the userRating and isRatingOptionEnabled won't apply to all points
-  const [isRatingOptionEnabled, SetIsRatingOptionEnabled] = useState(false);
+  const [isRatingOptionEnabled, setIsRatingOptionEnabled] = useState(false);
   const [userRating, setUserRating] = useState<PointRating | 0>(0);
-  const [averageRating, serAverageRating] = useState<number | undefined>(
-    undefined
-  );
   const [pointDetails, setPointDetails] = useState<MapPoint | undefined>(
     undefined
   );
 
+  // TEST
+  const averageRating = 3;
+
+  const handleClose = () => {
+    setIsRatingOptionEnabled(false);
+    setUserRating(0);
+    closeSidebar();
+  };
+
   const enableRatingOption = () => {
-    SetIsRatingOptionEnabled(true);
+    setIsRatingOptionEnabled(true);
   };
 
   useEffect(() => {
@@ -44,10 +50,10 @@ export const DisplayPointSidebar = ({
   });
 
   return (
-    <ClickAwayListener onClickAway={closeSidebar}>
+    <ClickAwayListener onClickAway={handleClose}>
       <Drawer open={isSidebarOpen} anchor="right" variant="persistent">
         <SidebarHeader
-          closeSidebar={closeSidebar}
+          closeSidebar={handleClose}
           closeButtonTitle="סגור צפייה בנקודה"
           headerTitle="צפייה בנקודה"
         />
