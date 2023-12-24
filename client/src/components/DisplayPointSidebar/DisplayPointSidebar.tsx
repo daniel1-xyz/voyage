@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import { getPoint } from "../../services/pointServices";
 import { MapPoint } from "../../types/point";
 import { PointRating } from "../../types/pointRating";
+import { addRatingForPoint } from "../../services/pointRatingServices";
 
 export const DisplayPointSidebar = ({
   pointId,
@@ -32,6 +33,7 @@ export const DisplayPointSidebar = ({
   const averageRating = 3;
 
   const handleClose = () => {
+    userRating && addRatingForPoint(pointId, userRating);
     setIsRatingOptionEnabled(false);
     setUserRating(0);
     closeSidebar();
