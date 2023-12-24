@@ -1,10 +1,12 @@
 import { Request, Response, Router } from "express";
 import { Point } from "../models/point";
 import uniqid from "uniqid";
+import { PointRating } from "../models/pointRating";
 
 const router: Router = Router();
 
 Point.sync();
+PointRating.sync();
 
 router.get("/", (req: Request, res: Response) => {});
 
@@ -18,7 +20,7 @@ router.get("/point/:id", async (req: Request, res: Response) => {
 });
 
 router.post("/points/new", async (req: Request, res: Response) => {
-  let point = Point.build({
+  const point = Point.build({
     id: uniqid(),
     latitude: req.body.latitude,
     longitude: req.body.longitude,
@@ -30,6 +32,24 @@ router.post("/points/new", async (req: Request, res: Response) => {
   await point.save();
 
   res.send(point);
+});
+
+router.get("/ratings/:pointId", async (req: Request, res: Response) => {
+  res.send(
+    await PointRating.findAll({ where: { pointId: req.params.pointId } })
+  );
+});
+
+router.post("/ratings/new", async (req: Request, res: Response) => {
+  const pointRating = PointRating.build({
+    ratingId: uniqid(),
+    rating: req.body.rating,
+    pointId: req.body.pointId,
+  });
+
+  await pointRating.save();
+
+  res.send(pointRating);
 });
 
 export default router;

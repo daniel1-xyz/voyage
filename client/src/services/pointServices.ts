@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Point } from "../types/point";
+import { MapPoint } from "../types/point";
 
 const server = axios.create({
   baseURL: "http://localhost:5000",
@@ -25,7 +25,7 @@ export const getAllPoints = async () => {
   }
 };
 
-export const createPoint = async (point: Point) => {
+export const createPoint = async (point: MapPoint) => {
   try {
     await server.post("/points/new", {
       latitude: point.latitude,
