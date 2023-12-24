@@ -10,7 +10,7 @@ import {
 import { useEffect, useState } from "react";
 import { getPoint } from "../../services/pointServices";
 import { MapPoint } from "../../types/point";
-import { PointRating } from "../../types/pointRating";
+import { PointRating, PointRatingRow } from "../../types/pointRating";
 import {
   addRatingForPoint,
   getAllRatingsForPoint,
@@ -54,7 +54,7 @@ export const DisplayPointSidebar = ({
       const ratings = await getAllRatingsForPoint(pointId);
       let sum = 0;
       ratings?.data.length
-        ? (ratings?.data.forEach((row: any) => (sum += row.rating)),
+        ? (ratings?.data.forEach((row: PointRatingRow) => (sum += row.rating)),
           setAverageRating(parseFloat((sum / ratings?.data.length).toFixed(1))))
         : setAverageRating(0);
     };
