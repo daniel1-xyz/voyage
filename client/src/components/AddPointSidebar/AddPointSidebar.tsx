@@ -5,7 +5,7 @@ import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 import { Select, InputLabel } from "@mui/material";
 import { useMapEvents } from "react-leaflet";
 import { PointType, pointTypes } from "../../types/pointTypes";
-import { Point } from "../../types/point";
+import { MapPoint } from "../../types/point";
 import { createPoint } from "../../services/pointServices";
 import { SidebarHeader } from "../SidebarHeader/SidebarHeader";
 import {
@@ -32,21 +32,21 @@ export const AddPointSidebar = ({
   closeSidebar: () => void;
 }) => {
   const [isMapPinToggled, setIsMapPinToggled] = useState<boolean>(false);
-  const [newPoint, setNewPoint] = useState<Partial<Point>>({});
+  const [newPoint, setNewPoint] = useState<Partial<MapPoint>>({});
 
-  const setLongitude = (longitude: Point["longitude"] | undefined) =>
+  const setLongitude = (longitude: MapPoint["longitude"] | undefined) =>
     setNewPoint((prev) => ({ ...prev, longitude }));
 
-  const setLatitude = (latitude: Point["latitude"] | undefined) =>
+  const setLatitude = (latitude: MapPoint["latitude"] | undefined) =>
     setNewPoint((prev) => ({ ...prev, latitude }));
 
-  const setDescription = (description: Point["description"]) =>
+  const setDescription = (description: MapPoint["description"]) =>
     setNewPoint((prev) => ({ ...prev, description }));
 
-  const setPointType = (pointType: Point["pointType"]) =>
+  const setPointType = (pointType: MapPoint["pointType"]) =>
     setNewPoint((prev) => ({ ...prev, pointType }));
 
-  const setPrice = (price: Point["price"] | undefined) =>
+  const setPrice = (price: MapPoint["price"] | undefined) =>
     setNewPoint((prev) => ({ ...prev, price }));
 
   const handleCloseSidebar = () => {
@@ -61,34 +61,37 @@ export const AddPointSidebar = ({
     }
   };
 
-  const isPointValid = useCallback((point: Partial<Point>): point is Point => {
-    const { latitude, longitude, description, pointType, price } = point;
+  const isPointValid = useCallback(
+    (point: Partial<MapPoint>): point is MapPoint => {
+      const { latitude, longitude, description, pointType, price } = point;
 
-    const isCoordsValid =
-      (longitude || longitude === 0) &&
-      longitude <= 180 &&
-      longitude >= -180 &&
-      (latitude || latitude === 0) &&
-      latitude <= 90 &&
-      latitude >= -90;
+      const isCoordsValid =
+        (longitude || longitude === 0) &&
+        longitude <= 180 &&
+        longitude >= -180 &&
+        (latitude || latitude === 0) &&
+        latitude <= 90 &&
+        latitude >= -90;
 
-    const isDescriptionValid =
-      description?.length && description.length <= MAX_CHARACTERS_DESC;
+      const isDescriptionValid =
+        description?.length && description.length <= MAX_CHARACTERS_DESC;
 
-    const isPointTypeValid = pointType;
+      const isPointTypeValid = pointType;
 
-    const isPriceValid =
-      pointType !== "אטרקציה" ||
-      (price && price > 0 && price % 1 === 0) ||
-      price === 0;
+      const isPriceValid =
+        pointType !== "אטרקציה" ||
+        (price && price > 0 && price % 1 === 0) ||
+        price === 0;
 
-    return !!(
-      isCoordsValid &&
-      isDescriptionValid &&
-      isPointTypeValid &&
-      isPriceValid
-    );
-  }, []);
+      return !!(
+        isCoordsValid &&
+        isDescriptionValid &&
+        isPointTypeValid &&
+        isPriceValid
+      );
+    },
+    []
+  );
 
   useMapEvents({
     click(e) {
