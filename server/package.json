@@ -14,12 +14,14 @@
   "description": "just a tour map",
   "main": "app.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.ts"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@types/cors": "^2.8.17",
-    "@types/uniqid": "^5.3.4"
+    "@types/uniqid": "^5.3.4",
+    "nodemon": "^3.0.2"
   }
 }
