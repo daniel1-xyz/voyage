@@ -5,7 +5,7 @@ export const db = new Sequelize({
   database: "postgres",
   username: "postgres",
   password: "Aa123456",
-  host: "localhost",
+  host: "db",
   port: 5432,
   logging: false,
 });
