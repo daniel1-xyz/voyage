@@ -33,7 +33,7 @@ export const DisplayPointSidebar = ({
 
   const handleClose = async () => {
     userRating &&
-      (addRatingForPoint(pointId, userRating),
+      (await addRatingForPoint(pointId, userRating),
       updatePointAvgRating(pointId, await getAverageRating()));
     setIsRatingOptionEnabled(false);
     setUserRating(0);
