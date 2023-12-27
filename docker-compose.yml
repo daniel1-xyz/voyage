@@ -24,7 +24,9 @@ services:
     container_name: db
     restart: always
     ports:
-      - "5432:5432"
+      - "5430:5432"
+    expose:
+      - 5430
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
