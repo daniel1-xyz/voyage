@@ -34,6 +34,14 @@ router.post("/points/new", async (req: Request, res: Response) => {
   res.send(point);
 });
 
+router.patch("/point/:id/rating", async (req: Request, res: Response) => {
+  const pointToUpdate = await Point.findByPk(req.params.id);
+  pointToUpdate
+    ? ((pointToUpdate.avgRating = req.body.avgRating),
+      await pointToUpdate.save())
+    : res.status(404).send("point not found");
+});
+
 router.get("/ratings/:pointId", async (req: Request, res: Response) => {
   res.send(
     await PointRating.findAll({

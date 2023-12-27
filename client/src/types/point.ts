@@ -7,4 +7,5 @@ export type MapPoint = {
   pointType: PointType;
   price?: number;
   id?: string;
+  avgRating?: number;
 };

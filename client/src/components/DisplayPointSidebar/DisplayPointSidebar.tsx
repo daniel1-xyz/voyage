@@ -8,7 +8,7 @@ import {
   CenteredRating,
 } from "./muiStyledComponents";
 import { useEffect, useState } from "react";
-import { getPoint } from "../../services/pointServices";
+import { getPoint, updatePointAvgRating } from "../../services/pointServices";
 import { MapPoint } from "../../types/point";
 import { PointRating, PointRatingRow } from "../../types/pointRating";
 import {
@@ -27,16 +27,26 @@ export const DisplayPointSidebar = ({
 }) => {
   const [isRatingOptionEnabled, setIsRatingOptionEnabled] = useState(false);
   const [userRating, setUserRating] = useState<PointRating | 0>(0);
-  const [averageRating, setAverageRating] = useState<number>(0);
   const [pointDetails, setPointDetails] = useState<MapPoint | undefined>(
     undefined
   );
 
-  const handleClose = () => {
-    userRating && addRatingForPoint(pointId, userRating);
+  const handleClose = async () => {
+    userRating &&
+      (addRatingForPoint(pointId, userRating),
+      updatePointAvgRating(pointId, await getAverageRating()));
     setIsRatingOptionEnabled(false);
     setUserRating(0);
     closeSidebar();
+  };
+
+  const getAverageRating = async () => {
+    const ratings = await getAllRatingsForPoint(pointId);
+    let sum = 0;
+    return ratings?.data.length
+      ? (ratings?.data.forEach((row: PointRatingRow) => (sum += row.rating)),
+        parseFloat((sum / ratings?.data.length).toFixed(1)))
+      : null;
   };
 
   const enableRatingOption = () => {
@@ -49,16 +59,7 @@ export const DisplayPointSidebar = ({
       setPointDetails(point ? point.data : undefined);
     };
 
-    const getAverageRating = async () => {
-      const ratings = await getAllRatingsForPoint(pointId);
-      let sum = 0;
-      ratings?.data.length
-        ? (ratings?.data.forEach((row: PointRatingRow) => (sum += row.rating)),
-          setAverageRating(parseFloat((sum / ratings?.data.length).toFixed(1))))
-        : setAverageRating(0);
-    };
-
-    pointId && (getPointDetailsById(), getAverageRating());
+    pointId && getPointDetailsById();
   });
 
   return (
@@ -97,7 +98,7 @@ export const DisplayPointSidebar = ({
         <Section>
           <strong>דירוג</strong>
           <Paragraph>
-            {averageRating}
+            {pointDetails?.avgRating || 0}
             <AddRatingButton onClick={enableRatingOption}>
               הוספת דירוג
             </AddRatingButton>

@@ -8,6 +8,7 @@ interface PointAttributes {
   description: string;
   pointType: string;
   price: number;
+  avgRating: number;
 }
 
 export class Point extends Model implements PointAttributes {
@@ -17,6 +18,7 @@ export class Point extends Model implements PointAttributes {
   description!: string;
   pointType!: string;
   price!: number;
+  avgRating!: number;
 }
 
 Point.init(
@@ -44,6 +46,9 @@ Point.init(
     },
     price: {
       type: DataTypes.INTEGER,
+    },
+    avgRating: {
+      type: DataTypes.DECIMAL(1),
     },
   },
   {
