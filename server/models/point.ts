@@ -48,7 +48,7 @@ Point.init(
       type: DataTypes.INTEGER,
     },
     avgRating: {
-      type: DataTypes.DECIMAL(1),
+      type: DataTypes.DECIMAL(2, 1),
     },
   },
   {

@@ -5,7 +5,7 @@ import { PointRating } from "../models/pointRating";
 
 const router: Router = Router();
 
-Point.sync();
+Point.sync({ alter: true });
 PointRating.sync();
 
 router.get("/", (req: Request, res: Response) => {});
@@ -37,8 +37,9 @@ router.post("/points/new", async (req: Request, res: Response) => {
 router.patch("/point/:id/rating", async (req: Request, res: Response) => {
   const pointToUpdate = await Point.findByPk(req.params.id);
   pointToUpdate
-    ? ((pointToUpdate.avgRating = req.body.avgRating),
-      await pointToUpdate.save())
+    ? (pointToUpdate.set({ avgRating: req.body.avgRating }),
+      await pointToUpdate.save(),
+      res.send(pointToUpdate))
     : res.status(404).send("point not found");
 });
 
