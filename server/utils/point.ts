@@ -2,7 +2,7 @@ import { PointAttributes } from "../models/point";
 
 const MAX_CHARACTERS_DESC = 256;
 
-export const validatePoint = (point: Omit<PointAttributes, "id">) => {
+export const validatePoint = (point: Omit<PointAttributes, "id">): boolean => {
   return !(
     point.latitude > 90 ||
     point.latitude < -90 ||

@@ -16,15 +16,6 @@ import {
   getAllRatingsForPoint,
 } from "../../services/pointRatingServices";
 
-const getAverageRating = async (pointId: string) => {
-  const ratings = await getAllRatingsForPoint(pointId);
-  let sum = 0;
-  return ratings?.data.length
-    ? (ratings?.data.forEach((row: PointRatingRow) => (sum += row.rating)),
-      parseFloat((sum / ratings?.data.length).toFixed(1)))
-    : null;
-};
-
 export const DisplayPointSidebar = ({
   pointId,
   isSidebarOpen,
