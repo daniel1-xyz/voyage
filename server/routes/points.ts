@@ -54,22 +54,22 @@ router.post(
   }
 );
 
-// router.patch(
-//   "/point/:id/rating",
-//   async (
-//     req: Request<{ id: string }, {}, { avgRating: number | null }>,
-//     res: Response
-//   ) => {
-//     try {
-//       const pointToUpdate = await Point.findByPk(req.params.id);
+router.patch(
+  "/point/:id/rating",
+  async (
+    req: Request<{ id: string }, {}, { avgRating: number | null }>,
+    res: Response
+  ) => {
+    try {
+      const pointToUpdate = await PointModel.findByPk(req.params.id);
 
-//       if (!pointToUpdate) return res.status(404).send("point not found");
+      if (!pointToUpdate) return res.status(404).send("point not found");
 
-//       pointToUpdate.set({ avgRating: req.body.avgRating });
-//       await pointToUpdate.save();
-//       res.send(pointToUpdate);
-//     } catch (error) {
-//       res.status(500).send(`internal server Error ${error} `);
-//     }
-//   }
-// );
+      pointToUpdate.set({ avgRating: req.body.avgRating });
+      await pointToUpdate.save();
+      res.send(pointToUpdate);
+    } catch (error) {
+      res.status(500).send(`internal server Error ${error} `);
+    }
+  }
+);

@@ -7,6 +7,7 @@ import {
   validatePointRating,
 } from "../utils/pointRating";
 import { getRatingsForPoint } from "../utils/pointRating";
+import { PointModel } from "../models/point";
 
 PointRatingModel.sync();
 
@@ -40,9 +41,15 @@ router.post(
       await pointRating.save();
 
       const ratingsForPoint = await getRatingsForPoint(req.body.pointId);
-      const averageRatingForPoint = await calcAverageRatingForPoint(
-        ratingsForPoint
-      );
+      const averageRatingForPoint = calcAverageRatingForPoint(ratingsForPoint);
+
+      const pointToUpdate = await PointModel.findByPk(req.body.pointId);
+
+      if (!pointToUpdate) return res.status(404).send("point not found");
+
+      pointToUpdate.set({ avgRating: averageRatingForPoint });
+
+      await pointToUpdate.save();
 
       res.send(pointRating);
     } catch (error) {

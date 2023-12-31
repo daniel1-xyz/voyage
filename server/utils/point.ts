@@ -1,5 +1,5 @@
 import { PointAttributes } from "../models/point";
-
+import { PointType } from "../types/pointTypes";
 const MAX_CHARACTERS_DESC = 256;
 
 export const validatePoint = (point: Omit<PointAttributes, "id">): boolean => {
@@ -12,7 +12,7 @@ export const validatePoint = (point: Omit<PointAttributes, "id">): boolean => {
     (!point.longitude && point.longitude !== 0) ||
     !point.description ||
     point.description.length > MAX_CHARACTERS_DESC ||
-    /* CHECK IF point.pointType FITS TYPE */
-    (point.price && (point.price <= 0 || point.price % 1 !== 1))
+    (point.pointType as PointType) ||
+    (point.price && (point.price <= 0 || point.price % 1 !== 0))
   );
 };
