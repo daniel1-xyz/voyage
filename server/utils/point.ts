@@ -1,5 +1,4 @@
 import { PointAttributes } from "../models/point";
-import { PointType } from "../types/pointTypes";
 
 const MIN_CHARACTERS_DESC = 1;
 const MAX_CHARACTERS_DESC = 256;
