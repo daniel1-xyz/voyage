@@ -1,13 +1,14 @@
-import { Request, Response } from "express";
+import { Request, Response, Router } from "express";
 import { PointRatingModel, PointRatingAttributes } from "../models/pointRating";
 import uniqid from "uniqid";
-import router from "./router";
 import {
   calcAverageRatingForPoint,
   validatePointRating,
 } from "../utils/pointRating";
 import { getRatingsForPoint } from "../utils/pointRating";
 import { PointModel } from "../models/point";
+
+const router = Router();
 
 PointRatingModel.sync();
 
@@ -57,3 +58,5 @@ router.post(
     }
   }
 );
+
+export default router;

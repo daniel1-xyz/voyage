@@ -1,8 +1,9 @@
-import { Request, Response } from "express";
+import { Request, Response, Router } from "express";
 import { PointAttributes, PointModel } from "../models/point";
 import uniqid from "uniqid";
-import router from "./router";
 import { validatePoint } from "../utils/point";
+
+const router = Router();
 
 PointModel.sync({ alter: true });
 
@@ -73,3 +74,5 @@ router.patch(
     }
   }
 );
+
+export default router;
