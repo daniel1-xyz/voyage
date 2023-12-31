@@ -1,7 +1,7 @@
 import { DataTypes, Model } from "sequelize";
 import { db } from "../config/database";
 
-interface PointAttributes {
+export interface PointAttributes {
   id: string;
   latitude: number;
   longitude: number;
@@ -11,7 +11,7 @@ interface PointAttributes {
   avgRating: number;
 }
 
-export class Point extends Model implements PointAttributes {
+export class PointModel extends Model implements PointAttributes {
   id!: string;
   latitude!: number;
   longitude!: number;
@@ -21,7 +21,7 @@ export class Point extends Model implements PointAttributes {
   avgRating!: number;
 }
 
-Point.init(
+PointModel.init(
   {
     id: {
       type: DataTypes.STRING,

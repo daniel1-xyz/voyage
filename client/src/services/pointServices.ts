@@ -39,18 +39,18 @@ export const createPoint = async (point: MapPoint) => {
   }
 };
 
-export const updatePointAvgRating = async (
-  pointId: string,
-  avgRating: number | null
-) => {
-  try {
-    await server.patch(`/point/${pointId}/rating`, {
-      params: {
-        id: pointId,
-      },
-      avgRating: avgRating,
-    });
-  } catch (error) {
-    console.error(error);
-  }
-};
+// export const updatePointAvgRating = async (
+//   pointId: string,
+//   avgRating: number | null
+// ) => {
+//   try {
+//     await server.patch(`/point/${pointId}/rating`, {
+//       params: {
+//         id: pointId,
+//       },
+//       avgRating: avgRating,
+//     });
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };

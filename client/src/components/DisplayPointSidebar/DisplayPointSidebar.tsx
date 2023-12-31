@@ -8,7 +8,7 @@ import {
   CenteredRating,
 } from "./muiStyledComponents";
 import { useEffect, useState } from "react";
-import { getPoint, updatePointAvgRating } from "../../services/pointServices";
+import { getPoint } from "../../services/pointServices";
 import { MapPoint } from "../../types/point";
 import { PointRating, PointRatingRow } from "../../types/pointRating";
 import {
@@ -41,9 +41,7 @@ export const DisplayPointSidebar = ({
   );
 
   const handleClose = async () => {
-    userRating &&
-      (await addRatingForPoint(pointId, userRating),
-      await updatePointAvgRating(pointId, await getAverageRating(pointId)));
+    userRating && (await addRatingForPoint(pointId, userRating));
     setIsRatingOptionEnabled(false);
     setUserRating(0);
     closeSidebar();

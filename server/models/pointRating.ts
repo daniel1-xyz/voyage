@@ -1,19 +1,19 @@
 import { DataTypes, Model } from "sequelize";
 import { db } from "../config/database";
 
-interface PointAttributes {
+export interface PointRatingAttributes {
   ratingId: string;
   pointId: string;
   rating: number;
 }
 
-export class PointRating extends Model implements PointAttributes {
+export class PointRatingModel extends Model implements PointRatingAttributes {
   ratingId!: string;
   pointId!: string;
   rating!: number;
 }
 
-PointRating.init(
+PointRatingModel.init(
   {
     ratingId: {
       type: DataTypes.STRING,
