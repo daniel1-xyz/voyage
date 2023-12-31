@@ -13,6 +13,6 @@ export const validatePoint = (point: Omit<PointAttributes, "id">): boolean => {
     !point.description ||
     point.description.length > MAX_CHARACTERS_DESC ||
     (point.pointType as PointType) ||
-    (point.price && (point.price <= 0 || point.price % 1 !== 0))
+    (point.price && (point.price < 0 || point.price % 1 !== 0))
   );
 };
