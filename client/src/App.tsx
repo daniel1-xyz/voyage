@@ -1,5 +1,5 @@
 import "./App.css";
-import { ToursMap } from "../pages/ToursMap";
+import { ToursMap } from "./pages/ToursMap";
 
 function App() {
   return (
