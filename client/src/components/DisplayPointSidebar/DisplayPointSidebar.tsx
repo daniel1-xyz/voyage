@@ -8,7 +8,6 @@ import {
   CenteredRating,
 } from "./muiStyledComponents";
 import { useEffect, useState } from "react";
-import { getPoint } from "../../services/pointServices";
 import { MapPoint } from "../../types/point";
 import { PointRating, PointRatingRow } from "../../types/pointRating";
 import {
@@ -42,14 +41,7 @@ export const DisplayPointSidebar = ({
     setIsRatingOptionEnabled(true);
   };
 
-  useEffect(() => {
-    const getPointDetailsById = async () => {
-      const point = await getPoint(pointId);
-      setPointDetails(point ? point.data : undefined);
-    };
-
-    pointId && getPointDetailsById();
-  });
+  useEffect(() => {});
 
   return (
     <ClickAwayListener onClickAway={handleClose}>
