@@ -3,7 +3,7 @@ import {
   CurrentPointAction,
   SetCurrentPointAction,
 } from "../actions/currentPoint";
-import { DEFAULT_CURRENT_POINT, RootState } from "../store";
+import { defaultState, RootState } from "../store";
 
 export const currentPointReducer = (
   state: RootState,
@@ -16,7 +16,7 @@ export const currentPointReducer = (
         currentPoint: (action as SetCurrentPointAction).payload,
       };
     case currentPointActionTypes.RESET_CURRENT_POINT:
-      return { ...state, currentPoint: DEFAULT_CURRENT_POINT };
+      return { ...state, currentPoint: defaultState.CURRENT_POINT };
     default:
       return state;
   }
