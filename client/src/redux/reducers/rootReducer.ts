@@ -1,4 +1,8 @@
 import { combineReducers } from "redux";
-import { currentPointReducer } from "./currentPoint";
+import { currentPointReducer as currentPoint } from "./currentPoint";
+import { currentSidebarReducer as currentSidebar } from "./currentSidebar";
 
-export default combineReducers(currentPointReducer);
+export default combineReducers({
+  currentPoint,
+  currentSidebar,
+});

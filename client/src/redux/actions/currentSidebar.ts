@@ -1,3 +1,5 @@
+import { State } from "../store";
+
 export const currentSidebarActionTypes = {
   SET_CURRENT_SIDEBAR: "SET_CURRENT_SIDEBAR",
   RESET_CURRENT_SIDEBAR: "RESET_CURRENT_SIDEBAR",
@@ -5,7 +7,7 @@ export const currentSidebarActionTypes = {
 
 export interface SetCurrentSidebarAction {
   type: string;
-  payload: string;
+  payload: State["currentSidebar"];
 }
 
 export interface ResetCurrentSidebarAction {
@@ -17,7 +19,7 @@ export type CurrentSidebarAction =
   | ResetCurrentSidebarAction;
 
 export const setCurrentSidebar = (
-  upcomingSidebarCode: string
+  upcomingSidebarCode: State["currentSidebar"]
 ): SetCurrentSidebarAction => ({
   type: currentSidebarActionTypes.SET_CURRENT_SIDEBAR,
   payload: upcomingSidebarCode,

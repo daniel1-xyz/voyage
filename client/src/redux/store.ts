@@ -9,18 +9,18 @@ export const defaultState = {
   CURRENT_POINT: undefined,
 };
 
-export interface RootState {
+export interface State {
   pointsToDisplay: Array<MapPoint>;
   currentSidebar: string;
   currentPoint: MapPoint | undefined;
 }
 
-const rootState: RootState = {
+const rootState: State = {
   pointsToDisplay: defaultState.POINTS_TO_DISPLAY,
   currentSidebar: defaultState.CURRENT_SIDEBAR,
   currentPoint: defaultState.CURRENT_POINT,
 };
 
-const store = createStore(rootReducer, rootState);
+const store = createStore(rootReducer, rootState as Partial<State>);
 
 export default store;

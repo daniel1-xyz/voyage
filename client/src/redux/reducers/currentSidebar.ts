@@ -3,23 +3,17 @@ import {
   SetCurrentSidebarAction,
   currentSidebarActionTypes,
 } from "../actions/currentSidebar";
-import { defaultState, RootState } from "../store";
+import { defaultState, State } from "../store";
 
 export const currentSidebarReducer = (
-  state: RootState,
+  state: State["currentSidebar"],
   action: CurrentSidebarAction
-): RootState => {
+): State["currentSidebar"] => {
   switch (action.type) {
     case currentSidebarActionTypes.SET_CURRENT_SIDEBAR:
-      return {
-        ...state,
-        currentSidebar: (action as SetCurrentSidebarAction).payload,
-      };
+      return (action as SetCurrentSidebarAction).payload;
     case currentSidebarActionTypes.RESET_CURRENT_SIDEBAR:
-      return {
-        ...state,
-        currentSidebar: defaultState.CURRENT_SIDEBAR,
-      };
+      return defaultState.CURRENT_SIDEBAR;
     default:
       return state;
   }
