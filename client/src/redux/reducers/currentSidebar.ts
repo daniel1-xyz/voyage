@@ -2,8 +2,8 @@ import {
   CurrentSidebarAction,
   SetCurrentSidebarAction,
   currentSidebarActionTypes,
-} from "../actions/currentSidebar";
-import { defaultState, State } from "../store";
+} from "../constants/currentSidebar";
+import { defaultState, State } from "../constants/defaultState";
 
 export const currentSidebarReducer = (
   state: State["currentSidebar"],

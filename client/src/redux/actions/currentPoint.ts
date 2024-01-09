@@ -1,22 +1,9 @@
 import { MapPoint } from "../../types/point";
-
-export const currentPointActionTypes = {
-  SET_CURRENT_POINT: "SET_CURRENT_POINT",
-  RESET_CURRENT_POINT: "RESET_CURRENT_POINT",
-};
-
-export interface SetCurrentPointAction {
-  type: string;
-  payload: MapPoint;
-}
-
-export interface ResetCurrentPointAction {
-  type: string;
-}
-
-export type CurrentPointAction =
-  | SetCurrentPointAction
-  | ResetCurrentPointAction;
+import {
+  SetCurrentPointAction,
+  ResetCurrentPointAction,
+  currentPointActionTypes,
+} from "../constants/currentPoint";
 
 export const setCurrentPoint = (
   upcomingPoint: MapPoint

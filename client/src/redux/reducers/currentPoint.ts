@@ -2,8 +2,8 @@ import {
   currentPointActionTypes,
   CurrentPointAction,
   SetCurrentPointAction,
-} from "../actions/currentPoint";
-import { defaultState, State } from "../store";
+} from "../constants/currentPoint";
+import { defaultState, State } from "../constants/defaultState";
 
 export const currentPointReducer = (
   state: State["currentPoint"],
