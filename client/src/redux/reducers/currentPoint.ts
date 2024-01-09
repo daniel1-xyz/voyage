@@ -2,7 +2,7 @@ import {
   currentPointActionTypes,
   CurrentPointAction,
   SetCurrentPointAction,
-} from "../actions/actionTypes";
+} from "../actions/currentPoint";
 import { DEFAULT_CURRENT_POINT, RootState } from "../store";
 
 export const currentPointReducer = (
