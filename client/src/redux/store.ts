@@ -1,6 +1,7 @@
 import { legacy_createStore as createStore } from "redux";
 import rootReducer from "./reducers/rootReducer";
-import { State, defaultState } from "./constants/defaultState";
+import defaultState from "./constants/defaultState";
+import State from "./constants/stateInterface";
 
 const rootState: State = {
   pointsToDisplay: defaultState.POINTS_TO_DISPLAY,

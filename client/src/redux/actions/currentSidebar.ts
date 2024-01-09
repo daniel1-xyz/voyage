@@ -1,4 +1,4 @@
-import { State } from "../constants/defaultState";
+import State from "../constants/stateInterface";
 import {
   SetCurrentSidebarAction,
   ResetCurrentSidebarAction,

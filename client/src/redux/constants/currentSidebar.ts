@@ -1,4 +1,4 @@
-import { State } from "./defaultState";
+import State from "./stateInterface";
 
 export const currentSidebarActionTypes = {
   SET_CURRENT_SIDEBAR: "SET_CURRENT_SIDEBAR",

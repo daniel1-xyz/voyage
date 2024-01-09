@@ -3,7 +3,8 @@ import {
   CurrentPointAction,
   SetCurrentPointAction,
 } from "../constants/currentPoint";
-import { defaultState, State } from "../constants/defaultState";
+import defaultState from "../constants/defaultState";
+import State from "../constants/stateInterface";
 
 export const currentPointReducer = (
   state: State["currentPoint"],
