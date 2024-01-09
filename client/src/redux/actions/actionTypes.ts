@@ -1,15 +1,19 @@
 import { MapPoint } from "../../types/point";
 
-export const SET_CURRENT_POINT = "SET_CURRENT_POINT";
-export const RESET_CURRENT_POINT = "RESET_CURRENT_POINT";
+export const currentPointActionTypes = {
+  SET_CURRENT_POINT: "SET_CURRENT_POINT",
+  RESET_CURRENT_POINT: "RESET_CURRENT_POINT",
+};
 
-export interface SetCurrentPoint {
+export interface SetCurrentPointAction {
   type: string;
   payload: MapPoint;
 }
 
-export interface ResetCurrentPoint {
+export interface ResetCurrentPointAction {
   type: string;
 }
 
-export type CurrentPointAction = SetCurrentPoint | ResetCurrentPoint;
+export type CurrentPointAction =
+  | SetCurrentPointAction
+  | ResetCurrentPointAction;
