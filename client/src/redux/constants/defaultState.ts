@@ -1,4 +1,4 @@
-import { sidebarCodes } from "./sidebarCodes";
+import sidebarCodes from "./sidebarCodes";
 
 const defaultState = {
   POINTS_TO_DISPLAY: [],
