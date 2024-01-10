@@ -1,10 +1,8 @@
-import { MapPoint } from "../../types/point";
 import {
   CurrentSidebarAction,
   SetCurrentSidebarAction,
   currentSidebarActionTypes,
 } from "../constants/currentSidebar";
-import defaultState from "../constants/defaultState";
 import sidebarCodes from "../constants/sidebarCodes";
 import State from "../constants/stateInterface";
 
@@ -27,7 +25,7 @@ export const currentSidebarReducer = (
         currentSidebar: (action as SetCurrentSidebarAction).payload,
       };
     case currentSidebarActionTypes.RESET_CURRENT_SIDEBAR:
-      return { ...state, currentSidebar: defaultState.CURRENT_SIDEBAR };
+      return { ...state, currentSidebar: initialState.currentSidebar };
     default:
       return state;
   }

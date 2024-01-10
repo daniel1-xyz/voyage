@@ -4,7 +4,6 @@ import {
   CurrentPointAction,
   SetCurrentPointAction,
 } from "../constants/currentPoint";
-import defaultState from "../constants/defaultState";
 import State from "../constants/stateInterface";
 
 export interface CurrentPointState {
@@ -26,7 +25,7 @@ export const currentPointReducer = (
         currentPoint: (action as SetCurrentPointAction).payload,
       };
     case currentPointActionTypes.RESET_CURRENT_POINT:
-      return { ...state, currentPoint: defaultState.CURRENT_POINT };
+      return { ...state, currentPoint: initialState.currentPoint };
     default:
       return state;
   }

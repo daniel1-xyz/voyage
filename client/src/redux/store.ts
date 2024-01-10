@@ -1,7 +1,5 @@
 import { legacy_createStore as createStore, applyMiddleware } from "redux";
 import rootReducer from "./reducers/rootReducer";
-import defaultState from "./constants/defaultState";
-import State from "./constants/stateInterface";
 import { thunk } from "redux-thunk";
 
 const enhancer = applyMiddleware(thunk);

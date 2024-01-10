@@ -1,5 +1,4 @@
 import { MapPoint } from "../../types/point";
-import defaultState from "../constants/defaultState";
 import {
   FetchPointsAction,
   FetchPointsFailureAction,
