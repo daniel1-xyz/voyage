@@ -5,14 +5,14 @@ import {
   FetchPointsSuccessAction,
   pointsToDisplayActionTypes,
 } from "../constants/pointsToDisplay";
-import State from "../constants/stateInterface";
+import { RootState } from "../store";
 
 export interface PointsToDisplayState {
   pointsToDisplay: Array<MapPoint>;
   error: Error | null;
 }
 
-const initialState: PointsToDisplayState = {
+export const initialState: PointsToDisplayState = {
   pointsToDisplay: [],
   error: null,
 };
@@ -20,7 +20,7 @@ const initialState: PointsToDisplayState = {
 export const pointsToDisplayReducer = (
   state: PointsToDisplayState = initialState,
   action: FetchPointsAction
-): State["pointsToDisplay"] => {
+): RootState["pointsToDisplay"] => {
   switch (action.type) {
     case pointsToDisplayActionTypes.FETCH_POINTS_SUCCESS:
       return {

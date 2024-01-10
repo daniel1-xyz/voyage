@@ -4,20 +4,20 @@ import {
   CurrentPointAction,
   SetCurrentPointAction,
 } from "../constants/currentPoint";
-import State from "../constants/stateInterface";
+import { RootState } from "../store";
 
 export interface CurrentPointState {
   currentPoint: MapPoint | undefined;
 }
 
-const initialState = {
+export const initialState = {
   currentPoint: undefined,
 };
 
 export const currentPointReducer = (
   state: CurrentPointState = initialState,
   action: CurrentPointAction
-): State["currentPoint"] => {
+): RootState["currentPoint"] => {
   switch (action.type) {
     case currentPointActionTypes.SET_CURRENT_POINT:
       return {

@@ -4,20 +4,20 @@ import {
   currentSidebarActionTypes,
 } from "../constants/currentSidebar";
 import sidebarCodes from "../constants/sidebarCodes";
-import State from "../constants/stateInterface";
+import { RootState } from "../store";
 
 export interface CurrentSidebarState {
   currentSidebar: string;
 }
 
-const initialState: CurrentSidebarState = {
+export const initialState: CurrentSidebarState = {
   currentSidebar: sidebarCodes.NO_SIDEBAR,
 };
 
 export const currentSidebarReducer = (
   state: CurrentSidebarState = initialState,
   action: CurrentSidebarAction
-): State["currentSidebar"] => {
+): RootState["currentSidebar"] => {
   switch (action.type) {
     case currentSidebarActionTypes.SET_CURRENT_SIDEBAR:
       return {

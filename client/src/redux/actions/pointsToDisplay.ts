@@ -1,5 +1,3 @@
-import { MapPoint } from "../../types/point";
-import State from "../constants/stateInterface";
 import {
   FetchPointsFailureAction,
   FetchPointsSuccessAction,
