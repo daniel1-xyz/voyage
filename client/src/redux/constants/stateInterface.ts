@@ -1,9 +1,11 @@
-import { MapPoint } from "../../types/point";
+import { CurrentPointState } from "../reducers/currentPoint";
+import { CurrentSidebarState } from "../reducers/currentSidebar";
+import { PointsToDisplayState } from "../reducers/pointsToDisplay";
 
 interface State {
-  pointsToDisplay: Array<MapPoint>;
-  currentSidebar: string;
-  currentPoint: MapPoint | undefined;
+  pointsToDisplay: PointsToDisplayState;
+  currentSidebar: CurrentSidebarState;
+  currentPoint: CurrentPointState;
 }
 
 export default State;

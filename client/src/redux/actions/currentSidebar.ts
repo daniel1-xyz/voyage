@@ -4,9 +4,10 @@ import {
   ResetCurrentSidebarAction,
   currentSidebarActionTypes,
 } from "../constants/currentSidebar";
+import { CurrentSidebarState } from "../reducers/currentSidebar";
 
 export const setCurrentSidebar = (
-  upcomingSidebarCode: State["currentSidebar"]
+  upcomingSidebarCode: CurrentSidebarState["currentSidebar"]
 ): SetCurrentSidebarAction => ({
   type: currentSidebarActionTypes.SET_CURRENT_SIDEBAR,
   payload: upcomingSidebarCode,

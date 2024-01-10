@@ -1,4 +1,4 @@
-import State from "./stateInterface";
+import { PointsToDisplayState } from "../reducers/pointsToDisplay";
 
 export const pointsToDisplayActionTypes = {
   FETCH_POINTS_SUCCESS: "FETCH_POINTS_SUCCESS",
@@ -6,13 +6,13 @@ export const pointsToDisplayActionTypes = {
 };
 
 export interface FetchPointsSuccessAction {
-  type: string;
-  payload: State["pointsToDisplay"];
+  type: typeof pointsToDisplayActionTypes.FETCH_POINTS_SUCCESS;
+  payload: PointsToDisplayState["pointsToDisplay"];
 }
 
 export interface FetchPointsFailureAction {
-  type: string;
-  payload: Error;
+  type: typeof pointsToDisplayActionTypes.FETCH_POINT_FAILURE;
+  payload: PointsToDisplayState["error"];
 }
 
 export type FetchPointsAction =

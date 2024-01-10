@@ -5,9 +5,10 @@ import {
   FetchPointsSuccessAction,
   pointsToDisplayActionTypes,
 } from "../constants/pointsToDisplay";
+import { PointsToDisplayState } from "../reducers/pointsToDisplay";
 
 export const fetchPointsSuccess = (
-  pointsToDisplay: State["pointsToDisplay"]
+  pointsToDisplay: PointsToDisplayState["pointsToDisplay"]
 ): FetchPointsSuccessAction => ({
   type: pointsToDisplayActionTypes.FETCH_POINTS_SUCCESS,
   payload: pointsToDisplay,

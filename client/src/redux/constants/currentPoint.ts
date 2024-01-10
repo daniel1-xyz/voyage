@@ -6,12 +6,12 @@ export const currentPointActionTypes = {
 };
 
 export interface SetCurrentPointAction {
-  type: string;
+  type: typeof currentPointActionTypes.SET_CURRENT_POINT;
   payload: MapPoint;
 }
 
 export interface ResetCurrentPointAction {
-  type: string;
+  type: typeof currentPointActionTypes.RESET_CURRENT_POINT;
 }
 
 export type CurrentPointAction =

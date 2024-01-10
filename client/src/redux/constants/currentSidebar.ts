@@ -1,4 +1,4 @@
-import State from "./stateInterface";
+import { CurrentSidebarState } from "../reducers/currentSidebar";
 
 export const currentSidebarActionTypes = {
   SET_CURRENT_SIDEBAR: "SET_CURRENT_SIDEBAR",
@@ -6,12 +6,12 @@ export const currentSidebarActionTypes = {
 };
 
 export interface SetCurrentSidebarAction {
-  type: string;
-  payload: State["currentSidebar"];
+  type: typeof currentSidebarActionTypes.SET_CURRENT_SIDEBAR;
+  payload: CurrentSidebarState["currentSidebar"];
 }
 
 export interface ResetCurrentSidebarAction {
-  type: string;
+  type: typeof currentSidebarActionTypes.RESET_CURRENT_SIDEBAR;
 }
 
 export type CurrentSidebarAction =

@@ -4,14 +4,11 @@ import defaultState from "./constants/defaultState";
 import State from "./constants/stateInterface";
 import { thunk } from "redux-thunk";
 
-const rootState: State = {
-  pointsToDisplay: defaultState.POINTS_TO_DISPLAY,
-  currentSidebar: defaultState.CURRENT_SIDEBAR,
-  currentPoint: defaultState.CURRENT_POINT,
-};
-
 const enhancer = applyMiddleware(thunk);
 
-const store = createStore(rootReducer, rootState as Partial<State>, enhancer);
+const store = createStore(rootReducer, {}, enhancer);
+
+export type RootState = typeof store.getState;
+export type AppDispatch = typeof store.dispatch;
 
 export default store;

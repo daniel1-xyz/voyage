@@ -1,3 +1,4 @@
+import { MapPoint } from "../../types/point";
 import {
   currentPointActionTypes,
   CurrentPointAction,
@@ -6,15 +7,26 @@ import {
 import defaultState from "../constants/defaultState";
 import State from "../constants/stateInterface";
 
+export interface CurrentPointState {
+  currentPoint: MapPoint | undefined;
+}
+
+const initialState = {
+  currentPoint: undefined,
+};
+
 export const currentPointReducer = (
-  state: State["currentPoint"],
+  state: CurrentPointState = initialState,
   action: CurrentPointAction
 ): State["currentPoint"] => {
   switch (action.type) {
     case currentPointActionTypes.SET_CURRENT_POINT:
-      return (action as SetCurrentPointAction).payload;
+      return {
+        ...state,
+        currentPoint: (action as SetCurrentPointAction).payload,
+      };
     case currentPointActionTypes.RESET_CURRENT_POINT:
-      return defaultState.CURRENT_POINT;
+      return { ...state, currentPoint: defaultState.CURRENT_POINT };
     default:
       return state;
   }
