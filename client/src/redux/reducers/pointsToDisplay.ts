@@ -28,7 +28,7 @@ export const pointsToDisplayReducer = (
         pointsToDisplay: (action as FetchPointsSuccessAction).payload,
       };
     case pointsToDisplayActionTypes.FETCH_POINT_FAILURE:
-      return { ...state, error: (action as FetchPointsFailureAction).payload };
+    // return { ...state, error: (action as FetchPointsFailureAction).payload };
     default:
       return state;
   }

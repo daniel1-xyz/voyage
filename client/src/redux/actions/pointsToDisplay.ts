@@ -14,5 +14,5 @@ export const fetchPointsSuccess = (
 
 export const fetchPointsFailure = (error: Error): FetchPointsFailureAction => ({
   type: pointsToDisplayActionTypes.FETCH_POINT_FAILURE,
-  payload: error,
+  // payload: error,
 });
