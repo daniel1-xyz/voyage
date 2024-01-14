@@ -11,6 +11,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import { setCurrentSidebar } from "../redux/actions/currentSidebar";
 import fetchPointsToDisplay from "../redux/actions/asyncActions/fetchPointsToDisplay";
+import { setCurrentPoint } from "../redux/actions/currentPoint";
+import { MapPoint } from "../types/point";
 
 const CIRCLE_RADIUS = 50;
 const CIRCLE_OPACITY = 50;
@@ -64,7 +66,7 @@ export const ToursMap = () => {
     dispatch(setCurrentSidebar(sidebarCodes.ADD_SIDEBAR));
   };
 
-  const openDisplaySidebar = (pointId: string) => {
+  const openDisplaySidebar = () => {
     dispatch(setCurrentSidebar(sidebarCodes.DISPLAY_SIDEBAR));
   };
 
@@ -92,7 +94,12 @@ export const ToursMap = () => {
             key={point.id}
             eventHandlers={{
               click: (e) => {
-                openDisplaySidebar(String(point.id));
+                const newCurrentPoint: MapPoint | undefined =
+                  pointsToDisplay.find(
+                    (pointToDisplay) => pointToDisplay.id === point.id
+                  );
+                newCurrentPoint && dispatch(setCurrentPoint(newCurrentPoint));
+                openDisplaySidebar();
                 e.originalEvent.stopPropagation();
               },
             }}
