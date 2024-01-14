@@ -9,29 +9,25 @@ import {
 } from "./muiStyledComponents";
 import { useEffect, useState } from "react";
 import { MapPoint } from "../../types/point";
-import { PointRating, PointRatingRow } from "../../types/pointRating";
-import {
-  addRatingForPoint,
-  getAllRatingsForPoint,
-} from "../../services/pointRatingServices";
+import { PointRating } from "../../types/pointRating";
+import { addRatingForPoint } from "../../services/pointRatingServices";
 
 export const DisplayPointSidebar = ({
-  pointId,
+  currentPoint,
   isSidebarOpen,
   closeSidebar,
 }: {
-  pointId: string;
+  currentPoint: MapPoint | undefined;
   isSidebarOpen: boolean;
   closeSidebar: () => void;
 }) => {
   const [isRatingOptionEnabled, setIsRatingOptionEnabled] = useState(false);
   const [userRating, setUserRating] = useState<PointRating | 0>(0);
-  const [pointDetails, setPointDetails] = useState<MapPoint | undefined>(
-    undefined
-  );
 
   const handleClose = async () => {
-    userRating && (await addRatingForPoint(pointId, userRating));
+    userRating &&
+      currentPoint?.id &&
+      (await addRatingForPoint(currentPoint?.id, userRating));
     setIsRatingOptionEnabled(false);
     setUserRating(0);
     closeSidebar();
@@ -53,33 +49,33 @@ export const DisplayPointSidebar = ({
         />
         <DividerLine />
         <Section>
-          <strong>{pointDetails?.pointType}</strong>
+          <strong>{currentPoint?.pointType}</strong>
         </Section>
         <Section>
           <strong>תיאור הנקודה</strong>
-          <Paragraph>{pointDetails?.description}</Paragraph>
+          <Paragraph>{currentPoint?.description}</Paragraph>
         </Section>
-        {pointDetails?.pointType === "אטרקציה" && (
+        {currentPoint?.pointType === "אטרקציה" && (
           <Section>
             <strong>מחיר</strong>
-            <Paragraph>{pointDetails?.price?.toString()}</Paragraph>
+            <Paragraph>{currentPoint?.price?.toString()}</Paragraph>
           </Section>
         )}
         <Section>
           <strong>מיקום הנקודה</strong>
           <div>
             <strong>מיקום X</strong>
-            <Paragraph>{pointDetails?.longitude.toString()}</Paragraph>
+            <Paragraph>{currentPoint?.longitude.toString()}</Paragraph>
           </div>
           <div>
             <strong>מיקום Y</strong>
-            <Paragraph>{pointDetails?.latitude.toString()}</Paragraph>
+            <Paragraph>{currentPoint?.latitude.toString()}</Paragraph>
           </div>
         </Section>
         <Section>
           <strong>דירוג</strong>
           <Paragraph>
-            {pointDetails?.avgRating || 0}
+            {currentPoint?.avgRating || 0}
             <AddRatingButton onClick={enableRatingOption}>
               הוספת דירוג
             </AddRatingButton>

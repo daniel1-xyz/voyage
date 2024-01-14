@@ -1,13 +1,16 @@
 import { MapContainer, TileLayer, Circle } from "react-leaflet";
 import { styled } from "@mui/material/styles";
 import { AddPointButton } from "../components/AddPointButton";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { AddPointSidebar } from "../components/AddPointSidebar/AddPointSidebar";
 import "leaflet/dist/leaflet.css";
-import { getAllPoints } from "../services/pointServices";
-import { MapPoint } from "../types/point";
+import sidebarCodes from "../redux/constants/sidebarCodes";
 import { PointType } from "../types/pointTypes";
 import { DisplayPointSidebar } from "../components/DisplayPointSidebar/DisplayPointSidebar";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../redux/store";
+import { setCurrentSidebar } from "../redux/actions/currentSidebar";
+import fetchPointsToDisplay from "../redux/actions/asyncActions/fetchPointsToDisplay";
 
 const CIRCLE_RADIUS = 50;
 const CIRCLE_OPACITY = 50;
@@ -42,40 +45,31 @@ const getColorByPointType = (pointType: PointType | "") => {
 };
 
 export const ToursMap = () => {
-  const [isAddSidebarOpen, setIsAddSidebarOpen] = useState(false);
-  const [isDisplaySidebarOpen, setIsDisplaySidebarOpen] = useState(false);
-  const [displaySidebarId, setDisplaySidebarId] = useState("");
-  const [pointsToDisplay, setPointsToDisplay] = useState<
-    Array<MapPoint> | undefined
-  >(undefined);
+  const dispatch: AppDispatch = useDispatch();
+  const currentSidebar = useSelector(
+    (state: RootState) => state.currentSidebar["currentSidebar"]
+  );
+  const currentPoint = useSelector(
+    (state: RootState) => state.currentPoint["currentPoint"]
+  );
+  const pointsToDisplay = useSelector(
+    (state: RootState) => state.pointsToDisplay["pointsToDisplay"]
+  );
 
   useEffect(() => {
-    const getPointsToDisplay = async () => {
-      const points = await getAllPoints();
-      setPointsToDisplay(points ? points.data : undefined);
-    };
-    getPointsToDisplay();
-  });
+    dispatch(fetchPointsToDisplay);
+  }, [dispatch]);
 
   const openAddSidebar = () => {
-    setIsDisplaySidebarOpen(false);
-    setDisplaySidebarId("");
-    setIsAddSidebarOpen(true);
-  };
-
-  const closeAddSidebar = () => {
-    setIsAddSidebarOpen(false);
+    dispatch(setCurrentSidebar(sidebarCodes.ADD_SIDEBAR));
   };
 
   const openDisplaySidebar = (pointId: string) => {
-    setIsAddSidebarOpen(false);
-    setIsDisplaySidebarOpen(true);
-    setDisplaySidebarId(pointId);
+    dispatch(setCurrentSidebar(sidebarCodes.DISPLAY_SIDEBAR));
   };
 
-  const closeDisplaySidebar = () => {
-    setIsDisplaySidebarOpen(false);
-    setDisplaySidebarId("");
+  const closeSidebar = () => {
+    dispatch(setCurrentSidebar(sidebarCodes.NO_SIDEBAR));
   };
 
   return (
@@ -104,17 +98,18 @@ export const ToursMap = () => {
             }}
           />
         ))}
-        {!isAddSidebarOpen && (
+        {/* If Add Sidebar isn't open */}
+        {!(currentSidebar === sidebarCodes.ADD_SIDEBAR) && (
           <AddPointButton openAddSidebar={openAddSidebar} />
         )}
         <AddPointSidebar
-          isSidebarOpen={isAddSidebarOpen}
-          closeSidebar={closeAddSidebar}
+          isSidebarOpen={currentSidebar === sidebarCodes.ADD_SIDEBAR}
+          closeSidebar={closeSidebar}
         />
         <DisplayPointSidebar
-          pointId={displaySidebarId}
-          isSidebarOpen={isDisplaySidebarOpen}
-          closeSidebar={closeDisplaySidebar}
+          currentPoint={currentPoint}
+          isSidebarOpen={currentSidebar === sidebarCodes.DISPLAY_SIDEBAR}
+          closeSidebar={closeSidebar}
         />
       </FullMapContainer>
     </TourMapWrapper>
