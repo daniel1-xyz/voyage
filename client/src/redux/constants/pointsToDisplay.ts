@@ -12,7 +12,6 @@ export interface FetchPointsSuccessAction {
 
 export interface FetchPointsFailureAction {
   type: typeof pointsToDisplayActionTypes.FETCH_POINT_FAILURE;
-  // payload: PointsToDisplayState["error"];
 }
 
 export type FetchPointsAction =
