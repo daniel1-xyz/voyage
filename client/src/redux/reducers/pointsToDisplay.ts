@@ -9,12 +9,10 @@ import { RootState } from "../store";
 
 export interface PointsToDisplayState {
   pointsToDisplay: Array<MapPoint>;
-  error: Error | null;
 }
 
 export const initialState: PointsToDisplayState = {
   pointsToDisplay: [],
-  error: null,
 };
 
 export const pointsToDisplayReducer = (
