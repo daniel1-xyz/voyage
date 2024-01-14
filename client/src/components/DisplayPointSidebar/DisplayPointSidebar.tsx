@@ -25,6 +25,7 @@ export const DisplayPointSidebar = ({
   const [userRating, setUserRating] = useState<PointRating | 0>(0);
 
   const handleClose = async () => {
+    if (!isSidebarOpen) return;
     userRating &&
       currentPoint?.id &&
       (await addRatingForPoint(currentPoint?.id, userRating));

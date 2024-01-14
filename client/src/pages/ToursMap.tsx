@@ -47,15 +47,15 @@ const getColorByPointType = (pointType: PointType | "") => {
 };
 
 export const ToursMap = () => {
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const currentSidebar = useSelector(
-    (state: RootState) => state.currentSidebar["currentSidebar"]
+    (state: RootState) => state.currentSidebar.currentSidebar
   );
   const currentPoint = useSelector(
-    (state: RootState) => state.currentPoint["currentPoint"]
+    (state: RootState) => state.currentPoint.currentPoint
   );
   const pointsToDisplay = useSelector(
-    (state: RootState) => state.pointsToDisplay["pointsToDisplay"]
+    (state: RootState) => state.pointsToDisplay.pointsToDisplay
   );
 
   useEffect(() => {

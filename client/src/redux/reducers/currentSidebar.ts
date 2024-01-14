@@ -3,11 +3,11 @@ import {
   SetCurrentSidebarAction,
   currentSidebarActionTypes,
 } from "../constants/currentSidebar";
-import sidebarCodes from "../constants/sidebarCodes";
+import sidebarCodes, { SidebarCodeType } from "../constants/sidebarCodes";
 import { RootState } from "../store";
 
 export interface CurrentSidebarState {
-  currentSidebar: string;
+  currentSidebar: SidebarCodeType;
 }
 
 export const initialState: CurrentSidebarState = {
