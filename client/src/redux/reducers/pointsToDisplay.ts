@@ -29,13 +29,10 @@ export const pointsToDisplayReducer = (
     case pointsToDisplayActionTypes.FETCH_POINT_FAILURE:
       return { ...state, pointsToDisplay: initialState.pointsToDisplay };
     case pointsToDisplayActionTypes.UPDATE_SPECIFIC_POINT:
-      const updatedPointsToDisplay: Array<MapPoint> =
-        state.pointsToDisplay.slice();
       const updatedPoint = (action as UpdateSpecificPointAction).payload;
-      const indexToUpdate = updatedPointsToDisplay.findIndex(
-        (point) => point.id === updatedPoint.id
+      const updatedPointsToDisplay: Array<MapPoint> = state.pointsToDisplay.map(
+        (point) => (point.id === updatedPoint.id ? updatedPoint : point)
       );
-      updatedPointsToDisplay[indexToUpdate] = updatedPoint;
       return { ...state, pointsToDisplay: updatedPointsToDisplay };
     case pointsToDisplayActionTypes.INSERT_POINT:
       return {
