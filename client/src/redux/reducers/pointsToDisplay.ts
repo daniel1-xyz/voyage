@@ -1,8 +1,9 @@
 import { MapPoint } from "../../types/point";
 import {
   FetchPointsAction,
-  FetchPointsFailureAction,
   FetchPointsSuccessAction,
+  InsertPointAction,
+  UpdateSpecificPointAction,
   pointsToDisplayActionTypes,
 } from "../constants/pointsToDisplay";
 import { RootState } from "../store";
@@ -27,6 +28,23 @@ export const pointsToDisplayReducer = (
       };
     case pointsToDisplayActionTypes.FETCH_POINT_FAILURE:
       return { ...state, pointsToDisplay: initialState.pointsToDisplay };
+    case pointsToDisplayActionTypes.UPDATE_SPECIFIC_POINT:
+      const updatedPointsToDisplay: Array<MapPoint> =
+        state.pointsToDisplay.slice();
+      const updatedPoint = (action as UpdateSpecificPointAction).payload;
+      const indexToUpdate = updatedPointsToDisplay.findIndex(
+        (point) => point.id === updatedPoint.id
+      );
+      updatedPointsToDisplay[indexToUpdate] = updatedPoint;
+      return { ...state, pointsToDisplay: updatedPointsToDisplay };
+    case pointsToDisplayActionTypes.INSERT_POINT:
+      return {
+        ...state,
+        pointsToDisplay: [
+          ...state.pointsToDisplay,
+          (action as InsertPointAction).payload,
+        ],
+      };
     default:
       return state;
   }

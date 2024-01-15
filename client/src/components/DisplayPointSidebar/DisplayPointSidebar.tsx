@@ -11,6 +11,9 @@ import { useEffect, useState } from "react";
 import { MapPoint } from "../../types/point";
 import { PointRating } from "../../types/pointRating";
 import { addRatingForPoint } from "../../services/pointRatingServices";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../redux/store";
+import { updateSpecificPoint } from "../../redux/actions/pointsToDisplay";
 
 export const DisplayPointSidebar = ({
   currentPoint,
@@ -21,14 +24,24 @@ export const DisplayPointSidebar = ({
   isSidebarOpen: boolean;
   closeSidebar: () => void;
 }) => {
+  const dispatch = useDispatch<AppDispatch>();
+
   const [isRatingOptionEnabled, setIsRatingOptionEnabled] = useState(false);
   const [userRating, setUserRating] = useState<PointRating | 0>(0);
 
   const handleClose = async () => {
+    // To avoid other sidebar close in case the sidebar isn't open
     if (!isSidebarOpen) return;
-    userRating &&
-      currentPoint?.id &&
-      (await addRatingForPoint(currentPoint?.id, userRating));
+
+    if (userRating && currentPoint?.id) {
+      try {
+        await addRatingForPoint(currentPoint?.id, userRating);
+        dispatch(updateSpecificPoint({ ...currentPoint, avgRating: 0 }));
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
     setIsRatingOptionEnabled(false);
     setUserRating(0);
     closeSidebar();
