@@ -13,6 +13,8 @@ import { setCurrentSidebar } from "../redux/actions/currentSidebar";
 import fetchPointsToDisplay from "../redux/actions/asyncActions/fetchPointsToDisplay";
 import { setCurrentPoint } from "../redux/actions/currentPoint";
 import { MapPoint } from "../types/point";
+import { ThunkDispatch } from "redux-thunk";
+import { AnyAction } from "redux";
 
 const CIRCLE_RADIUS = 50;
 const CIRCLE_OPACITY = 50;
@@ -59,7 +61,7 @@ export const ToursMap = () => {
   );
 
   useEffect(() => {
-    dispatch(fetchPointsToDisplay);
+    dispatch(fetchPointsToDisplay());
   }, [dispatch]);
 
   const openAddSidebar = () => {
