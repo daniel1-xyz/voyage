@@ -13,6 +13,14 @@ export const getAllPoints = async () => {
   }
 };
 
+export const getPointById = async (pointId: string) => {
+  try {
+    return await server.get(`/point/${pointId}`, { params: { pointId } });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export const createPoint = async (point: MapPoint) => {
   try {
     await server.post("/points/new", {

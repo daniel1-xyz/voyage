@@ -14,6 +14,7 @@ import { addRatingForPoint } from "../../services/pointRatingServices";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../redux/store";
 import { updateSpecificPoint } from "../../redux/actions/pointsToDisplay";
+import { getPointById } from "../../services/pointServices";
 
 export const DisplayPointSidebar = ({
   currentPoint,
@@ -35,8 +36,10 @@ export const DisplayPointSidebar = ({
 
     if (userRating && currentPoint?.id) {
       try {
-        await addRatingForPoint(currentPoint?.id, userRating);
-        dispatch(updateSpecificPoint({ ...currentPoint, avgRating: 0 }));
+        await addRatingForPoint(currentPoint.id, userRating);
+        const updatedPoint: MapPoint = (await getPointById(currentPoint.id))
+          ?.data;
+        dispatch(updateSpecificPoint(updatedPoint));
       } catch (error) {
         console.error(error);
       }
