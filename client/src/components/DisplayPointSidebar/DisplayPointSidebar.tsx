@@ -35,14 +35,10 @@ export const DisplayPointSidebar = ({
     if (!isSidebarOpen) return;
 
     if (userRating && currentPoint?.id) {
-      try {
-        await addRatingForPoint(currentPoint.id, userRating);
-        const updatedPoint: MapPoint = (await getPointById(currentPoint.id))
-          ?.data;
-        dispatch(updateSpecificPoint(updatedPoint));
-      } catch (error) {
-        console.error(error);
-      }
+      await addRatingForPoint(currentPoint.id, userRating);
+      const updatedPoint: MapPoint = (await getPointById(currentPoint.id))
+        ?.data;
+      dispatch(updateSpecificPoint(updatedPoint));
     }
 
     setIsRatingOptionEnabled(false);
@@ -53,8 +49,6 @@ export const DisplayPointSidebar = ({
   const enableRatingOption = () => {
     setIsRatingOptionEnabled(true);
   };
-
-  useEffect(() => {});
 
   return (
     <ClickAwayListener onClickAway={handleClose}>

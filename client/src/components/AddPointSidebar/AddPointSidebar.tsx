@@ -21,6 +21,9 @@ import {
   SaveButton,
   FullHeightFormControl,
 } from "./muiStyledComponents";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../redux/store";
+import fetchPointsToDisplay from "../../redux/actions/asyncActions/fetchPointsToDisplay";
 
 const MAX_CHARACTERS_DESC = 256;
 
@@ -31,6 +34,8 @@ export const AddPointSidebar = ({
   isSidebarOpen: boolean;
   closeSidebar: () => void;
 }) => {
+  const dispatch = useDispatch<AppDispatch>();
+
   const [isMapPinToggled, setIsMapPinToggled] = useState<boolean>(false);
   const [newPoint, setNewPoint] = useState<Partial<MapPoint>>({});
 
@@ -54,9 +59,10 @@ export const AddPointSidebar = ({
     setNewPoint({});
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (isPointValid(newPoint)) {
-      createPoint(newPoint);
+      await createPoint(newPoint);
+      dispatch(fetchPointsToDisplay());
       handleCloseSidebar();
     }
   };
