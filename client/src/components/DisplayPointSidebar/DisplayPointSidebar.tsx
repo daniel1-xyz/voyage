@@ -31,7 +31,7 @@ export const DisplayPointSidebar = ({
   const [userRating, setUserRating] = useState<PointRating | 0>(0);
 
   const handleClose = async () => {
-    // To avoid other sidebar close in case the sidebar isn't open
+    // To prevent other sidebar close in case the sidebar isn't open
     if (!isSidebarOpen) return;
 
     if (userRating && currentPoint?.id) {
@@ -41,9 +41,13 @@ export const DisplayPointSidebar = ({
       dispatch(updateSpecificPoint(updatedPoint));
     }
 
+    resetRatingState();
+    closeSidebar();
+  };
+
+  const resetRatingState = () => {
     setIsRatingOptionEnabled(false);
     setUserRating(0);
-    closeSidebar();
   };
 
   const enableRatingOption = () => {
