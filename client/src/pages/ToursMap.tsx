@@ -66,7 +66,8 @@ export const ToursMap = () => {
     dispatch(setCurrentSidebar(sidebarCodes.ADD_SIDEBAR));
   };
 
-  const openDisplaySidebar = () => {
+  const openDisplaySidebar = (sidebarPointToDisplay: MapPoint) => {
+    dispatch(setCurrentPoint(sidebarPointToDisplay));
     dispatch(setCurrentSidebar(sidebarCodes.DISPLAY_SIDEBAR));
   };
 
@@ -98,8 +99,7 @@ export const ToursMap = () => {
                   pointsToDisplay.find(
                     (pointToDisplay) => pointToDisplay.id === point.id
                   );
-                newCurrentPoint && dispatch(setCurrentPoint(newCurrentPoint));
-                openDisplaySidebar();
+                newCurrentPoint && openDisplaySidebar(newCurrentPoint);
                 e.originalEvent.stopPropagation();
               },
             }}
