@@ -27,7 +27,7 @@ export const pointsToDisplayReducer = (
         pointsToDisplay: (action as FetchPointsSuccessAction).payload,
       };
     case pointsToDisplayActionTypes.FETCH_POINT_FAILURE:
-      return { ...state, pointsToDisplay: initialState.pointsToDisplay };
+      return state;
     case pointsToDisplayActionTypes.UPDATE_SPECIFIC_POINT:
       const updatedPoint = (action as UpdateSpecificPointAction).payload;
       const updatedPointsToDisplay: Array<MapPoint> = state.pointsToDisplay.map(
