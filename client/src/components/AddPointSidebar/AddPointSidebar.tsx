@@ -61,8 +61,13 @@ export const AddPointSidebar = ({
 
   const handleSubmit = async () => {
     if (isPointValid(newPoint)) {
-      await createPoint(newPoint);
-      dispatch(fetchPointsToDisplay());
+      try {
+        await createPoint(newPoint);
+        dispatch(fetchPointsToDisplay());
+      } catch (error) {
+        console.error("Error creating point: " + error);
+      }
+
       handleCloseSidebar();
     }
   };

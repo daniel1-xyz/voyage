@@ -35,10 +35,14 @@ export const DisplayPointSidebar = ({
     if (!isSidebarOpen) return;
 
     if (userRating && currentPoint?.id) {
-      await addRatingForPoint(currentPoint.id, userRating);
-      const updatedPoint: MapPoint = (await getPointById(currentPoint.id))
-        ?.data;
-      dispatch(updateSpecificPoint(updatedPoint));
+      try {
+        await addRatingForPoint(currentPoint.id, userRating);
+        const updatedPoint: MapPoint = (await getPointById(currentPoint.id))
+          ?.data;
+        dispatch(updateSpecificPoint(updatedPoint));
+      } catch (error) {
+        console.error("Error updating point: " + error);
+      }
     }
 
     resetRatingState();
