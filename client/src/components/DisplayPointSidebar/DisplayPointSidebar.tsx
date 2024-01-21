@@ -7,7 +7,7 @@ import {
   AddRatingButton,
   CenteredRating,
 } from "./muiStyledComponents";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MapPoint } from "../../types/point";
 import { PointRating } from "../../types/pointRating";
 import { addRatingForPoint } from "../../services/pointRatingServices";
