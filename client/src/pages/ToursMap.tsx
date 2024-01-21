@@ -106,7 +106,7 @@ export const ToursMap = () => {
           />
         ))}
         {/* If Add Sidebar isn't open */}
-        {!(currentSidebar === sidebarCodes.ADD_SIDEBAR) && (
+        {currentSidebar !== sidebarCodes.ADD_SIDEBAR && (
           <AddPointButton openAddSidebar={openAddSidebar} />
         )}
         <AddPointSidebar
