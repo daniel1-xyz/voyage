@@ -23,7 +23,7 @@ import {
 } from "./muiStyledComponents";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../redux/store";
-import fetchPointsToDisplay from "../../redux/actions/asyncActions/fetchPointsToDisplay";
+import { fetchPointsToDisplay } from "../../redux/actions/asyncActions/fetchPointsToDisplay";
 
 const MAX_CHARACTERS_DESC = 256;
 
