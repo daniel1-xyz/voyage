@@ -4,13 +4,13 @@ import { AddPointButton } from "../components/AddPointButton";
 import { useEffect } from "react";
 import { AddPointSidebar } from "../components/AddPointSidebar/AddPointSidebar";
 import "leaflet/dist/leaflet.css";
-import sidebarCodes from "../redux/constants/sidebarCodes";
+import { sidebarCodes } from "../redux/constants/sidebarCodes";
 import { PointType } from "../types/pointTypes";
 import { DisplayPointSidebar } from "../components/DisplayPointSidebar/DisplayPointSidebar";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../redux/store";
 import { setCurrentSidebar } from "../redux/actions/currentSidebar";
-import fetchPointsToDisplay from "../redux/actions/asyncActions/fetchPointsToDisplay";
+import { fetchPointsToDisplay } from "../redux/actions/asyncActions/fetchPointsToDisplay";
 import { setCurrentPoint } from "../redux/actions/currentPoint";
 import { MapPoint } from "../types/point";
 

@@ -3,7 +3,7 @@ import {
   SetCurrentSidebarAction,
   currentSidebarActionTypes,
 } from "../constants/currentSidebar";
-import sidebarCodes, { SidebarCodeType } from "../constants/sidebarCodes";
+import { sidebarCodes, SidebarCodeType } from "../constants/sidebarCodes";
 import { RootState } from "../store";
 
 export interface CurrentSidebarState {

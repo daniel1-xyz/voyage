@@ -4,12 +4,10 @@ interface SidebarCodes {
   NO_SIDEBAR: SidebarCodeType;
 }
 
-const sidebarCodes: SidebarCodes = {
+export const sidebarCodes: SidebarCodes = {
   ADD_SIDEBAR: "add",
   DISPLAY_SIDEBAR: "display",
   NO_SIDEBAR: "none",
 };
 
 export type SidebarCodeType = "add" | "display" | "none";
-
-export default sidebarCodes;

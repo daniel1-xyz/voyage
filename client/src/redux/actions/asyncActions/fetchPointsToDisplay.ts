@@ -3,7 +3,7 @@ import { fetchPointsFailure, fetchPointsSuccess } from "../pointsToDisplay";
 import { AppAction, RootState } from "../../store";
 import { ThunkAction } from "redux-thunk";
 
-const fetchPointsToDisplay = (): ThunkAction<
+export const fetchPointsToDisplay = (): ThunkAction<
   void,
   RootState,
   unknown,
@@ -18,5 +18,3 @@ const fetchPointsToDisplay = (): ThunkAction<
     }
   };
 };
-
-export default fetchPointsToDisplay;
