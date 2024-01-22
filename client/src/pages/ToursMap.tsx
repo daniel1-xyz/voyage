@@ -3,7 +3,7 @@ import { styled } from "@mui/material/styles";
 import { AddPointButton } from "../components/AddPointButton";
 import { useEffect } from "react";
 import { AddPointSidebar } from "../components/AddPointSidebar/AddPointSidebar";
-import "leaflet/dist/leaflet.css";
+import { FilterSearchBar } from "../components/FilterSearchBar/FilterSearchBar";
 import { sidebarCodes } from "../redux/constants/sidebarCodes";
 import { PointType } from "../types/pointTypes";
 import { DisplayPointSidebar } from "../components/DisplayPointSidebar/DisplayPointSidebar";
@@ -13,6 +13,7 @@ import { setCurrentSidebar } from "../redux/actions/currentSidebar";
 import { fetchPointsToDisplay } from "../redux/actions/asyncActions/fetchPointsToDisplay";
 import { setCurrentPoint } from "../redux/actions/currentPoint";
 import { MapPoint } from "../types/point";
+import "leaflet/dist/leaflet.css";
 
 const CIRCLE_RADIUS = 50;
 const CIRCLE_OPACITY = 50;
@@ -109,6 +110,7 @@ export const ToursMap = () => {
         {currentSidebar !== sidebarCodes.ADD_SIDEBAR && (
           <AddPointButton openAddSidebar={openAddSidebar} />
         )}
+        {currentSidebar === sidebarCodes.NO_SIDEBAR && <FilterSearchBar />}
         <AddPointSidebar
           isSidebarOpen={currentSidebar === sidebarCodes.ADD_SIDEBAR}
           closeSidebar={closeSidebar}
