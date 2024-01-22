@@ -1,6 +1,6 @@
 import { Divider, IconButton, TextField, styled } from "@mui/material";
 
-export const FilterSearchBarWrapper = styled("div")({
+export const FilterSearchBarWrapper = styled("span")({
   position: "absolute",
   top: "1rem",
   right: "1rem",
@@ -18,6 +18,14 @@ export const SearchFilterField = styled(TextField)({
   width: "100%",
   "& fieldset": {
     border: "none",
+  },
+  "& input": {
+    color: "#000",
+    fontFamily: "calibri",
+    fontSize: "1.125rem",
+    "::placeholder": {
+      opacity: "50%",
+    },
   },
 });
 
