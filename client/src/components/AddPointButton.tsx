@@ -3,8 +3,8 @@ import AddIcon from "@mui/icons-material/Add";
 
 const AddButton = styled(IconButton)({
   position: "absolute",
-  bottom: "1%",
-  left: "1%",
+  bottom: "1rem",
+  left: "1rem",
   height: "5rem",
   width: "5rem",
   fontSize: "3rem",
