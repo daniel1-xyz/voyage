@@ -1,14 +1,17 @@
 import { Divider, IconButton, TextField, styled } from "@mui/material";
 
-export const FilterSearchBarWrapper = styled("span")({
+export const FilterSearchBarWrapper = styled("div")({
   position: "absolute",
   top: "1rem",
   right: "1rem",
-  direction: "rtl",
-  backgroundColor: "#fff",
   zIndex: "1000",
+  backgroundColor: "#fff",
   borderRadius: "2rem",
   width: "24rem",
+});
+
+export const FilterSearchRow = styled("span")({
+  direction: "rtl",
   paddingInline: "0.5rem",
   border: "none",
   display: "flex",
