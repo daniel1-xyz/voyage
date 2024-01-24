@@ -29,8 +29,9 @@ export const FilterSearchBar = () => {
     setFilterPreferences((prevState) => ({ ...prevState, pointType }));
   };
 
-  const closeMenu = () => {
+  const handleCloseMenu = () => {
     setIsFilterMenuOpen(false);
+    setFilterPreferences({});
   };
 
   const openMenu = () => {
@@ -108,7 +109,7 @@ export const FilterSearchBar = () => {
           >
             <CheckCircleOutlineOutlinedIcon fontSize="large" />
           </FinalButton>
-          <FinalButton color="error" onClick={closeMenu}>
+          <FinalButton color="error" onClick={handleCloseMenu}>
             <CancelOutlinedIcon fontSize="large" />
           </FinalButton>
         </FilterSection>
