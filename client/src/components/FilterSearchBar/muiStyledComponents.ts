@@ -1,4 +1,12 @@
-import { Divider, IconButton, TextField, styled } from "@mui/material";
+import {
+  Button,
+  Divider,
+  FormControl,
+  IconButton,
+  MenuItem,
+  TextField,
+  styled,
+} from "@mui/material";
 
 export const FilterSearchBarWrapper = styled("div")({
   position: "absolute",
@@ -7,11 +15,12 @@ export const FilterSearchBarWrapper = styled("div")({
   zIndex: "1000",
   backgroundColor: "#fff",
   borderRadius: "2rem",
-  width: "24rem",
+  width: "30rem",
+  direction: "rtl",
 });
 
 export const FilterSearchRow = styled("span")({
-  direction: "rtl",
+  direction: "inherit",
   paddingInline: "0.5rem",
   border: "none",
   display: "flex",
@@ -47,5 +56,73 @@ export const FilterButton = styled(IconButton)({
   "&:focus": {
     border: "none",
     outline: "none",
+  },
+});
+
+export const FilterSection = styled("div")({
+  display: "flex",
+  alignItems: "center",
+  fontSize: "1.125rem",
+  fontFamily: "calibri",
+  width: "90%",
+  marginInline: "auto",
+});
+
+export const FilterSelectField = styled(FormControl)({
+  direction: "inherit",
+  width: "12rem",
+  marginBlock: "0.4rem",
+  marginInline: "1rem",
+  textAlign: "start",
+  "& legend": {
+    textAlign: "start",
+  },
+  "& label": {
+    transformOrigin: "right !important",
+    left: "inherit !important",
+    right: "1.75rem !important",
+  },
+});
+
+export const SmallInputField = styled(TextField)({
+  marginBlock: "0.4rem",
+  marginInline: "1rem",
+  direction: "inherit",
+  textAlign: "start",
+  width: "5rem",
+  "& legend": {
+    textAlign: "start",
+  },
+  "& label": {
+    transformOrigin: "right !important",
+    left: "inherit !important",
+    right: "1.75rem !important",
+  },
+  "input::-webkit-outer-spin-button, input::-webkit-inner-spin-button": {
+    WebkitAppearance: "none",
+    margin: 0,
+  },
+  "input[type=number]": {
+    MozAppearance: "textfield",
+  },
+});
+
+export const SelectItem = styled(MenuItem)({
+  backgroundColor: "#fff !important",
+  direction: "rtl",
+});
+
+// TODO: Find a better name
+export const FinalButton = styled(IconButton)({
+  border: "none",
+  direction: "inherit",
+  fontFamily: "inherit",
+  fontSize: "inherit",
+  "&:focus": {
+    outline: "none",
+  },
+  "&:hover": {
+    backgroundColor: "transparent",
+    borderColor: "initial",
   },
 });
