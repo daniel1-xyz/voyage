@@ -100,11 +100,12 @@ export const FilterSearchBar = () => {
           ></SmallInputField>
         </FilterSection>
         <FilterSection>
-          <FinalButton color="success" disabled={!validatePreferences()}>
-            <CheckCircleOutlineOutlinedIcon
-              fontSize="large"
-              onClick={handlePreferences}
-            />
+          <FinalButton
+            color="success"
+            onClick={handlePreferences}
+            disabled={!validatePreferences()}
+          >
+            <CheckCircleOutlineOutlinedIcon fontSize="large" />
           </FinalButton>
           <FinalButton color="error" onClick={closeMenu}>
             <CancelOutlinedIcon fontSize="large" />
