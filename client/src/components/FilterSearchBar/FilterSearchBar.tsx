@@ -8,9 +8,11 @@ import {
   FullHeightDivider,
   FilterSearchBarWrapper,
   FilterSelectField,
+  FilterSectionTitle,
   SelectItem,
   FilterSection,
-  SmallInputField,
+  PriceInputField,
+  RatingInputField,
   FinalButton,
 } from "./muiStyledComponents";
 import { Collapse, InputLabel, Select } from "@mui/material";
@@ -52,7 +54,7 @@ export const FilterSearchBar = () => {
       </FilterSearchRow>
       <Collapse in={isFilterMenuOpen}>
         <FilterSection>
-          <strong>סוג הנקודה:</strong>
+          <FilterSectionTitle>סוג הנקודה:</FilterSectionTitle>
           <FilterSelectField>
             <InputLabel id="point-type-label-filter">סוג הנקודה</InputLabel>
             <Select
@@ -78,26 +80,25 @@ export const FilterSearchBar = () => {
           </FilterSelectField>
         </FilterSection>
         <FilterSection>
-          <strong>מחיר:</strong>
-          <SmallInputField
+          <FilterSectionTitle>מחיר:</FilterSectionTitle>
+          <PriceInputField
             type="number"
             id="filter-min-price"
             label="מינ'"
-          ></SmallInputField>
-          {" - "}
-          <SmallInputField
+          ></PriceInputField>
+          <PriceInputField
             type="number"
             id="filter-max-price"
             label="מקס'"
-          ></SmallInputField>
+          ></PriceInputField>
         </FilterSection>
         <FilterSection>
-          <strong>דירוג:</strong>
-          <SmallInputField
+          <FilterSectionTitle>דירוג:</FilterSectionTitle>
+          <RatingInputField
             type="number"
             id="filter-min-rating"
             label="מינ'"
-          ></SmallInputField>
+          ></RatingInputField>
         </FilterSection>
         <FilterSection>
           <FinalButton

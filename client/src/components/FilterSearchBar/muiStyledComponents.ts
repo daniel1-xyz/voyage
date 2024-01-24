@@ -1,5 +1,4 @@
 import {
-  Button,
   Divider,
   FormControl,
   IconButton,
@@ -68,6 +67,11 @@ export const FilterSection = styled("div")({
   marginInline: "auto",
 });
 
+export const FilterSectionTitle = styled("strong")({
+  width: "25%",
+  textAlign: "start",
+});
+
 export const FilterSelectField = styled(FormControl)({
   direction: "inherit",
   width: "12rem",
@@ -84,12 +88,35 @@ export const FilterSelectField = styled(FormControl)({
   },
 });
 
-export const SmallInputField = styled(TextField)({
+export const PriceInputField = styled(TextField)({
   marginBlock: "0.4rem",
   marginInline: "1rem",
   direction: "inherit",
   textAlign: "start",
   width: "5rem",
+  "& legend": {
+    textAlign: "start",
+  },
+  "& label": {
+    transformOrigin: "right !important",
+    left: "inherit !important",
+    right: "1.75rem !important",
+  },
+  "input::-webkit-outer-spin-button, input::-webkit-inner-spin-button": {
+    WebkitAppearance: "none",
+    margin: 0,
+  },
+  "input[type=number]": {
+    MozAppearance: "textfield",
+  },
+});
+
+export const RatingInputField = styled(TextField)({
+  marginBlock: "0.4rem",
+  marginInline: "1rem",
+  direction: "inherit",
+  textAlign: "start",
+  width: "12rem",
   "& legend": {
     textAlign: "start",
   },
