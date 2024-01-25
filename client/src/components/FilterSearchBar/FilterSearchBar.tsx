@@ -98,7 +98,9 @@ export const FilterSearchBar = () => {
           (!(filterPreferences.maxPrice || filterPreferences.minPrice) ||
             (pointToDisplay.price &&
               (!filterPreferences.maxPrice ||
-                pointToDisplay.price <= filterPreferences.maxPrice)))
+                pointToDisplay.price <= filterPreferences.maxPrice) &&
+              (!filterPreferences.minPrice ||
+                pointToDisplay.price <= filterPreferences.minPrice)))
       );
       dispatch(setFilteredPointsToDisplay(newFilteredPointsToDisplay));
     } else {
