@@ -1,6 +1,7 @@
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import CancelOutlinedIcon from "@mui/icons-material/CancelOutlined";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import {
   FilterButton,
   FilterSearchRow,
@@ -22,6 +23,7 @@ import { FilterPreferences } from "../../types/filterPreferences";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../../redux/store";
 import { setFilteredPointsToDisplay } from "../../redux/actions/filteredPointsToDisplay";
+import { MAX_RATING_LIMIT, MIN_RATING_LIMIT } from "../../types/pointRating";
 
 export const FilterSearchBar = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -32,21 +34,29 @@ export const FilterSearchBar = () => {
 
   const [searchText, setSearchText] = useState<string>("");
   const [isFilterMenuOpen, setIsFilterMenuOpen] = useState<boolean>(false);
-  const [filterPreferences, setFilterPreferences] = useState<
-    Partial<FilterPreferences>
-  >({});
+  const [filterPreferences, setFilterPreferences] = useState<FilterPreferences>(
+    {}
+  );
 
-  const setPointType = (pointType: string) => {
+  const setPointType = (pointType: FilterPreferences["pointType"]) => {
     setFilterPreferences((prevState) => ({ ...prevState, pointType }));
   };
-  const setMinPrice = (minPrice: number) => {
+  const setMinPrice = (minPrice: FilterPreferences["minPrice"]) => {
     setFilterPreferences((prevState) => ({ ...prevState, minPrice }));
   };
-  const setMaxPrice = (maxPrice: number) => {
+  const setMaxPrice = (maxPrice: FilterPreferences["maxPrice"]) => {
     setFilterPreferences((prevState) => ({ ...prevState, maxPrice }));
   };
-  const setMinRating = (minRating: number) => {
+  const setMinRating = (minRating: FilterPreferences["minRating"]) => {
     setFilterPreferences((prevState) => ({ ...prevState, minRating }));
+  };
+
+  let currentPreferences: FilterPreferences = {};
+
+  const resetPreferences = () => {
+    currentPreferences = {};
+    handleFilterByTextAndPreferences();
+    handleCloseMenu();
   };
 
   const isPriceOptionAllowed = (): boolean => {
@@ -71,16 +81,49 @@ export const FilterSearchBar = () => {
 
   const handleSearchTextChange = (newText: string) => {
     setSearchText(newText);
-    const newFilteredPointsToDisplay = pointsToDisplay.filter(
-      (pointToDisplay) => pointToDisplay.description.includes(newText)
-    );
-    dispatch(setFilteredPointsToDisplay(newFilteredPointsToDisplay));
+    handleFilterByTextAndPreferences();
   };
 
-  const handlePreferences = () => {};
+  const handleFilterByTextAndPreferences = () => {
+    if (currentPreferences) {
+      const newFilteredPointsToDisplay = pointsToDisplay.filter(
+        (pointToDisplay) =>
+          pointToDisplay.description.includes(searchText) &&
+          (pointToDisplay.pointType === filterPreferences.pointType ||
+            filterPreferences.pointType === "כל סוג נקודה" ||
+            !filterPreferences.pointType) &&
+          (!filterPreferences.minRating ||
+            (pointToDisplay.avgRating &&
+              pointToDisplay.avgRating >= filterPreferences.minRating)) &&
+          (!(filterPreferences.maxPrice || filterPreferences.minPrice) ||
+            (pointToDisplay.price &&
+              (!filterPreferences.maxPrice ||
+                pointToDisplay.price <= filterPreferences.maxPrice)))
+      );
+      dispatch(setFilteredPointsToDisplay(newFilteredPointsToDisplay));
+    } else {
+      const newFilteredPointsToDisplay = pointsToDisplay.filter(
+        (pointToDisplay) => pointToDisplay.description.includes(searchText)
+      );
+      dispatch(setFilteredPointsToDisplay(newFilteredPointsToDisplay));
+    }
+  };
+
+  const handlePreferences = () => {
+    validatePreferences() && (currentPreferences = filterPreferences);
+    handleFilterByTextAndPreferences();
+    handleCloseMenu();
+  };
 
   const validatePreferences = (): boolean => {
-    return false;
+    const isPriceValid: boolean =
+      (!filterPreferences.minPrice || filterPreferences.minPrice >= 0) &&
+      (!filterPreferences.maxPrice || filterPreferences.maxPrice >= 0);
+    const isRatingValid: boolean =
+      (!filterPreferences.minRating && filterPreferences.minRating !== 0) ||
+      (filterPreferences.minRating <= MAX_RATING_LIMIT &&
+        filterPreferences.minRating >= MIN_RATING_LIMIT);
+    return isPriceValid && isRatingValid;
   };
 
   return (
@@ -130,11 +173,27 @@ export const FilterSearchBar = () => {
               type="number"
               id="filter-min-price"
               label="מינ'"
+              value={
+                filterPreferences?.minPrice !== undefined
+                  ? filterPreferences.minPrice
+                  : ""
+              }
+              onChange={(e) =>
+                setMinPrice(e.target.value ? Number(e.target.value) : undefined)
+              }
             ></PriceInputField>
             <PriceInputField
               type="number"
               id="filter-max-price"
               label="מקס'"
+              value={
+                filterPreferences?.maxPrice !== undefined
+                  ? filterPreferences.maxPrice
+                  : ""
+              }
+              onChange={(e) =>
+                setMaxPrice(e.target.value ? Number(e.target.value) : undefined)
+              }
             ></PriceInputField>
           </FilterSection>
         )}
@@ -144,6 +203,14 @@ export const FilterSearchBar = () => {
             type="number"
             id="filter-min-rating"
             label="מינ'"
+            value={
+              filterPreferences?.minRating !== undefined
+                ? filterPreferences.minRating
+                : ""
+            }
+            onChange={(e) =>
+              setMinRating(e.target.value ? Number(e.target.value) : undefined)
+            }
           ></RatingInputField>
         </FilterSection>
         <FilterSection>
@@ -156,6 +223,9 @@ export const FilterSearchBar = () => {
           </FinalButton>
           <FinalButton color="error" onClick={handleCloseMenu}>
             <CancelOutlinedIcon fontSize="large" />
+          </FinalButton>
+          <FinalButton color="warning" onClick={resetPreferences}>
+            <DeleteOutlineOutlinedIcon fontSize="large" />
           </FinalButton>
         </FilterSection>
       </Collapse>

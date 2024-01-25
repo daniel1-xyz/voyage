@@ -5,3 +5,6 @@ export type PointRatingRow = {
   pointId?: string;
   ratingId?: string;
 };
+
+export const MIN_RATING_LIMIT = 1;
+export const MAX_RATING_LIMIT = 5;
