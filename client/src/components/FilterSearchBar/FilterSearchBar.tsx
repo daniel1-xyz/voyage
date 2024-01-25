@@ -17,7 +17,7 @@ import {
 } from "./muiStyledComponents";
 import { Collapse, InputLabel, Select } from "@mui/material";
 import { pointTypes } from "../../types/pointTypes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FilterPreferences } from "../../types/filterPreferences";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../../redux/store";
@@ -35,9 +35,30 @@ export const FilterSearchBar = () => {
   const [filterPreferences, setFilterPreferences] = useState<
     Partial<FilterPreferences>
   >({});
+
   const setPointType = (pointType: string) => {
     setFilterPreferences((prevState) => ({ ...prevState, pointType }));
   };
+  const setMinPrice = (minPrice: number) => {
+    setFilterPreferences((prevState) => ({ ...prevState, minPrice }));
+  };
+  const setMaxPrice = (maxPrice: number) => {
+    setFilterPreferences((prevState) => ({ ...prevState, maxPrice }));
+  };
+  const setMinRating = (minRating: number) => {
+    setFilterPreferences((prevState) => ({ ...prevState, minRating }));
+  };
+
+  const isPriceOptionAllowed = (): boolean => {
+    return (
+      filterPreferences.pointType === "אטרקציה" ||
+      filterPreferences.pointType === "כל סוג נקודה"
+    );
+  };
+
+  useEffect(() => {
+    dispatch(setFilteredPointsToDisplay(pointsToDisplay));
+  }, [dispatch]);
 
   const handleCloseMenu = () => {
     setIsFilterMenuOpen(false);
@@ -102,19 +123,21 @@ export const FilterSearchBar = () => {
             </Select>
           </FilterSelectField>
         </FilterSection>
-        <FilterSection>
-          <FilterSectionTitle>מחיר:</FilterSectionTitle>
-          <PriceInputField
-            type="number"
-            id="filter-min-price"
-            label="מינ'"
-          ></PriceInputField>
-          <PriceInputField
-            type="number"
-            id="filter-max-price"
-            label="מקס'"
-          ></PriceInputField>
-        </FilterSection>
+        {isPriceOptionAllowed() && (
+          <FilterSection>
+            <FilterSectionTitle>מחיר:</FilterSectionTitle>
+            <PriceInputField
+              type="number"
+              id="filter-min-price"
+              label="מינ'"
+            ></PriceInputField>
+            <PriceInputField
+              type="number"
+              id="filter-max-price"
+              label="מקס'"
+            ></PriceInputField>
+          </FilterSection>
+        )}
         <FilterSection>
           <FilterSectionTitle>דירוג:</FilterSectionTitle>
           <RatingInputField
