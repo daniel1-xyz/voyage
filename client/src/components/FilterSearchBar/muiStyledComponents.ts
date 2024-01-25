@@ -149,7 +149,6 @@ export const FinalButton = styled(IconButton)({
     outline: "none",
   },
   "&:hover": {
-    backgroundColor: "transparent",
     borderColor: "initial",
   },
 });

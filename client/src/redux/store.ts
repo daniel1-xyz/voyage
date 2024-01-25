@@ -6,6 +6,10 @@ import {
   PointsToDisplayState,
 } from "./reducers/pointsToDisplay";
 import {
+  initialState as filteredPointsToDisplayInitialState,
+  FilteredPointsToDisplayState,
+} from "./reducers/filteredPointsToDisplay";
+import {
   initialState as currentSidebarInitialState,
   CurrentSidebarState,
 } from "./reducers/currentSidebar";
@@ -16,17 +20,20 @@ import {
 import { FetchPointsAction } from "./constants/pointsToDisplay";
 import { CurrentPointAction } from "./constants/currentPoint";
 import { CurrentSidebarAction } from "./constants/currentSidebar";
+import { FilteredPointAction } from "./constants/filteredPointsToDisplay";
 
 const enhancer = applyMiddleware(thunk);
 
 export type RootState = {
   pointsToDisplay: PointsToDisplayState;
+  filteredPointsToDisplay: FilteredPointsToDisplayState;
   currentSidebar: CurrentSidebarState;
   currentPoint: CurrentPointState;
 };
 
 const rootInitialState: RootState = {
   pointsToDisplay: pointsToDisplayInitialState,
+  filteredPointsToDisplay: filteredPointsToDisplayInitialState,
   currentPoint: currentPointInitialState,
   currentSidebar: currentSidebarInitialState,
 };
@@ -38,6 +45,7 @@ export type AppDispatch = typeof store.dispatch;
 export type AppAction =
   | FetchPointsAction
   | CurrentPointAction
-  | CurrentSidebarAction;
+  | CurrentSidebarAction
+  | FilteredPointAction;
 
 export default store;
