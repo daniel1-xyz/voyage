@@ -19,8 +19,18 @@ import { Collapse, InputLabel, Select } from "@mui/material";
 import { pointTypes } from "../../types/pointTypes";
 import { useState } from "react";
 import { FilterPreferences } from "../../types/filterPreferences";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "../../redux/store";
+import { setFilteredPointsToDisplay } from "../../redux/actions/filteredPointsToDisplay";
 
 export const FilterSearchBar = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const pointsToDisplay = useSelector(
+    (state: RootState) => state.pointsToDisplay.pointsToDisplay
+  );
+
+  const [searchText, setSearchText] = useState<string>("");
   const [isFilterMenuOpen, setIsFilterMenuOpen] = useState<boolean>(false);
   const [filterPreferences, setFilterPreferences] = useState<
     Partial<FilterPreferences>
@@ -38,6 +48,14 @@ export const FilterSearchBar = () => {
     setIsFilterMenuOpen(true);
   };
 
+  const handleSearchTextChange = (newText: string) => {
+    setSearchText(newText);
+    const newFilteredPointsToDisplay = pointsToDisplay.filter(
+      (pointToDisplay) => pointToDisplay.description.includes(newText)
+    );
+    dispatch(setFilteredPointsToDisplay(newFilteredPointsToDisplay));
+  };
+
   const handlePreferences = () => {};
 
   const validatePreferences = (): boolean => {
@@ -47,7 +65,11 @@ export const FilterSearchBar = () => {
   return (
     <FilterSearchBarWrapper>
       <FilterSearchRow>
-        <SearchFilterField placeholder="חפש נקודה על המפה" />
+        <SearchFilterField
+          placeholder="חפש נקודה על המפה"
+          value={searchText}
+          onChange={(e) => handleSearchTextChange(e.target.value)}
+        />
         <FullHeightDivider orientation="vertical" />
         <FilterButton onClick={openMenu}>
           <FilterAltIcon />

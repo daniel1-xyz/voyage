@@ -55,8 +55,8 @@ export const ToursMap = () => {
   const currentPoint = useSelector(
     (state: RootState) => state.currentPoint.currentPoint
   );
-  const pointsToDisplay = useSelector(
-    (state: RootState) => state.pointsToDisplay.pointsToDisplay
+  const filteredPointsToDisplay = useSelector(
+    (state: RootState) => state.filteredPointsToDisplay.pointsToDisplay
   );
 
   useEffect(() => {
@@ -87,7 +87,7 @@ export const ToursMap = () => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {pointsToDisplay?.map((point) => (
+        {filteredPointsToDisplay?.map((point) => (
           <Circle
             radius={CIRCLE_RADIUS}
             center={[point.latitude, point.longitude]}
@@ -97,7 +97,7 @@ export const ToursMap = () => {
             eventHandlers={{
               click: (e) => {
                 const newCurrentPoint: MapPoint | undefined =
-                  pointsToDisplay.find(
+                  filteredPointsToDisplay.find(
                     (pointToDisplay) => pointToDisplay.id === point.id
                   );
                 newCurrentPoint && openDisplaySidebar(newCurrentPoint);
