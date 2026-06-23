@@ -5,21 +5,17 @@ const server = axios.create({
   baseURL: "http://localhost:5000",
 });
 
-export const getPoint = async (pointId: string) => {
+export const getAllPoints = async () => {
   try {
-    return await server.get(`/point/${pointId}`, {
-      params: {
-        id: pointId,
-      },
-    });
+    return await server.get("/points");
   } catch (error) {
     console.error(error);
   }
 };
 
-export const getAllPoints = async () => {
+export const getPointById = async (pointId: string) => {
   try {
-    return await server.get("/points");
+    return await server.get(`/point/${pointId}`, { params: { pointId } });
   } catch (error) {
     console.error(error);
   }
@@ -38,19 +34,3 @@ export const createPoint = async (point: MapPoint) => {
     console.error(error);
   }
 };
-
-// export const updatePointAvgRating = async (
-//   pointId: string,
-//   avgRating: number | null
-// ) => {
-//   try {
-//     await server.patch(`/point/${pointId}/rating`, {
-//       params: {
-//         id: pointId,
-//       },
-//       avgRating: avgRating,
-//     });
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };

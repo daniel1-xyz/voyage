@@ -7,49 +7,56 @@ import {
   AddRatingButton,
   CenteredRating,
 } from "./muiStyledComponents";
-import { useEffect, useState } from "react";
-import { getPoint } from "../../services/pointServices";
+import { useState } from "react";
 import { MapPoint } from "../../types/point";
-import { PointRating, PointRatingRow } from "../../types/pointRating";
-import {
-  addRatingForPoint,
-  getAllRatingsForPoint,
-} from "../../services/pointRatingServices";
+import { PointRating } from "../../types/pointRating";
+import { addRatingForPoint } from "../../services/pointRatingServices";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../redux/store";
+import { updateSpecificPoint } from "../../redux/actions/pointsToDisplay";
+import { getPointById } from "../../services/pointServices";
 
 export const DisplayPointSidebar = ({
-  pointId,
+  currentPoint,
   isSidebarOpen,
   closeSidebar,
 }: {
-  pointId: string;
+  currentPoint: MapPoint | undefined;
   isSidebarOpen: boolean;
   closeSidebar: () => void;
 }) => {
+  const dispatch = useDispatch<AppDispatch>();
+
   const [isRatingOptionEnabled, setIsRatingOptionEnabled] = useState(false);
   const [userRating, setUserRating] = useState<PointRating | 0>(0);
-  const [pointDetails, setPointDetails] = useState<MapPoint | undefined>(
-    undefined
-  );
 
   const handleClose = async () => {
-    userRating && (await addRatingForPoint(pointId, userRating));
+    // To prevent other sidebar close in case the sidebar isn't open
+    if (!isSidebarOpen) return;
+
+    if (userRating && currentPoint?.id) {
+      try {
+        await addRatingForPoint(currentPoint.id, userRating);
+        const updatedPoint: MapPoint = (await getPointById(currentPoint.id))
+          ?.data;
+        dispatch(updateSpecificPoint(updatedPoint));
+      } catch (error) {
+        console.error("Error updating point: " + error);
+      }
+    }
+
+    resetRatingState();
+    closeSidebar();
+  };
+
+  const resetRatingState = () => {
     setIsRatingOptionEnabled(false);
     setUserRating(0);
-    closeSidebar();
   };
 
   const enableRatingOption = () => {
     setIsRatingOptionEnabled(true);
   };
-
-  useEffect(() => {
-    const getPointDetailsById = async () => {
-      const point = await getPoint(pointId);
-      setPointDetails(point ? point.data : undefined);
-    };
-
-    pointId && getPointDetailsById();
-  });
 
   return (
     <ClickAwayListener onClickAway={handleClose}>
@@ -61,33 +68,33 @@ export const DisplayPointSidebar = ({
         />
         <DividerLine />
         <Section>
-          <strong>{pointDetails?.pointType}</strong>
+          <strong>{currentPoint?.pointType}</strong>
         </Section>
         <Section>
           <strong>תיאור הנקודה</strong>
-          <Paragraph>{pointDetails?.description}</Paragraph>
+          <Paragraph>{currentPoint?.description}</Paragraph>
         </Section>
-        {pointDetails?.pointType === "אטרקציה" && (
+        {currentPoint?.pointType === "אטרקציה" && (
           <Section>
             <strong>מחיר</strong>
-            <Paragraph>{pointDetails?.price?.toString()}</Paragraph>
+            <Paragraph>{currentPoint?.price?.toString()}</Paragraph>
           </Section>
         )}
         <Section>
           <strong>מיקום הנקודה</strong>
           <div>
             <strong>מיקום X</strong>
-            <Paragraph>{pointDetails?.longitude.toString()}</Paragraph>
+            <Paragraph>{currentPoint?.longitude.toString()}</Paragraph>
           </div>
           <div>
             <strong>מיקום Y</strong>
-            <Paragraph>{pointDetails?.latitude.toString()}</Paragraph>
+            <Paragraph>{currentPoint?.latitude.toString()}</Paragraph>
           </div>
         </Section>
         <Section>
           <strong>דירוג</strong>
           <Paragraph>
-            {pointDetails?.avgRating || 0}
+            {currentPoint?.avgRating || 0}
             <AddRatingButton onClick={enableRatingOption}>
               הוספת דירוג
             </AddRatingButton>
