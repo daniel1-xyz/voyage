@@ -1,25 +1,27 @@
 import { DataTypes, Model } from "sequelize";
 import { db } from "../config/database";
 
-interface PointAttributes {
+export interface PointAttributes {
   id: string;
   latitude: number;
   longitude: number;
-  desc: string;
+  description: string;
   pointType: string;
   price: number;
+  avgRating: number;
 }
 
-class Point extends Model implements PointAttributes {
+export class PointModel extends Model implements PointAttributes {
   id!: string;
   latitude!: number;
   longitude!: number;
-  desc!: string;
+  description!: string;
   pointType!: string;
   price!: number;
+  avgRating!: number;
 }
 
-Point.init(
+PointModel.init(
   {
     id: {
       type: DataTypes.STRING,
@@ -34,7 +36,7 @@ Point.init(
       type: DataTypes.DECIMAL(9, 6),
       allowNull: false,
     },
-    desc: {
+    description: {
       type: DataTypes.TEXT,
       allowNull: false,
     },
@@ -45,6 +47,9 @@ Point.init(
     price: {
       type: DataTypes.INTEGER,
     },
+    avgRating: {
+      type: DataTypes.DECIMAL(2, 1),
+    },
   },
   {
     sequelize: db,
@@ -53,5 +58,3 @@ Point.init(
     schema: "public",
   }
 );
-
-export { Point };

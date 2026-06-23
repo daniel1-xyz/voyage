@@ -1,32 +1,78 @@
 import { Request, Response, Router } from "express";
-import { Point } from "../models/point";
+import { PointAttributes, PointModel } from "../models/point";
 import uniqid from "uniqid";
+import { validatePoint } from "../utils/point";
 
-const router: Router = Router();
+const router = Router();
 
-Point.sync();
+PointModel.sync({ alter: true });
 
 router.get("/points", async (req: Request, res: Response) => {
-  res.send(await Point.findAll());
+  try {
+    res.send(await PointModel.findAll());
+  } catch (error) {
+    res.status(500).send(`internal server Error ${error} `);
+  }
 });
 
-router.get("/point/:id", async (req: Request, res: Response) => {
-  res.send(await Point.findByPk(req.params.id));
-});
+router.get(
+  "/point/:id",
+  async (req: Request<{ id: string }>, res: Response) => {
+    try {
+      const point = await PointModel.findByPk(req.params.id);
 
-router.post("/points/new", async (req: Request, res: Response) => {
-  let point = Point.build({
-    id: uniqid(),
-    latitude: req.body.latitude,
-    longitude: req.body.longitude,
-    desc: req.body.desc,
-    pointType: req.body.pointType,
-    price: req.body.price || null,
-  });
+      if (!point) return res.status(404).send("point not found");
 
-  await point.save();
+      res.send(point);
+    } catch (error) {
+      res.status(500).send(`internal server Error ${error} `);
+    }
+  }
+);
 
-  res.send(point);
-});
+router.post(
+  "/points/new",
+  async (req: Request<{}, {}, Omit<PointAttributes, "id">>, res: Response) => {
+    try {
+      if (!validatePoint(req.body))
+        return res.status(400).send("invalid request");
+
+      const point = PointModel.build({
+        id: uniqid(),
+        latitude: req.body.latitude,
+        longitude: req.body.longitude,
+        description: req.body.description,
+        pointType: req.body.pointType,
+        price: req.body?.price,
+      });
+
+      await point.save();
+
+      res.send(point);
+    } catch (error) {
+      res.status(500).send(`internal server Error ${error} `);
+    }
+  }
+);
+
+router.patch(
+  "/point/:id/rating",
+  async (
+    req: Request<{ id: string }, {}, { avgRating: number | null }>,
+    res: Response
+  ) => {
+    try {
+      const pointToUpdate = await PointModel.findByPk(req.params.id);
+
+      if (!pointToUpdate) return res.status(404).send("point not found");
+
+      pointToUpdate.set({ avgRating: req.body.avgRating });
+      await pointToUpdate.save();
+      res.send(pointToUpdate);
+    } catch (error) {
+      res.status(500).send(`internal server Error ${error} `);
+    }
+  }
+);
 
 export default router;
