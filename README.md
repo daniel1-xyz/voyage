@@ -23,23 +23,6 @@ A full-stack, fully-typed **TypeScript** application built around an interactive
 
 ---
 
-## 📸 Demo
-
-> **Add a screenshot or GIF here** — a short recording of dropping a point on the map and rating it makes the strongest first impression for a portfolio. Place the file in a `docs/` folder and update the path below.
-
-<!--
-TIP: Record a quick clip with ScreenToGif / Kap, save it as docs/demo.gif, then replace the line below.
--->
-
-<div align="center">
-
-<!-- ![Voyage demo](docs/demo.gif) -->
-`📍 Screenshot / demo GIF goes here`
-
-</div>
-
----
-
 ## ✨ Features
 
 - **🗺️ Interactive map** — pan, zoom, and explore points rendered as colored circles over OpenStreetMap tiles (via Leaflet).
